@@ -1,3 +1,4 @@
+import { MavisIdProvider } from '@/components/providers/mavis-id-provider'
 import NextAuthSessionProvider from '@/components/providers/nextauth-session-provider'
 import type { Metadata } from 'next'
 import { Prompt } from 'next/font/google'
@@ -20,7 +21,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={prompt.className}>
-				<NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+				<NextAuthSessionProvider>
+					<MavisIdProvider>{children}</MavisIdProvider>
+				</NextAuthSessionProvider>
 			</body>
 		</html>
 	)

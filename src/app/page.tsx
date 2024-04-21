@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Page() {
 	return (
 		<main className="flex h-screen w-screen items-center justify-center">
 			<span>asd</span>

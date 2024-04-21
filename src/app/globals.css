@@ -1,3 +1,6 @@
+@import "@roninnetwork/walletgo/dist/base.css";
+@import "@roninnetwork/walletgo/dist/theme/default.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +9,9 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  --wg-z-dialog: 1000000;
+  --wg-z-overlay: 1000000;
 
   user-select: none;
 }
@@ -42,4 +48,12 @@ body {
   .spritesheet-icon {
     background: url("/spritesheet-icon.png");
   }
+}
+
+.wlg-dialog-mask {
+  z-index: 1000000;
+}
+
+.wlg-dialog-wrap {
+  z-index: 1000001;
 }
