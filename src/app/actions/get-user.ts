@@ -1,8 +1,8 @@
-import { type User, db } from '@/drizzle'
+import { type InsertUser, db } from '@/drizzle'
 import { users } from '@/drizzle/schema'
 import { eq } from 'drizzle-orm'
 
-export async function getUser(wallet: string): Promise<User | undefined> {
+export async function getUser(wallet: string): Promise<InsertUser | undefined> {
 	try {
 		const user = await db.select().from(users).where(eq(users.wallet, wallet))
 

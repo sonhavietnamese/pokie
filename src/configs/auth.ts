@@ -16,12 +16,17 @@ export const authConfig: AuthOptions = {
 			credentials: {
 				wallet: { label: 'wallet', type: 'text', placeholder: 'wallet' },
 			},
-			async authorize(credentials) {
-				const parsedCredentials = z
-					.object({ wallet: z.string().startsWith('0x') })
-					.safeParse(credentials)
+			async authorize(credentials, req) {
+				try {
+					if (!credentials) throw new Error('no credentials to log in as')
+					const parsedCredentials = z
+						.object({ wallet: z.string().startsWith('0x') })
+						.safeParse(credentials)
 
-				if (parsedCredentials.success) {
+					if (!parsedCredentials.success) {
+						return null
+					}
+
 					const user = await getUser(parsedCredentials.data.wallet)
 
 					if (!user) {
@@ -37,16 +42,17 @@ export const authConfig: AuthOptions = {
 						return {
 							id: newUser.id,
 							wallet: newUser.wallet,
-						}
+							// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+						} as any
 					}
 
 					return {
 						id: user.id,
 						wallet: user.wallet,
 					}
+				} catch (error) {
+					return null
 				}
-
-				return null
 			},
 		}),
 	],

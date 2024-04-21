@@ -23,6 +23,7 @@
     "clsx": "^2.1.0",
     "drizzle-orm": "^0.30.8",
     "framer-motion": "^11.1.7",
+    "lodash-es": "^4.17.21",
     "next": "14.1.0",
     "next-auth": "^4.24.7",
     "pako": "^2.1.0",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.0",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^20",
     "@types/pako": "^2.0.3",
     "@types/react": "^18",
@@ -47,6 +49,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
+    "sharp": "^0.33.3",
     "tailwindcss": "^3.3.0",
     "typescript": "^5",
     "zlib": "^1.0.5"

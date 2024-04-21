@@ -3,7 +3,6 @@ import {
 	AutoConnectPriority,
 	BaseConnector,
 	ConnectorError,
-	type IConnectResult,
 } from '@roninnetwork/walletgo'
 import type { ReactNode } from 'react'
 
@@ -33,7 +32,7 @@ class IdConnector extends BaseConnector<MavisIdProvider> {
 		return localStorage.getItem(STORAGE_KEY) !== null
 	}
 
-	async connect(chainId: number): Promise<IConnectResult<MavisIdProvider>> {
+	async connect(chainId: number) {
 		const newProvider = MavisIdProvider.create({
 			clientId: 'pokie',
 			chainId: chainId,
