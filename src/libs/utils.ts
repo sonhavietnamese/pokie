@@ -25,3 +25,19 @@ export function catchAxie(): boolean {
 
 export const trimWallet = (wallet: string, count = 8) =>
 	`${wallet.slice(0, count + 2)}...${wallet.slice(-count)}`
+
+export const generateId = () => {
+	const characters = '0123456789'
+	let id = ''
+
+	for (let i = 0; i < 24; i++) {
+		if (i > 0 && i % 8 === 0) {
+			id += '-'
+		}
+		const randomIndex = Math.floor(Math.random() * characters.length)
+
+		id += characters[randomIndex]
+	}
+
+	return id
+}

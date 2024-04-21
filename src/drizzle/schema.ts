@@ -2,6 +2,7 @@ import {
 	integer,
 	pgTable,
 	primaryKey,
+	serial,
 	text,
 	timestamp,
 } from 'drizzle-orm/pg-core'
@@ -9,9 +10,12 @@ import type { AdapterAccount } from 'next-auth/adapters'
 
 export const users = pgTable('user', {
 	id: text('id').notNull().primaryKey(),
-	name: text('name'),
-	wallet: text('wallet').default('0x'),
+	name: text('name').default('user-name'),
+	email: text('email').notNull().default('user-email'),
+	emailVerified: timestamp('emailVerified', { mode: 'date' }),
+	wallet: text('wallet').notNull().default('0x'),
 	created_at: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+	image: text('image'),
 })
 
 export const accounts = pgTable(
@@ -39,7 +43,8 @@ export const accounts = pgTable(
 )
 
 export const sessions = pgTable('session', {
-	sessionToken: text('sessionToken').notNull().primaryKey(),
+	id: serial('id').notNull().primaryKey(),
+	sessionToken: text('sessionToken').notNull(),
 	userId: text('userId')
 		.notNull()
 		.references(() => users.id, { onDelete: 'cascade' }),

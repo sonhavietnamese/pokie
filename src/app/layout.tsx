@@ -1,3 +1,4 @@
+import NextAuthSessionProvider from '@/components/providers/nextauth-session-provider'
 import type { Metadata } from 'next'
 import { Prompt } from 'next/font/google'
 import './globals.css'
@@ -18,7 +19,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={prompt.className}>{children}</body>
+			<body className={prompt.className}>
+				<NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+			</body>
 		</html>
 	)
 }
