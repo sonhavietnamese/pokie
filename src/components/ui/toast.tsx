@@ -1,37 +1,49 @@
-import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+'use client'
+
 import { cn } from '@/libs/utils'
-import React, { type HTMLAttributes, type ReactNode } from 'react'
+
+import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { type Variants, motion } from 'framer-motion'
+import type { ReactNode } from 'react'
 import { Sprite } from './sprite'
 
 type ToastProps = {
 	children: ReactNode
-} & HTMLAttributes<HTMLDivElement>
+}
 
-const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
-	({ children, className, ...props }) => {
-		const l = SPRITESHEET_ELEMENT.frames['toast-l.png'].frame
-		const r = SPRITESHEET_ELEMENT.frames['toast-r.png'].frame
-
-		return (
-			<div
-				className={cn('relative flex w-[300px] items-center', className)}
-				{...props}
-			>
-				<Sprite
-					data={{
-						part: '2',
-						l,
-						r,
-					}}
-					className={className}
-				>
-					{children}
-				</Sprite>
-			</div>
-		)
+const toastVariants: Variants = {
+	hidden: {
+		opacity: 0,
+		y: -20,
 	},
-)
+	visible: {
+		opacity: 1,
+		y: 0,
+	},
+}
 
-Toast.displayName = 'Toast'
+export function Toast({ children }: ToastProps) {
+	const l = SPRITESHEET_ELEMENT.frames['toast-l.png'].frame
+	const r = SPRITESHEET_ELEMENT.frames['toast-r.png'].frame
 
-export { Toast }
+	return (
+		<motion.div
+			className={cn('relative flex h-[50px] w-[800px] items-center')}
+			variants={toastVariants}
+			initial={'hidden'}
+			animate={'visible'}
+			exit={'hidden'}
+		>
+			<Sprite
+				data={{
+					part: '2',
+					l,
+					r,
+				}}
+				className="absolute top-0 left-0 z-[0] h-full w-full"
+			>
+				{children}
+			</Sprite>
+		</motion.div>
+	)
+}

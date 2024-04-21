@@ -87,11 +87,14 @@ const SpriteTwoParts = forwardRef<HTMLDivElement, SpriteTwoPartsProps>(
 		return (
 			<div
 				ref={ref}
-				className={cn('relative flex w-[300px] items-center', className)}
+				className={cn(
+					'relative flex h-[50px] w-[300px] items-center',
+					className,
+				)}
 				{...props}
 			>
 				<div
-					className="relative w-full"
+					className="relative w-1/2"
 					style={{ aspectRatio: `${l.w}/${l.h}` }}
 				>
 					<div className="absolute top-0 left-0 w-full">
@@ -104,7 +107,7 @@ const SpriteTwoParts = forwardRef<HTMLDivElement, SpriteTwoPartsProps>(
 				</div>
 
 				<div
-					className="relative w-full"
+					className="relative w-1/2"
 					style={{ aspectRatio: `${r.w}/${r.h}` }}
 				>
 					<div className="absolute top-0 left-0 w-full">
