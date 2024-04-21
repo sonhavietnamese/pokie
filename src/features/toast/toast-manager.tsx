@@ -1,3 +1,5 @@
+'use client'
+
 import { Toast } from '@/components/ui/toast' // Import the Toast component
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'

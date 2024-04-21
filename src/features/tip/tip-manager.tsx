@@ -1,3 +1,5 @@
+'use client'
+
 import Tip from '@/components/ui/tip'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'

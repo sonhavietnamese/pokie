@@ -1,26 +1,32 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import NotificationManager from '@/features/notification/notification-manager'
 import { useNotificationStore } from '@/features/notification/store'
 import { useTipStore } from '@/features/tip/store'
-import TipManager from '@/features/tip/tip-manager'
 import { useToastStore } from '@/features/toast/store'
-import ToastManager from '@/features/toast/toast-manager'
+import { signIn } from 'next-auth/react'
 
 export default function Home() {
 	const showTip = useTipStore((s) => s.showTip)
 	const showNotification = useNotificationStore((s) => s.showNotification)
 	const showToast = useToastStore((s) => s.showToast)
 
-	return (
-		<main className="relative flex h-screen w-screen items-center justify-center">
-			<TipManager />
-			<NotificationManager />
-			<ToastManager />
+	const login = async () => {
+		const res = await signIn('credentials', { wallet: '0x9999999' })
+	}
 
-			<Button onClick={() => showToast(`hello${Date.now()}`)}>
-				<span className="">Showadasdasdaasd</span>
+	const playAsGuest = () => {
+		const res = signIn('credentials', { wallet: `0x-guess-${Date.now()}` })
+	}
+
+	return (
+		<main className="relative flex flex-col h-screen w-screen items-center justify-center">
+			<Button onClick={login}>
+				<span className="">Login</span>
+			</Button>
+
+			<Button onClick={playAsGuest}>
+				<span className="">Play as guess</span>
 			</Button>
 		</main>
 	)

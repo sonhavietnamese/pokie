@@ -1,3 +1,5 @@
+'use client'
+
 import { Notification } from '@/components/ui/notification'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
