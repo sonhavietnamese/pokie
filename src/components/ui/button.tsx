@@ -1,6 +1,6 @@
-import { SPRITESHEET_ELEMENT } from '@/config/spritesheet'
-import { cn } from '@/lib/utils'
-import React, { type ButtonHTMLAttributes, type ReactNode } from 'react'
+import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { cn } from '@/libs/utils'
+import React, { type HTMLAttributes, type ReactNode } from 'react'
 import { Sprite } from './sprite'
 
 type Color = 'pink' | 'blue' | 'green' | 'yellow' | 'red'
@@ -8,18 +8,18 @@ type Color = 'pink' | 'blue' | 'green' | 'yellow' | 'red'
 type ButtonProps = {
 	children: ReactNode
 	color?: Color
-} & ButtonHTMLAttributes<HTMLButtonElement>
+} & HTMLAttributes<HTMLDivElement>
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-	({ children, className, color = 'blue', ...props }) => {
+const Button = React.forwardRef<HTMLDivElement, ButtonProps>(
+	({ children, className, color = 'blue', ...props }, ref) => {
 		const l = SPRITESHEET_ELEMENT.frames[`btn-${color}-l.png`].frame
 		const m = SPRITESHEET_ELEMENT.frames[`btn-${color}-m.png`].frame
 		const r = SPRITESHEET_ELEMENT.frames[`btn-${color}-r.png`].frame
 
 		return (
-			<button
-				type="button"
-				className={cn('relative flex h-[50px] w-[100px]', className)}
+			<div
+				role="button"
+				className={cn('relative flex p-3 px-5', className)}
 				{...props}
 			>
 				<Sprite
@@ -29,11 +29,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 						m,
 						r,
 					}}
-					className={className}
-				>
-					{children}
-				</Sprite>
-			</button>
+					className="absolute top-0 left-0 z-[0] h-full w-full"
+				/>
+
+				<div className="z-[1]">{children}</div>
+			</div>
 		)
 	},
 )

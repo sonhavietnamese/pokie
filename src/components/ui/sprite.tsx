@@ -1,5 +1,5 @@
-import { SPRITESHEET_ELEMENT } from '@/config/spritesheet'
-import { cn, getSpriteStyles } from '@/lib/utils'
+import { SPRITESHEET_ELEMENT, SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { cn, getSpriteStyles } from '@/libs/utils'
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 
 type Frame = {
@@ -11,12 +11,18 @@ type Frame = {
 
 interface Part<T extends string> {
 	part: T
+	meta?: { w: number; h: number }
+}
+
+interface OnePart extends Part<'1'> {
+	m: Frame
 }
 
 interface TwoPart extends Part<'2'> {
 	l: Frame
 	r: Frame
 }
+
 interface ThreePart extends Part<'3'> {
 	l: Frame
 	m: Frame
@@ -35,13 +41,49 @@ interface NinePart extends Part<'9'> {
 	br: Frame
 }
 
-const meta = SPRITESHEET_ELEMENT.meta.size
+type SpriteOnePartsProps = { children?: ReactNode } & OnePart &
+	HTMLAttributes<HTMLDivElement>
+
+const SpriteOneParts = forwardRef<HTMLDivElement, SpriteOnePartsProps>(
+	({ children, className, meta, m, ...props }, ref) => {
+		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
+
+		return (
+			<div
+				ref={ref}
+				className={cn('relative flex w-[300px] items-center', className)}
+				{...props}
+			>
+				<div
+					className="relative w-full"
+					style={{ aspectRatio: `${m.w}/${m.h}` }}
+				>
+					<div className="absolute top-0 left-0 w-full">
+						<svg
+							className="spritesheet-icon w-full bg-no-repeat"
+							style={getSpriteStyles(m, meta)}
+							viewBox={`0 0 1 ${m.h / m.w}`}
+						/>
+					</div>
+				</div>
+
+				<div className="absolute flex h-full w-full items-center justify-center">
+					{children}
+				</div>
+			</div>
+		)
+	},
+)
+
+SpriteOneParts.displayName = 'SpriteOneParts'
 
 type SpriteTwoPartsProps = { children?: ReactNode } & TwoPart &
 	HTMLAttributes<HTMLDivElement>
 
 const SpriteTwoParts = forwardRef<HTMLDivElement, SpriteTwoPartsProps>(
-	({ children, className, l, r, ...props }, ref) => {
+	({ children, className, meta, l, r, ...props }, ref) => {
+		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
+
 		return (
 			<div
 				ref={ref}
@@ -90,7 +132,9 @@ type SpriteThreePartsProps = {
 	HTMLAttributes<HTMLDivElement>
 
 const SpriteThreeParts = forwardRef<HTMLDivElement, SpriteThreePartsProps>(
-	({ children, className, l, m, r, ...props }, ref) => {
+	({ children, className, meta, l, m, r, ...props }, ref) => {
+		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
+
 		return (
 			<div
 				ref={ref}
@@ -101,7 +145,7 @@ const SpriteThreeParts = forwardRef<HTMLDivElement, SpriteThreePartsProps>(
 					className="relative h-full"
 					style={{ aspectRatio: `${l.w}/${l.h}` }}
 				>
-					<div className="absolute top-0 left-0 ml-[.5px] h-full">
+					<div className="absolute top-0 left-0 h-full">
 						<svg
 							className="spritesheet-element h-full bg-no-repeat"
 							style={getSpriteStyles(l, meta)}
@@ -122,7 +166,7 @@ const SpriteThreeParts = forwardRef<HTMLDivElement, SpriteThreePartsProps>(
 					className="relative h-full"
 					style={{ aspectRatio: `${r.w}/${r.h}` }}
 				>
-					<div className="-ml-[.5px] absolute top-0 left-0 h-full">
+					<div className="absolute top-0 left-0 h-full">
 						<svg
 							className="spritesheet-element h-full bg-no-repeat"
 							style={getSpriteStyles(r, meta)}
@@ -148,9 +192,11 @@ type SpriteNinePartsProps = {
 
 const SpriteNineParts = forwardRef<HTMLDivElement, SpriteNinePartsProps>(
 	(
-		{ className, children, tl, tm, tr, ml, mm, mr, bl, bm, br, ...props },
+		{ className, children, meta, tl, tm, tr, ml, mm, mr, bl, bm, br, ...props },
 		ref,
 	) => {
+		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
+
 		return (
 			<div
 				ref={ref}
@@ -247,28 +293,55 @@ const SpriteNineParts = forwardRef<HTMLDivElement, SpriteNinePartsProps>(
 SpriteNineParts.displayName = 'SpriteNineParts'
 
 type SpriteProps = {
-	data: TwoPart | ThreePart | NinePart
+	data: OnePart | TwoPart | ThreePart | NinePart
 	children?: ReactNode
 } & HTMLAttributes<HTMLDivElement>
 
 const Sprite = forwardRef<HTMLDivElement, SpriteProps>(
 	({ data, children, ...props }, ref) => {
 		switch (data.part) {
+			case '1':
+				return (
+					<SpriteOneParts
+						ref={ref}
+						{...data}
+						{...props}
+						meta={SPRITESHEET_ICON.meta.size}
+					>
+						{children}
+					</SpriteOneParts>
+				)
+
 			case '2':
 				return (
-					<SpriteTwoParts ref={ref} {...data} {...props}>
+					<SpriteTwoParts
+						ref={ref}
+						{...data}
+						{...props}
+						meta={SPRITESHEET_ELEMENT.meta.size}
+					>
 						{children}
 					</SpriteTwoParts>
 				)
 			case '3':
 				return (
-					<SpriteThreeParts ref={ref} {...data} {...props}>
+					<SpriteThreeParts
+						ref={ref}
+						{...data}
+						{...props}
+						meta={SPRITESHEET_ELEMENT.meta.size}
+					>
 						{children}
 					</SpriteThreeParts>
 				)
 			default:
 				return (
-					<SpriteNineParts ref={ref} {...data} {...props}>
+					<SpriteNineParts
+						ref={ref}
+						{...data}
+						{...props}
+						meta={SPRITESHEET_ELEMENT.meta.size}
+					>
 						{children}
 					</SpriteNineParts>
 				)

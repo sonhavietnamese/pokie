@@ -1,5 +1,5 @@
-import { SPRITESHEET_ELEMENT } from '@/config/spritesheet'
-import { getSpriteStyles } from '@/lib/utils'
+import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { getSpriteStyles } from '@/libs/utils'
 
 const meta = SPRITESHEET_ELEMENT.meta.size
 

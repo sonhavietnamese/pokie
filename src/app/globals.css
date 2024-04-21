@@ -38,4 +38,8 @@ body {
   .spritesheet-element {
     background: url("/spritesheet-element.png");
   }
+
+  .spritesheet-icon {
+    background: url("/spritesheet-icon.png");
+  }
 }

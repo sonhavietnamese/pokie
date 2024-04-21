@@ -1,7 +1,19 @@
-import { SPRITESHEET_ELEMENT } from '@/config/spritesheet'
-import { cn } from '@/lib/utils'
+import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { cn } from '@/libs/utils'
+import { type Variants, motion } from 'framer-motion'
 import React, { type HTMLAttributes, type ReactNode } from 'react'
 import { Sprite } from './sprite'
+
+const notificationVatiants: Variants = {
+	hidden: {
+		opacity: 0,
+		y: -20,
+	},
+	visible: {
+		opacity: 1,
+		y: 0,
+	},
+}
 
 type NotificationProps = {
 	children: ReactNode
@@ -14,9 +26,12 @@ const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
 		const r = SPRITESHEET_ELEMENT.frames['notification-r.png'].frame
 
 		return (
-			<div
-				className={cn('relative flex h-[50px] w-[200px]', className)}
-				{...props}
+			<motion.div
+				className={cn('relative flex items-center p-2 px-20')}
+				variants={notificationVatiants}
+				initial={'hidden'}
+				animate={'visible'}
+				exit={'hidden'}
 			>
 				<Sprite
 					data={{
@@ -25,11 +40,11 @@ const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
 						m,
 						r,
 					}}
-					className={className}
-				>
-					{children}
-				</Sprite>
-			</div>
+					className="absolute top-0 left-0 z-[0] h-full w-full"
+				/>
+
+				<div className="z-[1]">{children}</div>
+			</motion.div>
 		)
 	},
 )

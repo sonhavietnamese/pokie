@@ -1,5 +1,5 @@
-import { SPRITESHEET_ELEMENT } from '@/config/spritesheet'
-import { cn } from '@/lib/utils'
+import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { cn } from '@/libs/utils'
 import React, { type HTMLAttributes } from 'react'
 import { Sprite } from './sprite'
 

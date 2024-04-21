@@ -1,26 +1,25 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { Sprite } from '@/components/ui/sprite'
-import { SPRITESHEET_ELEMENT } from '@/config/spritesheet'
+import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import NotificationManager from '@/features/notification/notification-manager'
+import { useNotificationStore } from '@/features/notification/store'
+import { useTipStore } from '@/features/tip/store'
+import TipManager from '@/features/tip/tip-manager'
 
 export default function Home() {
+	const showTip = useTipStore((s) => s.showTip)
+	const showNotification = useNotificationStore((s) => s.showNotification)
+
 	return (
-		<main className="flex h-screen w-screen items-center justify-center">
-			<Sprite
-				data={{
-					part: '9',
-					tl: SPRITESHEET_ELEMENT.frames['box-01-tl.png'].frame,
-					tm: SPRITESHEET_ELEMENT.frames['box-01-tm.png'].frame,
-					tr: SPRITESHEET_ELEMENT.frames['box-01-tr.png'].frame,
-					ml: SPRITESHEET_ELEMENT.frames['box-01-ml.png'].frame,
-					mm: SPRITESHEET_ELEMENT.frames['box-01-mm.png'].frame,
-					mr: SPRITESHEET_ELEMENT.frames['box-01-mr.png'].frame,
-					bl: SPRITESHEET_ELEMENT.frames['box-01-bl.png'].frame,
-					bm: SPRITESHEET_ELEMENT.frames['box-01-bm.png'].frame,
-					br: SPRITESHEET_ELEMENT.frames['box-01-br.png'].frame,
-				}}
-				className={'w-[300px] h-[200px]'}
-			/>
+		<main className="relative flex h-screen w-screen items-center justify-center">
+			<TipManager />
+			<NotificationManager />
+
+			<Button onClick={() => showNotification(`hello${Date.now()}`)}>
+				<span className="">Showadasdasdaasd</span>
+			</Button>
 		</main>
 	)
 }

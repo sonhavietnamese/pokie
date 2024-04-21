@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../src/config/spritesheet-element.json</filename>
+                <filename>../src/configs/spritesheet-element.json</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -446,6 +446,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">btn-frame-01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>43,44,87,89</rect>
+                <key>scale9Paddings</key>
+                <rect>43,44,87,89</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">btn-frame-02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,37,61,73</rect>
+                <key>scale9Paddings</key>
+                <rect>30,37,61,73</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">btn-pink-l.png</key>
             <key type="filename">btn-pink-r.png</key>
             <struct type="IndividualSpriteSettings">
@@ -616,6 +646,51 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">frame-bubble.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,26,59,53</rect>
+                <key>scale9Paddings</key>
+                <rect>30,26,59,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">frame-item-selected.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>52,52,103,103</rect>
+                <key>scale9Paddings</key>
+                <rect>52,52,103,103</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">frame-item.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>46,46,91,91</rect>
+                <key>scale9Paddings</key>
+                <rect>46,46,91,91</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">notification-l.png</key>
             <key type="filename">notification-r.png</key>
             <struct type="IndividualSpriteSettings">
@@ -644,6 +719,37 @@
                 <rect>2,21,5,42</rect>
                 <key>scale9Paddings</key>
                 <rect>2,21,5,42</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">panel-item-l.png</key>
+            <key type="filename">panel-item-r.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>34,178,69,355</rect>
+                <key>scale9Paddings</key>
+                <rect>34,178,69,355</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">panel-item-m.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>62,178,124,355</rect>
+                <key>scale9Paddings</key>
+                <rect>62,178,124,355</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -709,6 +815,21 @@
                 <rect>3,3,5,6</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,5,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">shop-item-frame.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>84,73,168,146</rect>
+                <key>scale9Paddings</key>
+                <rect>84,73,168,146</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -834,6 +955,15 @@
                     <filename>box-02-tr.png</filename>
                     <filename>btn-close-01.png</filename>
                     <filename>btn-close-02.png</filename>
+                    <filename>shop-item-frame.png</filename>
+                    <filename>btn-frame-01.png</filename>
+                    <filename>btn-frame-02.png</filename>
+                    <filename>panel-item-l.png</filename>
+                    <filename>panel-item-m.png</filename>
+                    <filename>panel-item-r.png</filename>
+                    <filename>frame-item-selected.png</filename>
+                    <filename>frame-item.png</filename>
+                    <filename>frame-bubble.png</filename>
                 </array>
             </struct>
         </map>
