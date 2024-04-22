@@ -3,19 +3,28 @@
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_ICON } from '@/configs/spritesheet'
-import { useBackpackStore } from './store'
+import { useEffect } from 'react'
+import useBackpack from './use-backpack'
 
 export default function Backpack() {
-	const [isOpen, setOpen] = useBackpackStore((s) => [s.isOpen, s.setOpen])
+	const { backpack, isOpen, setOpen, fetchBackpack } = useBackpack()
+
+	useEffect(() => {
+		if (!isOpen) return
+
+		fetchBackpack()
+	}, [isOpen])
+
+	console.log(backpack)
 
 	return (
 		<Dialog open={isOpen}>
 			<DialogContent className="h-[700px] w-[1200px]">
-				<div className="flex h-full items-center bg-red-100 relative">
+				<div className="relative flex h-full items-center bg-red-100">
 					<span>wau</span>
 				</div>
 				<DialogClose asChild>
-					<button type="button" className="absolute -top-4 -right-4" onClick={() => setOpen(false)}>
+					<button type="button" className="-top-4 -right-4 absolute" onClick={() => setOpen(false)}>
 						<Sprite
 							data={{
 								part: '1',

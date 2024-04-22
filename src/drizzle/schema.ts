@@ -63,3 +63,19 @@ export const verificationTokens = pgTable(
 		compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
 	}),
 )
+
+export const backpack = pgTable('backpack', {
+	id: serial('id').notNull().primaryKey(),
+	userId: text('userId')
+		.notNull()
+		.references(() => users.id, { onDelete: 'cascade' }),
+	milks: integer('milks').notNull().default(0),
+	fishes: integer('fishes').notNull().default(0),
+	feathers: integer('feathers').notNull().default(0),
+	rocks: integer('rocks').notNull().default(0),
+	nuts: integer('nuts').notNull().default(0),
+	plants: integer('plants').notNull().default(0),
+	bugs: integer('bugs').notNull().default(0),
+	stars: integer('stars').notNull().default(0),
+	moons: integer('moons').notNull().default(0),
+})

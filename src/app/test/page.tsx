@@ -3,6 +3,7 @@
 import ScreenSizeBreakpoint from '@/components/screen-size-breakpoint'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog'
+import Login from '@/scenes/login'
 import { useWalletgo } from '@roninnetwork/walletgo'
 import { useEffect, useState } from 'react'
 
@@ -36,6 +37,9 @@ export default function Page() {
 			</Dialog>
 
 			<ScreenSizeBreakpoint />
+
+			<Login />
+
 			{/* <Dialog /> */}
 
 			{/* <Avatar /> */}
