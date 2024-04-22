@@ -5,12 +5,11 @@ import { KEYBOARD_MAP } from '@/libs/constants'
 import Home from '@/scenes/home'
 import { KeyboardControls, Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import React from 'react'
 import * as THREE from 'three'
 
 export default function Page() {
 	return (
-		<main className="h-screen w-screen">
+		<main className="h-screen w-screen relative">
 			<KeyboardControls map={KEYBOARD_MAP}>
 				<Canvas
 					dpr={0.75}
