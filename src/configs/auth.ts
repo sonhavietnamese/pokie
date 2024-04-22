@@ -20,7 +20,7 @@ export const authConfig: AuthOptions = {
 				try {
 					if (!credentials) throw new Error('no credentials to log in as')
 					const parsedCredentials = z
-						.object({ wallet: z.string().startsWith('0x') })
+						.object({ wallet: z.string().length(42).startsWith('0x') })
 						.safeParse(credentials)
 
 					if (!parsedCredentials.success) {

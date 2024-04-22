@@ -64,6 +64,13 @@
       "when": 1713707547948,
       "tag": "0008_mute_mole_man",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1713769053254,
+      "tag": "0009_friendly_shinko_yamashiro",
+      "breakpoints": true
     }
   ]
 }

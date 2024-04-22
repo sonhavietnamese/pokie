@@ -1,3 +1,5 @@
+'use client'
+
 import { SPRITESHEET_ELEMENT, SPRITESHEET_ICON } from '@/configs/spritesheet'
 import { cn, getSpriteStyles } from '@/libs/utils'
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'

@@ -1,13 +1,14 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import useEnergy from '@/features/energy-system/use-energy'
 import { useMavisIdStore } from '@/features/mavis-id/store'
 import { useNotificationStore } from '@/features/notification/store'
 import { useTipStore } from '@/features/tip/store'
 import { useToastStore } from '@/features/toast/store'
 import { useUserStore } from '@/stores/user'
 import { useWalletgo } from '@roninnetwork/walletgo'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { SessionProvider } from 'next-auth/react'
 import { useEffect } from 'react'
 
@@ -23,23 +24,25 @@ export default function Login() {
 
 	const setOpenMavisId = useMavisIdStore((s) => s.setOpen)
 
-	// useEffect(() => {
-	// 	const login = async () => {
-	// 		const wallet = await walletProvider.getSigner().getAddress()
+	const { fetchEnergy, increaseEnergy } = useEnergy()
 
-	// 		try {
-	// 			await signIn('credentials', {
-	// 				wallet,
-	// 				redirect: false,
-	// 			})
-	// 		} catch (error) {
-	// 			console.log(error)
-	// 			throw error
-	// 		}
-	// 	}
+	useEffect(() => {
+		const login = async () => {
+			const wallet = await walletProvider.getSigner().getAddress()
 
-	// 	if (walletProvider) login()
-	// }, [walletProvider])
+			try {
+				await signIn('credentials', {
+					wallet,
+					redirect: false,
+				})
+			} catch (error) {
+				console.log(error)
+				throw error
+			}
+		}
+
+		if (walletProvider) login()
+	}, [walletProvider])
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
@@ -58,8 +61,20 @@ export default function Login() {
 				<span className="">Login</span>
 			</Button>
 
+			<Button onClick={() => signOut()}>
+				<span className="">Loout</span>
+			</Button>
+
 			<Button onClick={playAsGuest}>
 				<span className="">Play as guess</span>
+			</Button>
+
+			<Button onClick={fetchEnergy}>
+				<span className="">Fetch Energy</span>
+			</Button>
+
+			<Button onClick={increaseEnergy}>
+				<span className="">+ Energy</span>
 			</Button>
 		</main>
 	)
