@@ -1,5 +1,6 @@
 'use client'
 
+import Avatar from '@/components/avatar'
 import Energy from '@/features/energy-system/energy'
 import { useMavisIdStore } from '@/features/mavis-id/store'
 import PokieCoinBalance from '@/features/pokie-coin/balance'
@@ -24,11 +25,13 @@ export default function Page() {
 
 	return (
 		<main className="relative flex h-screen w-screen flex-col items-center justify-center">
-			{!loading ? <PokieCoinBalance /> : <div>Loading...</div>}
+			<Avatar />
 
-			<Energy />
+			{/* <Energy /> */}
+			{/* {!loading ? <PokieCoinBalance /> : <div>Loading...</div>}
 
-			<Login />
+
+			<Login /> */}
 		</main>
 	)
 }

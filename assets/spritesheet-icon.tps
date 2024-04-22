@@ -173,6 +173,21 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">avatar-default.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9Paddings</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">class-aquatic.png</key>
             <key type="filename">class-beast.png</key>
             <key type="filename">class-bird.png</key>
@@ -196,6 +211,37 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">icon-copy-01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,14,26,27</rect>
+                <key>scale9Paddings</key>
+                <rect>13,14,26,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">icon-energy.png</key>
+            <key type="filename">icon-pokie-coin.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,12,24,24</rect>
+                <key>scale9Paddings</key>
+                <rect>12,12,24,24</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">icon-exclamation.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -211,7 +257,14 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">icon-pokie-coin.png</key>
+            <key type="filename">icon-item-dawn.png</key>
+            <key type="filename">icon-item-dusk.png</key>
+            <key type="filename">icon-item-feather.png</key>
+            <key type="filename">icon-item-fish.png</key>
+            <key type="filename">icon-item-milk.png</key>
+            <key type="filename">icon-item-nut.png</key>
+            <key type="filename">icon-item-plant.png</key>
+            <key type="filename">icon-item-rock.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -220,9 +273,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>12,12,24,24</rect>
+                <rect>16,16,32,32</rect>
                 <key>scale9Paddings</key>
-                <rect>12,12,24,24</rect>
+                <rect>16,16,32,32</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -244,6 +297,17 @@
                     <filename>class-plant.png</filename>
                     <filename>class-reptile.png</filename>
                     <filename>icon-pokie-coin.png</filename>
+                    <filename>icon-energy.png</filename>
+                    <filename>icon-item-dawn.png</filename>
+                    <filename>icon-item-dusk.png</filename>
+                    <filename>icon-item-feather.png</filename>
+                    <filename>icon-item-fish.png</filename>
+                    <filename>icon-item-milk.png</filename>
+                    <filename>icon-item-nut.png</filename>
+                    <filename>icon-item-plant.png</filename>
+                    <filename>icon-item-rock.png</filename>
+                    <filename>avatar-default.png</filename>
+                    <filename>icon-copy-01.png</filename>
                 </array>
             </struct>
         </map>
