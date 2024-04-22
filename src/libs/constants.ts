@@ -16,9 +16,10 @@ export const KEYBOARD_MAP = [
 	{ name: 'aim', keys: ['KeyZ'] },
 	{ name: 'spawn', keys: ['KeyQ'] },
 	{ name: 'open-ui', keys: ['Space'] },
-	{ name: 'exit-ui', keys: ['Escape'] },
 
-	{ name: 'bag', keys: ['KeyB'] },
+	{ name: 'exit', keys: ['Escape'] },
+
+	{ name: 'backpack', keys: ['KeyB'] },
 
 	{ name: 'ride-animal', keys: ['KeyR'] },
 	{ name: 'catch-axie', keys: ['KeyC'] },

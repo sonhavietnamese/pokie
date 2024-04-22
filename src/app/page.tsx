@@ -9,12 +9,17 @@ import dynamic from 'next/dynamic'
 import * as THREE from 'three'
 
 import AnimationManager from '@/features/axie/animation-manager'
+// import BackpackTrigger from '@/features/backpack/trigger'
+// import Backpack from '@/features/backpack/ui'
 // import ToastManager from '@/features/toast/toast-manager'
 
 const Avatar = dynamic(() => import('@/components/avatar'))
 const ToastManager = dynamic(() => import('@/features/toast/toast-manager'))
 const Energy = dynamic(() => import('@/features/energy-system/energy'))
 const PokieCoinBalance = dynamic(() => import('@/features/pokie-coin/balance'))
+const Backpack = dynamic(() => import('@/features/backpack/ui'))
+const BackpackTrigger = dynamic(() => import('@/features/backpack/trigger'))
+const ShortcutManager = dynamic(() => import('@/features/shortcut/shortcut-manager'))
 
 export default function Page() {
 	return (
@@ -22,9 +27,15 @@ export default function Page() {
 			<div className="absolute top-5 z-[1] flex w-full items-center justify-between px-5">
 				<Avatar />
 
-				<div className="flex h-fit gap-5">
-					<Energy />
-					<PokieCoinBalance />
+				<div className="flex items-center gap-5">
+					<div className="flex gap-4 h-fit">
+						<Energy />
+						<PokieCoinBalance />
+					</div>
+
+					<div>
+						<BackpackTrigger />
+					</div>
 				</div>
 			</div>
 
@@ -48,13 +59,15 @@ export default function Page() {
 				>
 					<Home />
 				</Canvas>
+
+				<Loader />
+				<ShortcutManager />
 			</KeyboardControls>
 
 			<ToastManager />
-
 			<AnimationManager />
 
-			<Loader />
+			<Backpack />
 
 			<ScreenSizeBreakpoint />
 		</main>
