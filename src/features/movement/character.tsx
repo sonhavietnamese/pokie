@@ -6,12 +6,7 @@
 import useTextureFactory from '@/components/sapidae/use-texture-factory'
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { useFrame, useGraph } from '@react-three/fiber'
-import {
-	type CollisionPayload,
-	CuboidCollider,
-	type RapierRigidBody,
-	RigidBody,
-} from '@react-three/rapier'
+import { type CollisionPayload, CuboidCollider, type RapierRigidBody, RigidBody } from '@react-three/rapier'
 import { type JSX, useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { type GLTF, SkeletonUtils } from 'three-stdlib'
@@ -56,9 +51,7 @@ export function Sapidae(props: JSX.IntrinsicElements['group']) {
 
 	const curAnimation = useCharacterControl((state) => state.curAnimation)
 	const resetAnimation = useCharacterControl((state) => state.reset)
-	const initializeAnimationSet = useCharacterControl(
-		(state) => state.initializeAnimationSet,
-	)
+	const initializeAnimationSet = useCharacterControl((state) => state.initializeAnimationSet)
 
 	// const removeButterfly = useButterflyStore((state) => state.removeButterfly)
 
@@ -185,23 +178,14 @@ export function Sapidae(props: JSX.IntrinsicElements['group']) {
 				</skinnedMesh>
 
 				<RigidBody ref={netRef} type="dynamic" scale={80} name="local-tool">
-					<CuboidCollider
-						sensor
-						args={[3, 0.8, 0.8]}
-						mass={0}
-						onIntersectionEnter={onNetCollision}
-					/>
+					<CuboidCollider sensor args={[3, 0.8, 0.8]} mass={0} onIntersectionEnter={onNetCollision} />
 				</RigidBody>
 
 				<skinnedMesh
 					geometry={nodes.Sapidae_male_arms2_new003.geometry}
 					skeleton={nodes.Sapidae_male_arms2_new003.skeleton}
 				>
-					<meshStandardMaterial
-						ref={eyeMaterialRef}
-						map={textureEyeOpen}
-						roughness={1}
-					/>
+					<meshStandardMaterial ref={eyeMaterialRef} map={textureEyeOpen} roughness={1} />
 				</skinnedMesh>
 
 				{/* {usingItem &&

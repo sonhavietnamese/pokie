@@ -256,17 +256,10 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
 		}
 
 		const terrainMesh = nodes.grass
-		const grassGeometry = (grassLOD.nodes.GrassLOD02 as any)
-			.geometry as THREE.BufferGeometry
-		const sampler = new MeshSurfaceSampler(terrainMesh)
-			.setWeightAttribute('color')
-			.build()
+		const grassGeometry = (grassLOD.nodes.GrassLOD02 as any).geometry as THREE.BufferGeometry
+		const sampler = new MeshSurfaceSampler(terrainMesh).setWeightAttribute('color').build()
 
-		const grassInstancedMesh = new THREE.InstancedMesh(
-			grassGeometry,
-			material,
-			grassCount,
-		)
+		const grassInstancedMesh = new THREE.InstancedMesh(grassGeometry, material, grassCount)
 
 		grassInstancedMesh.receiveShadow = true
 		grassInstancedMesh.position.set(-8.503, -0.391, -12.436)
@@ -283,9 +276,7 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
 
 			quaternion.setFromUnitVectors(yAxis, normal)
 			const randomRotation = new THREE.Euler(0, Math.random() * Math.PI * 2, 0)
-			const randomQuaternion = new THREE.Quaternion().setFromEuler(
-				randomRotation,
-			)
+			const randomQuaternion = new THREE.Quaternion().setFromEuler(randomRotation)
 
 			quaternion.multiply(randomQuaternion)
 
@@ -323,11 +314,7 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
       <mesh geometry={nodes.grass.geometry} material={nodes.grass.material} position={[-8.503, -0.391, -12.436]} /> */}
 
 			<RigidBody type="fixed" colliders="trimesh">
-				<mesh
-					geometry={nodes.Plane.geometry}
-					receiveShadow
-					position={[-8.503, -0.391, -12.436]}
-				>
+				<mesh geometry={nodes.Plane.geometry} receiveShadow position={[-8.503, -0.391, -12.436]}>
 					<meshStandardMaterial color={'#1f352a'} />
 				</mesh>
 			</RigidBody>
@@ -342,11 +329,7 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
 				</mesh>
 			</RigidBody>
 
-			<RigidBody
-				type="fixed"
-				position={[42.1, -0.5, -22.907]}
-				onCollisionEnter={onEnter}
-			>
+			<RigidBody type="fixed" position={[42.1, -0.5, -22.907]} onCollisionEnter={onEnter}>
 				<mesh geometry={nodes.Plane002.geometry}>
 					<meshStandardMaterial opacity={0} transparent depthWrite={false} />
 				</mesh>

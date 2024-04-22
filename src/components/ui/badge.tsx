@@ -7,32 +7,27 @@ type BadgeProps = {
 	children: ReactNode
 } & HTMLAttributes<HTMLDivElement>
 
-const Badge = forwardRef<HTMLDivElement, BadgeProps>(
-	({ children, className, ...props }) => {
-		const l = SPRITESHEET_ELEMENT.frames['badge-l.png'].frame
-		const m = SPRITESHEET_ELEMENT.frames['badge-m.png'].frame
-		const r = SPRITESHEET_ELEMENT.frames['badge-r.png'].frame
+const Badge = forwardRef<HTMLDivElement, BadgeProps>(({ children, className, ...props }) => {
+	const l = SPRITESHEET_ELEMENT.frames['badge-l.png'].frame
+	const m = SPRITESHEET_ELEMENT.frames['badge-m.png'].frame
+	const r = SPRITESHEET_ELEMENT.frames['badge-r.png'].frame
 
-		return (
-			<div
-				className={cn('relative flex h-[50px] w-[100px]', className)}
-				{...props}
+	return (
+		<div className={cn('relative flex h-[50px] w-[100px]', className)} {...props}>
+			<Sprite
+				data={{
+					part: '3',
+					l,
+					m,
+					r,
+				}}
+				className={className}
 			>
-				<Sprite
-					data={{
-						part: '3',
-						l,
-						m,
-						r,
-					}}
-					className={className}
-				>
-					{children}
-				</Sprite>
-			</div>
-		)
-	},
-)
+				{children}
+			</Sprite>
+		</div>
+	)
+})
 
 Badge.displayName = 'Badge'
 

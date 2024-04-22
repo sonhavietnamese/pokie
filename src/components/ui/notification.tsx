@@ -19,36 +19,34 @@ type NotificationProps = {
 	children: ReactNode
 } & HTMLAttributes<HTMLDivElement>
 
-const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
-	({ children, className, ...props }, ref) => {
-		const l = SPRITESHEET_ELEMENT.frames['notification-l.png'].frame
-		const m = SPRITESHEET_ELEMENT.frames['notification-m.png'].frame
-		const r = SPRITESHEET_ELEMENT.frames['notification-r.png'].frame
+const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(({ children, className, ...props }, ref) => {
+	const l = SPRITESHEET_ELEMENT.frames['notification-l.png'].frame
+	const m = SPRITESHEET_ELEMENT.frames['notification-m.png'].frame
+	const r = SPRITESHEET_ELEMENT.frames['notification-r.png'].frame
 
-		return (
-			<motion.div
-				ref={ref}
-				className={cn('relative flex items-center p-2 px-20')}
-				variants={notificationVatiants}
-				initial={'hidden'}
-				animate={'visible'}
-				exit={'hidden'}
-			>
-				<Sprite
-					data={{
-						part: '3',
-						l,
-						m,
-						r,
-					}}
-					className="absolute top-0 left-0 z-[0] h-full w-full"
-				/>
+	return (
+		<motion.div
+			ref={ref}
+			className={cn('relative flex items-center p-2 px-20')}
+			variants={notificationVatiants}
+			initial={'hidden'}
+			animate={'visible'}
+			exit={'hidden'}
+		>
+			<Sprite
+				data={{
+					part: '3',
+					l,
+					m,
+					r,
+				}}
+				className="absolute top-0 left-0 z-[0] h-full w-full"
+			/>
 
-				<div className="z-[1]">{children}</div>
-			</motion.div>
-		)
-	},
-)
+			<div className="z-[1]">{children}</div>
+		</motion.div>
+	)
+})
 
 Notification.displayName = 'Notification'
 

@@ -121,17 +121,9 @@ export function SapidaeModel({
 						geometry={nodes.Sapidae_male_arms2_new003.geometry}
 						skeleton={nodes.Sapidae_male_arms2_new003.skeleton}
 					>
-						<meshStandardMaterial
-							ref={eyeMaterialRef}
-							map={textureEyeOpen}
-							roughness={1}
-						/>
+						<meshStandardMaterial ref={eyeMaterialRef} map={textureEyeOpen} roughness={1} />
 					</skinnedMesh>
-					<mesh
-						scale={80}
-						rotation={[Math.PI / 2, 0, 0]}
-						position={[0, 2.5, 0]}
-					>
+					<mesh scale={80} rotation={[Math.PI / 2, 0, 0]} position={[0, 2.5, 0]}>
 						<planeGeometry args={[1, 3, 1]} />
 						<meshStandardMaterial color={'red'} />
 					</mesh>

@@ -12,10 +12,7 @@ export default function Avatar() {
 				<Sprite data={{ part: '1', m: avatarImg }} className="h-full w-full" />
 			</div>
 			<button type="button" className="-right-2 absolute top-1 rounded-full">
-				<Sprite
-					data={{ part: '1', m: copyIcon }}
-					className="h-[30px] w-[30px]"
-				/>
+				<Sprite data={{ part: '1', m: copyIcon }} className="h-[30px] w-[30px]" />
 			</button>
 		</div>
 	)

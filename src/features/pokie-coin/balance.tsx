@@ -21,10 +21,7 @@ export default function PokieCoinBalance() {
 
 	return (
 		<div className="relative flex items-center p-2 px-7">
-			<Sprite
-				data={{ part: '3', l, m, r }}
-				className="absolute top-0 left-0 z-[0] h-full w-full"
-			/>
+			<Sprite data={{ part: '3', l, m, r }} className="absolute top-0 left-0 z-[0] h-full w-full" />
 
 			<Sprite
 				id="logo"
@@ -32,9 +29,7 @@ export default function PokieCoinBalance() {
 				className="-left-4 absolute z-[1] h-[54px] w-[54px] rotate-[-10deg]"
 			/>
 
-			<div className="z-[1] ml-4 font-extrabold text-xl tracking-wider">
-				{balance}
-			</div>
+			<div className="z-[1] ml-4 font-extrabold text-xl tracking-wider">{balance}</div>
 		</div>
 	)
 }

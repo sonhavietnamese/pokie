@@ -1,25 +1,23 @@
 {
-  "compilerOptions": {
-    "outDir": "build",
-    "target": "ESNext",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "strict": true,
-    "allowJs": true,
-    "strictNullChecks": false,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": false,
-    "types": [
-      "bun-types" // add Bun global
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": [
-    "src"
-  ]
+	"compilerOptions": {
+		"outDir": "build",
+		"target": "ESNext",
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"strict": true,
+		"allowJs": true,
+		"strictNullChecks": false,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"useDefineForClassFields": false,
+		"types": [
+			"bun-types" // add Bun global
+		],
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": ["src"]
 }

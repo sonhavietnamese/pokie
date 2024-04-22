@@ -43,13 +43,7 @@ export class Player extends Schema {
 	@type(Rotation) rotation: Rotation = new Rotation(0, 0, 0)
 	@type('number') timestamp = 0
 
-	constructor(
-		username: string,
-		address: string,
-		position: Position,
-		animation: string,
-		skin: string,
-	) {
+	constructor(username: string, address: string, position: Position, animation: string, skin: string) {
 		super()
 
 		this.username = username

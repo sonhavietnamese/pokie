@@ -1,11 +1,4 @@
-import {
-	integer,
-	pgTable,
-	primaryKey,
-	serial,
-	text,
-	timestamp,
-} from 'drizzle-orm/pg-core'
+import { integer, pgTable, primaryKey, serial, text, timestamp } from 'drizzle-orm/pg-core'
 import type { AdapterAccount } from 'next-auth/adapters'
 
 export const users = pgTable('user', {

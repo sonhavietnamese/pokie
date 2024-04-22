@@ -2,15 +2,7 @@ import { useTexture } from '@react-three/drei'
 import type * as THREE from 'three'
 
 export default function useTextureFactory() {
-	const [
-		skinDefault,
-		skinBlue,
-		skinGreen,
-		skinPurple,
-		skinYellow,
-		eyeOpen,
-		eyeClose,
-	] = useTexture([
+	const [skinDefault, skinBlue, skinGreen, skinPurple, skinYellow, eyeOpen, eyeClose] = useTexture([
 		'/textures/sapidae/skin-default.png',
 		'/textures/sapidae/skin-blue.png',
 		'/textures/sapidae/skin-green.png',

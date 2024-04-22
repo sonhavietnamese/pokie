@@ -17,11 +17,7 @@ const Button = React.forwardRef<HTMLDivElement, ButtonProps>(
 		const r = SPRITESHEET_ELEMENT.frames[`btn-${color}-r.png`].frame
 
 		return (
-			<div
-				role="button"
-				className={cn('relative flex p-3 px-5', className)}
-				{...props}
-			>
+			<div role="button" className={cn('relative flex p-3 px-5', className)} {...props}>
 				<Sprite
 					data={{
 						part: '3',

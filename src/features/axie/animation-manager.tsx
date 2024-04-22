@@ -20,8 +20,7 @@ export default function AnimationManager() {
 					if (['idle', 'run'].includes(animationKey)) {
 						const animation = raw[animationKey]
 
-						animations[`${key}_${animationKey}`] =
-							THREE.AnimationClip.parse(animation)
+						animations[`${key}_${animationKey}`] = THREE.AnimationClip.parse(animation)
 					}
 				}
 			}

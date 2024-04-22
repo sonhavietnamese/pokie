@@ -122,10 +122,7 @@ export const useCharacterControl = create(
 					if (state.curAnimation === state.animationSet.idle) {
 						return { curAnimation: state.animationSet.swing }
 					}
-					if (
-						state.curAnimation === state.animationSet.walk ||
-						state.curAnimation === state.animationSet.run
-					) {
+					if (state.curAnimation === state.animationSet.walk || state.curAnimation === state.animationSet.run) {
 						return { curAnimation: state.animationSet.swing }
 					}
 
@@ -138,10 +135,7 @@ export const useCharacterControl = create(
 					if (state.curAnimation === state.animationSet.idle) {
 						return { curAnimation: state.animationSet.action }
 					}
-					if (
-						state.curAnimation === state.animationSet.walk ||
-						state.curAnimation === state.animationSet.run
-					) {
+					if (state.curAnimation === state.animationSet.walk || state.curAnimation === state.animationSet.run) {
 						return { curAnimation: state.animationSet.action }
 					}
 
@@ -168,10 +162,7 @@ export const useCharacterControl = create(
 					if (state.curAnimation === state.animationSet.idle) {
 						return { curAnimation: state.animationSet.pet }
 					}
-					if (
-						state.curAnimation === state.animationSet.walk ||
-						state.curAnimation === state.animationSet.run
-					) {
+					if (state.curAnimation === state.animationSet.walk || state.curAnimation === state.animationSet.run) {
 						return { curAnimation: state.animationSet.pet }
 					}
 

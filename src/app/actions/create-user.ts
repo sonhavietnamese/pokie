@@ -1,9 +1,7 @@
 import { type InsertUser, db } from '@/drizzle'
 import { profile, users } from '@/drizzle/schema'
 
-export async function createUser(
-	user: InsertUser,
-): Promise<InsertUser | undefined> {
+export async function createUser(user: InsertUser): Promise<InsertUser | undefined> {
 	try {
 		const newUser = await db.insert(users).values(user).returning()
 

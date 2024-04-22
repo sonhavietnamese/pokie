@@ -1,9 +1,5 @@
 'use client'
 
-// import Avatar from '@/components/avatar'
-// import AnimationManager from '@/features/axie/animation-manager'
-// import Energy from '@/features/energy-system/energy'
-// import PokieCoinBalance from '@/features/pokie-coin/balance'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import Home from '@/scenes/home'
 import { KeyboardControls, Loader } from '@react-three/drei'
@@ -12,9 +8,7 @@ import dynamic from 'next/dynamic'
 import * as THREE from 'three'
 
 const Avatar = dynamic(() => import('@/components/avatar'))
-const AnimationManager = dynamic(
-	() => import('@/features/axie/animation-manager'),
-)
+const AnimationManager = dynamic(() => import('@/features/axie/animation-manager'))
 const Energy = dynamic(() => import('@/features/energy-system/energy'))
 const PokieCoinBalance = dynamic(() => import('@/features/pokie-coin/balance'))
 

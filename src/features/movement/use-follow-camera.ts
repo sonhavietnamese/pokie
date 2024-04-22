@@ -36,12 +36,7 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 	const cameraRayOrigin = useMemo(() => new THREE.Vector3(), [])
 	const cameraPosition = useMemo(() => new THREE.Vector3(), [])
 	const camLerpingPoint = useMemo(() => new THREE.Vector3(), [])
-	const camRayCast = new THREE.Raycaster(
-		cameraRayOrigin,
-		cameraRayDir,
-		0,
-		-camMaxDis,
-	)
+	const camRayCast = new THREE.Raycaster(cameraRayOrigin, cameraRayDir, 0, -camMaxDis)
 
 	// Mouse move event
 	const onDocumentMouseMove = (e: MouseEvent) => {
@@ -116,10 +111,7 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 				previousTouch1.pageX - previousTouch2.pageX,
 				previousTouch1.pageY - previousTouch2.pageY,
 			)
-			const pinchDis = Math.hypot(
-				e.touches[0].pageX - e.touches[1].pageX,
-				e.touches[0].pageY - e.touches[1].pageY,
-			)
+			const pinchDis = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY)
 
 			const vz = originZDis - (prePinchDis - pinchDis) * 0.01 * camZoomSpeed
 			const vy = followCam.rotation.x
@@ -179,9 +171,7 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 		intersects = camRayCast.intersectObjects(intersectObjects)
 		if (intersects.length && intersects[0].distance <= -originZDis) {
 			smallestDistance =
-				-intersects[0].distance * camCollisionOffset < -0.7
-					? -intersects[0].distance * camCollisionOffset
-					: -0.7
+				-intersects[0].distance * camCollisionOffset < -0.7 ? -intersects[0].distance * camCollisionOffset : -0.7
 		} else {
 			smallestDistance = originZDis
 		}
@@ -199,18 +189,8 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 	// Set camera position to (0,0,0), if followCam is disabled set to disableFollowCamPos (default 0,0,-5)
 	useEffect(() => {
 		if (disableFollowCam) {
-			camera.position.set(
-				disableFollowCamPos.x,
-				disableFollowCamPos.y,
-				disableFollowCamPos.z,
-			)
-			camera.lookAt(
-				new THREE.Vector3(
-					disableFollowCamTarget.x,
-					disableFollowCamTarget.y,
-					disableFollowCamTarget.z,
-				),
-			)
+			camera.position.set(disableFollowCamPos.x, disableFollowCamPos.y, disableFollowCamPos.z)
+			camera.lookAt(new THREE.Vector3(disableFollowCamTarget.x, disableFollowCamTarget.y, disableFollowCamTarget.z))
 		} else {
 			camera.position.set(0, 0, 0)
 		}

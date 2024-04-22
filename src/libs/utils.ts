@@ -14,9 +14,7 @@ export function getSpriteStyles(
 		backgroundPosition: `${(dimensions.x / (meta.w - dimensions.w)) * 100}% ${
 			(dimensions.y / (meta.h - dimensions.h)) * 100
 		}%`,
-		backgroundSize: `${(meta.w / dimensions.w) * 100}% ${
-			(meta.h / dimensions.h) * 100
-		}%`,
+		backgroundSize: `${(meta.w / dimensions.w) * 100}% ${(meta.h / dimensions.h) * 100}%`,
 	}
 }
 
@@ -24,8 +22,7 @@ export function catchAxie(): boolean {
 	return true
 }
 
-export const trimWallet = (wallet: string, count = 8) =>
-	`${wallet.slice(0, count + 2)}...${wallet.slice(-count)}`
+export const trimWallet = (wallet: string, count = 8) => `${wallet.slice(0, count + 2)}...${wallet.slice(-count)}`
 
 export const generateId = () => {
 	const characters = '0123456789'

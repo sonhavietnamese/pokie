@@ -2,12 +2,7 @@
 
 import { idConnectorImpl } from '@/features/mavis-id/connector'
 import { useMavisIdStore } from '@/features/mavis-id/store'
-import {
-	SupportedChainIds,
-	WalletWidget,
-	WalletgoProvider,
-	createRoninWallets,
-} from '@roninnetwork/walletgo'
+import { SupportedChainIds, WalletWidget, WalletgoProvider, createRoninWallets } from '@roninnetwork/walletgo'
 import type { ReactNode } from 'react'
 
 export const EXPLORER_DOMAIN: string = 'https://app.roninchain.com'

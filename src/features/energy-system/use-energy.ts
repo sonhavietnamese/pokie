@@ -7,9 +7,8 @@ import useSWRImmutable, { useSWRConfig } from 'swr'
 
 export default function useEnergy() {
 	const { data } = useSession()
-	const { data: profile } = useSWRImmutable(
-		data?.user ? 'getProfile' : null,
-		() => getProfile(data ? data.user.id : ''),
+	const { data: profile } = useSWRImmutable(data?.user ? 'getProfile' : null, () =>
+		getProfile(data ? data.user.id : ''),
 	)
 
 	const { mutate } = useSWRConfig()

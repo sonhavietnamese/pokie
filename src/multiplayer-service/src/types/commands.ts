@@ -11,10 +11,6 @@ export interface UserJoinCommandPayload extends BaseCommandPayload {
 	skin: string
 }
 
-export interface UserMoveCommandPayload
-	extends BaseCommandPayload,
-		UserMoveMessage {}
+export interface UserMoveCommandPayload extends BaseCommandPayload, UserMoveMessage {}
 
-export interface UserChangeAnimationCommandPayload
-	extends BaseCommandPayload,
-		UserChangeAnimationMessage {}
+export interface UserChangeAnimationCommandPayload extends BaseCommandPayload, UserChangeAnimationMessage {}

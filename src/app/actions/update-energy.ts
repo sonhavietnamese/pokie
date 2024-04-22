@@ -4,15 +4,9 @@ import { type SelectProfile, db } from '@/drizzle'
 import { profile } from '@/drizzle/schema'
 import { eq } from 'drizzle-orm'
 
-export async function updateEnergy(
-	userId: string,
-	amount: number,
-): Promise<SelectProfile | undefined> {
+export async function updateEnergy(userId: string, amount: number): Promise<SelectProfile | undefined> {
 	try {
-		const userProfile = await db
-			.select()
-			.from(profile)
-			.where(eq(profile.userId, userId))
+		const userProfile = await db.select().from(profile).where(eq(profile.userId, userId))
 
 		if (userProfile.length === 0) throw new Error('No profile.')
 

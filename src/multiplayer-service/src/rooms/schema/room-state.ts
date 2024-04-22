@@ -7,17 +7,8 @@ export class RoomState extends Schema {
 
 	@type('number') serverTime: number = Date.now()
 
-	createUser(
-		sessionId: string,
-		username: string,
-		address: string,
-		position: Position,
-		skin: string,
-	) {
-		this.players.set(
-			sessionId,
-			new Player(username, address, position, 'idle', skin),
-		)
+	createUser(sessionId: string, username: string, address: string, position: Position, skin: string) {
+		this.players.set(sessionId, new Player(username, address, position, 'idle', skin))
 	}
 
 	removeUser(sessionId: string) {

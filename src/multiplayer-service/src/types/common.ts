@@ -1,3 +1,3 @@
 export interface BaseCommandPayload {
-  sessionId: string
+	sessionId: string
 }

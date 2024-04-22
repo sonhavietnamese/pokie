@@ -70,23 +70,14 @@ type GLTFResult = GLTF & {
 	}
 }
 
-export default function Mixer({
-	parts,
-	body,
-	primaryColor,
-	animation = 'idle',
-}: MixerProps) {
+export default function Mixer({ parts, body, primaryColor, animation = 'idle' }: MixerProps) {
 	const { scene } = useGLTF(`/glb/body_${body}_idle.glb`)
 
 	const cloneScenes = useMemo(() => SkeletonUtils.clone(scene), [scene])
 	const bodyGraph = useGraph(cloneScenes) as GLTFResult
-	const mixer = useMemo(
-		() => new THREE.AnimationMixer(cloneScenes),
-		[cloneScenes],
-	)
+	const mixer = useMemo(() => new THREE.AnimationMixer(cloneScenes), [cloneScenes])
 
-	const [selectedAnimation, setSelectedAnimation] =
-		useState<AxieAnimation>(animation)
+	const [selectedAnimation, setSelectedAnimation] = useState<AxieAnimation>(animation)
 
 	const mouthRef = useRef<THREE.Group>(null)
 	const hornLRef = useRef<THREE.Group>(null)
@@ -175,38 +166,19 @@ export default function Mixer({
 				<Eye ref={eyeMRef} variant={parts.eyes} />
 				<Tail ref={tailMRef} variant={parts.tail} />
 
-				{getPartPosition('back', parts.back).includes('l') && (
-					<Back ref={backLRef} position="l" variant={parts.back} />
-				)}
-				{getPartPosition('back', parts.back).includes('r') && (
-					<Back ref={backRRef} position="r" variant={parts.back} />
-				)}
-				{getPartPosition('back', parts.back).includes('m') && (
-					<Back ref={backMRef} position="m" variant={parts.back} />
-				)}
+				{getPartPosition('back', parts.back).includes('l') && <Back ref={backLRef} position="l" variant={parts.back} />}
+				{getPartPosition('back', parts.back).includes('r') && <Back ref={backRRef} position="r" variant={parts.back} />}
+				{getPartPosition('back', parts.back).includes('m') && <Back ref={backMRef} position="m" variant={parts.back} />}
 
-				{getPartPosition('horn', parts.horn).includes('l') && (
-					<Horn ref={hornLRef} position="l" variant={parts.horn} />
-				)}
-				{getPartPosition('horn', parts.horn).includes('r') && (
-					<Horn ref={hornRRef} position="r" variant={parts.horn} />
-				)}
-				{getPartPosition('horn', parts.horn).includes('t') && (
-					<Horn ref={hornTRef} position="t" variant={parts.horn} />
-				)}
+				{getPartPosition('horn', parts.horn).includes('l') && <Horn ref={hornLRef} position="l" variant={parts.horn} />}
+				{getPartPosition('horn', parts.horn).includes('r') && <Horn ref={hornRRef} position="r" variant={parts.horn} />}
+				{getPartPosition('horn', parts.horn).includes('t') && <Horn ref={hornTRef} position="t" variant={parts.horn} />}
 
-				{getPartPosition('ear', parts.ear).includes('l') && (
-					<Ear ref={earLRef} position="l" variant={parts.ear} />
-				)}
-				{getPartPosition('ear', parts.ear).includes('r') && (
-					<Ear ref={earRRef} position="r" variant={parts.ear} />
-				)}
+				{getPartPosition('ear', parts.ear).includes('l') && <Ear ref={earLRef} position="l" variant={parts.ear} />}
+				{getPartPosition('ear', parts.ear).includes('r') && <Ear ref={earRRef} position="r" variant={parts.ear} />}
 			</group>
 
-			<Capsule
-				args={[0.7]}
-				material={new THREE.MeshStandardMaterial({ color: primaryColor })}
-			/>
+			<Capsule args={[0.7]} material={new THREE.MeshStandardMaterial({ color: primaryColor })} />
 		</Detailed>
 	)
 }

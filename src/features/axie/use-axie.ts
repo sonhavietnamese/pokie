@@ -12,10 +12,7 @@ const fetcher: Fetcher<SearchAxieResponse, string> = (url: string) =>
 	}).then((res) => res.json())
 
 export function useAxie() {
-	const { data, isLoading } = useSWR(
-		'https://skynet-test.skymavis.one/ronin/nfts/search',
-		fetcher,
-	)
+	const { data, isLoading } = useSWR('https://skynet-test.skymavis.one/ronin/nfts/search', fetcher)
 
 	return { data: data?.result.items, isLoading }
 }

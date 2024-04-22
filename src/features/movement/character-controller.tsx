@@ -1,9 +1,5 @@
 import { getMovingDirection } from '@/libs/utils'
-import type {
-	Collider,
-	RayColliderToi,
-	Vector,
-} from '@dimforge/rapier3d-compat'
+import type { Collider, RayColliderToi, Vector } from '@dimforge/rapier3d-compat'
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import {
@@ -179,10 +175,7 @@ const CharacterController = ({
 	const standingForcePoint = useMemo(() => new THREE.Vector3(), [])
 	const movingObjectDragForce = useMemo(() => new THREE.Vector3(), [])
 	const movingObjectVelocity = useMemo(() => new THREE.Vector3(), [])
-	const movingObjectVelocityInCharacterDir = useMemo(
-		() => new THREE.Vector3(),
-		[],
-	)
+	const movingObjectVelocityInCharacterDir = useMemo(() => new THREE.Vector3(), [])
 	const distanceFromCharacterToObject = useMemo(() => new THREE.Vector3(), [])
 	const objectAngvelToLinvel = useMemo(() => new THREE.Vector3(), [])
 	const velocityDiff = useMemo(() => new THREE.Vector3(), [])
@@ -274,28 +267,15 @@ const CharacterController = ({
 	/**
 	 * Character moving function
 	 */
-	const moveCharacter = (
-		_: number,
-		run: boolean,
-		slopeAngle: number,
-		movingObjectVelocity: THREE.Vector3,
-	) => {
+	const moveCharacter = (_: number, run: boolean, slopeAngle: number, movingObjectVelocity: THREE.Vector3) => {
 		// if (!canControl) return
 		if (!characterRef.current) return
 		if (!actualSlopeAngle) actualSlopeAngle = 0
 
-		if (
-			actualSlopeAngle < slopeMaxAngle &&
-			Math.abs(slopeAngle) > 0.2 &&
-			Math.abs(slopeAngle) < slopeMaxAngle
-		) {
+		if (actualSlopeAngle < slopeMaxAngle && Math.abs(slopeAngle) > 0.2 && Math.abs(slopeAngle) < slopeMaxAngle) {
 			movingDirection.set(0, Math.sin(slopeAngle), Math.cos(slopeAngle))
 		} else if (actualSlopeAngle >= slopeMaxAngle) {
-			movingDirection.set(
-				0,
-				Math.sin(slopeAngle) > 0 ? 0 : Math.sin(slopeAngle),
-				Math.sin(slopeAngle) > 0 ? 0.1 : 1,
-			)
+			movingDirection.set(0, Math.sin(slopeAngle) > 0 ? 0 : Math.sin(slopeAngle), Math.sin(slopeAngle) > 0 ? 0.1 : 1)
 		} else {
 			movingDirection.set(0, 0, 1)
 		}
@@ -307,52 +287,36 @@ const CharacterController = ({
 			.copy(movingObjectVelocity)
 			.projectOnVector(movingDirection)
 			.multiply(movingDirection)
-		const angleBetweenCharacterDirAndObjectDir =
-			movingObjectVelocity.angleTo(movingDirection)
+		const angleBetweenCharacterDirAndObjectDir = movingObjectVelocity.angleTo(movingDirection)
 
 		const wantToMoveMeg = currentVel.dot(movingDirection)
 
-		wantToMoveVel.set(
-			movingDirection.x * wantToMoveMeg,
-			0,
-			movingDirection.z * wantToMoveMeg,
-		)
+		wantToMoveVel.set(movingDirection.x * wantToMoveMeg, 0, movingDirection.z * wantToMoveMeg)
 		rejectVel.copy(currentVel).sub(wantToMoveVel)
 
 		moveAccNeeded.set(
-			(movingDirection.x *
-				(maxVelLimit * (run ? sprintMult : 1) +
-					movingObjectVelocityInCharacterDir.x) -
+			(movingDirection.x * (maxVelLimit * (run ? sprintMult : 1) + movingObjectVelocityInCharacterDir.x) -
 				(currentVel.x -
-					movingObjectVelocity.x *
-						Math.sin(angleBetweenCharacterDirAndObjectDir) +
+					movingObjectVelocity.x * Math.sin(angleBetweenCharacterDirAndObjectDir) +
 					rejectVel.x * (isOnMovingObject ? 0 : rejectVelMult))) /
 				accDeltaTime,
 			0,
-			(movingDirection.z *
-				(maxVelLimit * (run ? sprintMult : 1) +
-					movingObjectVelocityInCharacterDir.z) -
+			(movingDirection.z * (maxVelLimit * (run ? sprintMult : 1) + movingObjectVelocityInCharacterDir.z) -
 				(currentVel.z -
-					movingObjectVelocity.z *
-						Math.sin(angleBetweenCharacterDirAndObjectDir) +
+					movingObjectVelocity.z * Math.sin(angleBetweenCharacterDirAndObjectDir) +
 					rejectVel.z * (isOnMovingObject ? 0 : rejectVelMult))) /
 				accDeltaTime,
 		)
 
 		// Wanted to move force function: F = ma
-		const moveForceNeeded = moveAccNeeded.multiplyScalar(
-			characterRef.current.mass(),
-		)
+		const moveForceNeeded = moveAccNeeded.multiplyScalar(characterRef.current.mass())
 
 		const characterRotated =
-			Math.sin(characterModelIndicator.rotation.y).toFixed(3) ===
-			Math.sin(modelEuler.y).toFixed(3)
+			Math.sin(characterModelIndicator.rotation.y).toFixed(3) === Math.sin(modelEuler.y).toFixed(3)
 
 		if (!characterRotated) {
 			moveImpulse.set(
-				moveForceNeeded.x *
-					turnVelMultiplier *
-					(canJump ? 1 : airDragMultiplier),
+				moveForceNeeded.x * turnVelMultiplier * (canJump ? 1 : airDragMultiplier),
 				slopeAngle === null || slopeAngle === 0
 					? 0
 					: movingDirection.y *
@@ -361,9 +325,7 @@ const CharacterController = ({
 								? slopeUpExtraForce
 								: slopeDownExtraForce) *
 							(run ? sprintMult : 1),
-				moveForceNeeded.z *
-					turnVelMultiplier *
-					(canJump ? 1 : airDragMultiplier), // if it's in the air, give it less control
+				moveForceNeeded.z * turnVelMultiplier * (canJump ? 1 : airDragMultiplier), // if it's in the air, give it less control
 			)
 		}
 		// If character complete turning, change the impulse quaternion default
@@ -405,12 +367,8 @@ const CharacterController = ({
 		if (!characterRef.current) return
 
 		// Match body component to character model rotation on Y
-		bodyFacingVec
-			.set(0, 0, 1)
-			.applyQuaternion(quat(characterRef.current.rotation()))
-		bodyBalanceVec
-			.set(0, 1, 0)
-			.applyQuaternion(quat(characterRef.current.rotation()))
+		bodyFacingVec.set(0, 0, 1).applyQuaternion(quat(characterRef.current.rotation()))
+		bodyBalanceVec.set(0, 1, 0).applyQuaternion(quat(characterRef.current.rotation()))
 
 		bodyBalanceVecOnX.set(0, bodyBalanceVec.y, bodyBalanceVec.z)
 		bodyFacingVecOnY.set(bodyFacingVec.x, 0, bodyFacingVec.z)
@@ -428,17 +386,11 @@ const CharacterController = ({
 		const crossVecOnZ = vectorY.clone().cross(bodyBalanceVecOnZ)
 
 		dragAngForce.set(
-			(crossVecOnX.x < 0 ? 1 : -1) *
-				autoBalanceSpringK *
-				bodyBalanceVecOnX.angleTo(vectorY) -
+			(crossVecOnX.x < 0 ? 1 : -1) * autoBalanceSpringK * bodyBalanceVecOnX.angleTo(vectorY) -
 				characterRef.current.angvel().x * autoBalanceDampingC,
-			(crossVecOnY.y < 0 ? 1 : -1) *
-				autoBalanceSpringOnY *
-				modelFacingVec.angleTo(bodyFacingVecOnY) -
+			(crossVecOnY.y < 0 ? 1 : -1) * autoBalanceSpringOnY * modelFacingVec.angleTo(bodyFacingVecOnY) -
 				characterRef.current.angvel().y * autoBalanceDampingOnY,
-			(crossVecOnZ.z < 0 ? 1 : -1) *
-				autoBalanceSpringK *
-				bodyBalanceVecOnZ.angleTo(vectorY) -
+			(crossVecOnZ.z < 0 ? 1 : -1) * autoBalanceSpringK * bodyBalanceVecOnZ.angleTo(vectorY) -
 				characterRef.current.angvel().z * autoBalanceDampingC,
 		)
 
@@ -464,23 +416,14 @@ const CharacterController = ({
 	/**
 	 * Point-to-move function
 	 */
-	const pointToMove = (
-		delta: number,
-		slopeAngle: number,
-		movingObjectVelocity: THREE.Vector3,
-	) => {
+	const pointToMove = (delta: number, slopeAngle: number, movingObjectVelocity: THREE.Vector3) => {
 		const moveToPoint = getMoveToPoint().moveToPoint
 
 		if (moveToPoint) {
-			pointToPoint.set(
-				moveToPoint.x - currentPos.x,
-				0,
-				moveToPoint.z - currentPos.z,
-			)
+			pointToPoint.set(moveToPoint.x - currentPos.x, 0, moveToPoint.z - currentPos.z)
 			crossVector.crossVectors(pointToPoint, vectorZ)
 			// Rotate character to moving direction
-			modelEuler.y =
-				(crossVector.y > 0 ? -1 : 1) * pointToPoint.angleTo(vectorZ)
+			modelEuler.y = (crossVector.y > 0 ? -1 : 1) * pointToPoint.angleTo(vectorZ)
 			// Once character close to the target point (distance<0.3),
 			// Or character close to the wall (bodySensor intersects)
 			// stop moving
@@ -578,12 +521,7 @@ const CharacterController = ({
 		if (!characterRef.current) return
 
 		// Lock character rotations at Y axis
-		characterRef.current.setEnabledRotations(
-			!!autoBalance,
-			!!autoBalance,
-			!!autoBalance,
-			false,
-		)
+		characterRef.current.setEnabledRotations(!!autoBalance, !!autoBalance, !!autoBalance, false)
 
 		// Reset character quaternion
 		return () => {
@@ -634,34 +572,26 @@ const CharacterController = ({
 		const { forward, backward, leftward, rightward, run } = getKeys()
 
 		// Getting moving directions (IIFE)
-		modelEuler.y = ((movingDirection) =>
-			movingDirection === null ? modelEuler.y : movingDirection)(
+		modelEuler.y = ((movingDirection) => (movingDirection === null ? modelEuler.y : movingDirection))(
 			getMovingDirection(forward, backward, leftward, rightward, pivot),
 		)
 
 		// Move character to the moving direction
-		if (forward || backward || leftward || rightward)
-			moveCharacter(delta, run, slopeAngle, movingObjectVelocity)
+		if (forward || backward || leftward || rightward) moveCharacter(delta, run, slopeAngle, movingObjectVelocity)
 
 		// Character current velocity
-		if (characterRef.current)
-			currentVel.copy(characterRef.current.linvel() as THREE.Vector3)
+		if (characterRef.current) currentVel.copy(characterRef.current.linvel() as THREE.Vector3)
 
 		// Rotate character Indicator
 		modelQuat.setFromEuler(modelEuler)
-		characterModelIndicator.quaternion.rotateTowards(
-			modelQuat,
-			delta * turnSpeed,
-		)
+		characterModelIndicator.quaternion.rotateTowards(modelQuat, delta * turnSpeed)
 
 		// If autobalance is off, rotate character model itself
 		if (!autoBalance) {
 			if (getCameraBased().isCameraBased) {
 				characterModelRef.current.quaternion.copy(pivot.quaternion)
 			} else {
-				characterModelRef.current.quaternion.copy(
-					characterModelIndicator.quaternion,
-				)
+				characterModelRef.current.quaternion.copy(characterModelIndicator.quaternion)
 			}
 		}
 
@@ -726,9 +656,7 @@ const CharacterController = ({
 			if (rayHitObjectBodyType === 0 || rayHitObjectBodyType === 2) {
 				isOnMovingObject = true
 				// Calculate distance between character and moving object
-				distanceFromCharacterToObject
-					.copy(currentPos)
-					.sub(parentCol.translation() as THREE.Vector3)
+				distanceFromCharacterToObject.copy(currentPos).sub(parentCol.translation() as THREE.Vector3)
 				// Moving object linear velocity
 				const movingObjectLinvel = parentCol.linvel() as THREE.Vector3
 				// Moving object angular velocity
@@ -738,22 +666,15 @@ const CharacterController = ({
 				movingObjectVelocity
 					.set(
 						movingObjectLinvel.x +
-							objectAngvelToLinvel.crossVectors(
-								movingObjectAngvel,
-								distanceFromCharacterToObject,
-							).x,
+							objectAngvelToLinvel.crossVectors(movingObjectAngvel, distanceFromCharacterToObject).x,
 						movingObjectLinvel.y,
 						movingObjectLinvel.z +
-							objectAngvelToLinvel.crossVectors(
-								movingObjectAngvel,
-								distanceFromCharacterToObject,
-							).z,
+							objectAngvelToLinvel.crossVectors(movingObjectAngvel, distanceFromCharacterToObject).z,
 					)
 					.multiplyScalar(Math.min(1, 1 / massRatio))
 				// If the velocity diff is too high (> 30), ignore movingObjectVelocity
 				velocityDiff.subVectors(movingObjectVelocity, currentVel)
-				if (velocityDiff.length() > 30)
-					movingObjectVelocity.multiplyScalar(1 / velocityDiff.length())
+				if (velocityDiff.length() > 30) movingObjectVelocity.multiplyScalar(1 / velocityDiff.length())
 
 				// Apply opposite drage force to the stading rigid body, body type 0
 				// Character moving and unmoving should provide different drag force to the platform
@@ -784,11 +705,7 @@ const CharacterController = ({
 							.multiplyScalar(Math.min(1, 1 / massRatio)) // Scale up/down base on different masses ratio
 							.negate()
 					}
-					parentCol.applyImpulseAtPoint(
-						movingObjectDragForce,
-						standingForcePoint,
-						true,
-					)
+					parentCol.applyImpulseAtPoint(movingObjectDragForce, standingForcePoint, true)
 				}
 			} else {
 				// on fixed body
@@ -825,28 +742,17 @@ const CharacterController = ({
 
 		// Calculate slope angle
 		if (slopeRayHit) {
-			actualSlopeNormal = slopeRayHit.collider.castRayAndGetNormal(
-				slopeRayCast,
-				slopeRayLength,
-				false,
-			)?.normal as Vector
+			actualSlopeNormal = slopeRayHit.collider.castRayAndGetNormal(slopeRayCast, slopeRayLength, false)
+				?.normal as Vector
 			if (actualSlopeNormal) {
-				actualSlopeNormalVec?.set(
-					actualSlopeNormal.x,
-					actualSlopeNormal.y,
-					actualSlopeNormal.z,
-				)
+				actualSlopeNormalVec?.set(actualSlopeNormal.x, actualSlopeNormal.y, actualSlopeNormal.z)
 				actualSlopeAngle = actualSlopeNormalVec?.angleTo(floorNormal)
 			}
 		}
 		if (slopeRayHit && rayHit && slopeRayHit.toi < floatingDis + 0.5) {
 			if (canJump) {
 				// Round the slope angle to 2 decimal places
-				slopeAngle = Number(
-					Math.atan(
-						(rayHit.toi - slopeRayHit.toi) / slopeRayOriginOffest,
-					).toFixed(2),
-				)
+				slopeAngle = Number(Math.atan((rayHit.toi - slopeRayHit.toi) / slopeRayOriginOffest).toFixed(2))
 			} else {
 				slopeAngle = 0
 			}
@@ -859,19 +765,12 @@ const CharacterController = ({
 		 */
 		if (rayHit != null) {
 			if (canJump && rayHit.collider.parent()) {
-				floatingForce =
-					springK * (floatingDis - rayHit.toi) -
-					characterRef.current.linvel().y * dampingC
-				characterRef.current.applyImpulse(
-					springDirVec.set(0, floatingForce, 0),
-					false,
-				)
+				floatingForce = springK * (floatingDis - rayHit.toi) - characterRef.current.linvel().y * dampingC
+				characterRef.current.applyImpulse(springDirVec.set(0, floatingForce, 0), false)
 
 				// Apply opposite force to standing object (gravity g in rapier is 0.11 ?_?)
 				characterMassForce.set(0, floatingForce > 0 ? -floatingForce : 0, 0)
-				rayHit.collider
-					.parent()
-					?.applyImpulseAtPoint(characterMassForce, standingForcePoint, true)
+				rayHit.collider.parent()?.applyImpulseAtPoint(characterMassForce, standingForcePoint, true)
 			}
 		}
 
@@ -894,11 +793,7 @@ const CharacterController = ({
 		) {
 			// not on a moving object
 			if (!isOnMovingObject) {
-				dragForce.set(
-					-currentVel.x * dragDampingC,
-					0,
-					-currentVel.z * dragDampingC,
-				)
+				dragForce.set(-currentVel.x * dragDampingC, 0, -currentVel.z * dragDampingC)
 				characterRef.current.applyImpulse(dragForce, false)
 			}
 			// on a moving object
@@ -915,20 +810,11 @@ const CharacterController = ({
 		isFalling = !!(currentVel.y < 0 && !canJump)
 
 		if (characterRef.current) {
-			if (
-				currentVel.y < fallingMaxVel &&
-				characterRef.current.gravityScale() !== 0
-			) {
+			if (currentVel.y < fallingMaxVel && characterRef.current.gravityScale() !== 0) {
 				characterRef.current.setGravityScale(0, true)
-			} else if (
-				isFalling &&
-				characterRef.current.gravityScale() !== fallingGravityScale
-			) {
+			} else if (isFalling && characterRef.current.gravityScale() !== fallingGravityScale) {
 				characterRef.current.setGravityScale(fallingGravityScale, true)
-			} else if (
-				!isFalling &&
-				characterRef.current.gravityScale() !== initialGravityScale
-			) {
+			} else if (!isFalling && characterRef.current.gravityScale() !== initialGravityScale) {
 				characterRef.current.setGravityScale(initialGravityScale, true)
 			}
 		}
@@ -951,14 +837,7 @@ const CharacterController = ({
 		/**
 		 * Apply all the animations
 		 */
-		if (
-			!forward &&
-			!backward &&
-			!leftward &&
-			!rightward &&
-			!isPointMoving &&
-			canJump
-		) {
+		if (!forward && !backward && !leftward && !rightward && !isPointMoving && canJump) {
 			idleAnimation()
 			// isUnderWater ? swimAnimation() : idleAnimation()
 			// SOUNDS.RUN_FOOTSTEP.stop()
@@ -987,17 +866,12 @@ const CharacterController = ({
 			ref={characterRef}
 			position={props.position || [0, 5, 0]}
 			friction={props.friction || -0.5}
-			onContactForce={(e) =>
-				bodyContactForce.set(e.totalForce.x, e.totalForce.y, e.totalForce.z)
-			}
+			onContactForce={(e) => bodyContactForce.set(e.totalForce.x, e.totalForce.y, e.totalForce.z)}
 			onCollisionExit={() => bodyContactForce.set(0, 0, 0)}
 			userData={{ canJump: false }}
 			{...props}
 		>
-			<CapsuleCollider
-				name="character-body"
-				args={[capsuleHalfHeight, capsuleRadius]}
-			/>
+			<CapsuleCollider name="character-body" args={[capsuleHalfHeight, capsuleRadius]} />
 			<BallCollider args={[0.5]} position={[0, 0.3, 0]} />
 
 			{isModePointToMove && (
@@ -1010,17 +884,9 @@ const CharacterController = ({
 					onIntersectionExit={handleOnIntersectionExit}
 				/>
 			)}
-			<group
-				name="character"
-				ref={characterModelRef}
-				userData={{ camExcludeCollision: true }}
-			>
+			<group name="character" ref={characterModelRef} userData={{ camExcludeCollision: true }}>
 				<mesh
-					position={[
-						rayOriginOffest.x,
-						rayOriginOffest.y,
-						rayOriginOffest.z + slopeRayOriginOffest,
-					]}
+					position={[rayOriginOffest.x, rayOriginOffest.y, rayOriginOffest.z + slopeRayOriginOffest]}
 					ref={slopeRayOriginRef}
 					visible={showSlopeRayOrigin}
 					userData={{ camExcludeCollision: true }}
@@ -1028,11 +894,7 @@ const CharacterController = ({
 					<boxGeometry args={[0.15, 0.15, 0.15]} />
 				</mesh>
 
-				<object3D
-					ref={spawnPositionRef}
-					name="spawn-position"
-					position={[0, 0.1, -2]}
-				/>
+				<object3D ref={spawnPositionRef} name="spawn-position" position={[0, 0.1, -2]} />
 
 				{children}
 			</group>

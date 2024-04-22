@@ -22,11 +22,7 @@ export const Mouth = forwardRef<THREE.Group, MouthProps>(({ variant }, ref) => {
 
 	const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
 
-	const texture = useTexture(
-		`/textures/axie/${variant.split('_')[0]}_mouth_${
-			variant.split('_')[1]
-		}.jpg`,
-	)
+	const texture = useTexture(`/textures/axie/${variant.split('_')[0]}_mouth_${variant.split('_')[1]}.jpg`)
 
 	texture.wrapS = THREE.RepeatWrapping
 	texture.repeat.x = -1

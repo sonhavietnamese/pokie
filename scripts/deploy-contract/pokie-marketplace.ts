@@ -1,9 +1,6 @@
 import type { HardhatRuntimeEnvironment } from 'hardhat/types'
 
-const deploy = async ({
-	getNamedAccounts,
-	deployments,
-}: HardhatRuntimeEnvironment) => {
+const deploy = async ({ getNamedAccounts, deployments }: HardhatRuntimeEnvironment) => {
 	const { deploy } = deployments
 	const { deployer } = await getNamedAccounts()
 
@@ -13,11 +10,7 @@ const deploy = async ({
 	await deploy('PokieMarketplace', {
 		from: deployer,
 		log: true,
-		args: [
-			'0xa4ffee15dc0930eca8e0bac4ed0087db149a682a',
-			coinContract.address,
-			idContract.address,
-		],
+		args: ['0xa4ffee15dc0930eca8e0bac4ed0087db149a682a', coinContract.address, idContract.address],
 	})
 }
 

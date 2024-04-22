@@ -1,9 +1,5 @@
 import { MavisIdProvider } from '@axieinfinity/mavis-id-sdk'
-import {
-	AutoConnectPriority,
-	BaseConnector,
-	ConnectorError,
-} from '@roninnetwork/walletgo'
+import { AutoConnectPriority, BaseConnector, ConnectorError } from '@roninnetwork/walletgo'
 import type { ReactNode } from 'react'
 
 const ID_URL = 'https://id.skymavis.com'
@@ -19,13 +15,7 @@ class IdConnector extends BaseConnector<MavisIdProvider> {
 	provider?: MavisIdProvider
 
 	constructor(logo: ReactNode) {
-		super(
-			'MAVIS_ID_CONNECTOR',
-			'Mavis ID',
-			{ default: ID_URL, external: ID_URL },
-			logo,
-			false,
-		)
+		super('MAVIS_ID_CONNECTOR', 'Mavis ID', { default: ID_URL, external: ID_URL }, logo, false)
 	}
 
 	async shouldAutoConnect(): Promise<boolean> {

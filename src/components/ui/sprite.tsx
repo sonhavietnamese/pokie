@@ -43,23 +43,15 @@ interface NinePart extends Part<'9'> {
 	br: Frame
 }
 
-type SpriteOnePartsProps = { children?: ReactNode } & OnePart &
-	HTMLAttributes<HTMLDivElement>
+type SpriteOnePartsProps = { children?: ReactNode } & OnePart & HTMLAttributes<HTMLDivElement>
 
 const SpriteOneParts = forwardRef<HTMLDivElement, SpriteOnePartsProps>(
 	({ children, className, meta, m, ...props }, ref) => {
 		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
 
 		return (
-			<div
-				ref={ref}
-				className={cn('relative flex w-[300px] items-center', className)}
-				{...props}
-			>
-				<div
-					className="relative w-full"
-					style={{ aspectRatio: `${m.w}/${m.h}` }}
-				>
+			<div ref={ref} className={cn('relative flex w-[300px] items-center', className)} {...props}>
+				<div className="relative w-full" style={{ aspectRatio: `${m.w}/${m.h}` }}>
 					<div className="absolute top-0 left-0 w-full">
 						<svg
 							className="spritesheet-icon w-full bg-no-repeat"
@@ -69,9 +61,7 @@ const SpriteOneParts = forwardRef<HTMLDivElement, SpriteOnePartsProps>(
 					</div>
 				</div>
 
-				<div className="absolute flex h-full w-full items-center justify-center">
-					{children}
-				</div>
+				<div className="absolute flex h-full w-full items-center justify-center">{children}</div>
 			</div>
 		)
 	},
@@ -79,26 +69,15 @@ const SpriteOneParts = forwardRef<HTMLDivElement, SpriteOnePartsProps>(
 
 SpriteOneParts.displayName = 'SpriteOneParts'
 
-type SpriteTwoPartsProps = { children?: ReactNode } & TwoPart &
-	HTMLAttributes<HTMLDivElement>
+type SpriteTwoPartsProps = { children?: ReactNode } & TwoPart & HTMLAttributes<HTMLDivElement>
 
 const SpriteTwoParts = forwardRef<HTMLDivElement, SpriteTwoPartsProps>(
 	({ children, className, meta, l, r, ...props }, ref) => {
 		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
 
 		return (
-			<div
-				ref={ref}
-				className={cn(
-					'relative flex h-[50px] w-[300px] items-center',
-					className,
-				)}
-				{...props}
-			>
-				<div
-					className="relative w-1/2"
-					style={{ aspectRatio: `${l.w}/${l.h}` }}
-				>
+			<div ref={ref} className={cn('relative flex h-[50px] w-[300px] items-center', className)} {...props}>
+				<div className="relative w-1/2" style={{ aspectRatio: `${l.w}/${l.h}` }}>
 					<div className="absolute top-0 left-0 w-full">
 						<svg
 							className="spritesheet-element w-full bg-no-repeat"
@@ -108,10 +87,7 @@ const SpriteTwoParts = forwardRef<HTMLDivElement, SpriteTwoPartsProps>(
 					</div>
 				</div>
 
-				<div
-					className="relative w-1/2"
-					style={{ aspectRatio: `${r.w}/${r.h}` }}
-				>
+				<div className="relative w-1/2" style={{ aspectRatio: `${r.w}/${r.h}` }}>
 					<div className="absolute top-0 left-0 w-full">
 						<svg
 							className="spritesheet-element w-full bg-no-repeat"
@@ -121,9 +97,7 @@ const SpriteTwoParts = forwardRef<HTMLDivElement, SpriteTwoPartsProps>(
 					</div>
 				</div>
 
-				<div className="absolute flex h-full w-full items-center justify-center">
-					{children}
-				</div>
+				<div className="absolute flex h-full w-full items-center justify-center">{children}</div>
 			</div>
 		)
 	},
@@ -141,15 +115,8 @@ const SpriteThreeParts = forwardRef<HTMLDivElement, SpriteThreePartsProps>(
 		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
 
 		return (
-			<div
-				ref={ref}
-				className={cn('relative flex h-[50px] w-[200px]', className)}
-				{...props}
-			>
-				<div
-					className="relative h-full"
-					style={{ aspectRatio: `${l.w}/${l.h}` }}
-				>
+			<div ref={ref} className={cn('relative flex h-[50px] w-[200px]', className)} {...props}>
+				<div className="relative h-full" style={{ aspectRatio: `${l.w}/${l.h}` }}>
 					<div className="absolute top-0 left-0 h-full">
 						<svg
 							className="spritesheet-element h-full bg-no-repeat"
@@ -167,10 +134,7 @@ const SpriteThreeParts = forwardRef<HTMLDivElement, SpriteThreePartsProps>(
 						/>
 					</div>
 				</div>
-				<div
-					className="relative h-full"
-					style={{ aspectRatio: `${r.w}/${r.h}` }}
-				>
+				<div className="relative h-full" style={{ aspectRatio: `${r.w}/${r.h}` }}>
 					<div className="absolute top-0 left-0 h-full">
 						<svg
 							className="spritesheet-element h-full bg-no-repeat"
@@ -180,9 +144,7 @@ const SpriteThreeParts = forwardRef<HTMLDivElement, SpriteThreePartsProps>(
 					</div>
 				</div>
 
-				<div className="absolute flex h-full w-full items-center justify-center">
-					{children}
-				</div>
+				<div className="absolute flex h-full w-full items-center justify-center">{children}</div>
 			</div>
 		)
 	},
@@ -196,10 +158,7 @@ type SpriteNinePartsProps = {
 	HTMLAttributes<HTMLDivElement>
 
 const SpriteNineParts = forwardRef<HTMLDivElement, SpriteNinePartsProps>(
-	(
-		{ className, children, meta, tl, tm, tr, ml, mm, mr, bl, bm, br, ...props },
-		ref,
-	) => {
+	({ className, children, meta, tl, tm, tr, ml, mm, mr, bl, bm, br, ...props }, ref) => {
 		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
 
 		return (
@@ -287,9 +246,7 @@ const SpriteNineParts = forwardRef<HTMLDivElement, SpriteNinePartsProps>(
 					/>
 				</div>
 
-				<div className="absolute flex h-full w-full items-center justify-center">
-					{children}
-				</div>
+				<div className="absolute flex h-full w-full items-center justify-center">{children}</div>
 			</div>
 		)
 	},
@@ -302,57 +259,35 @@ type SpriteProps = {
 	children?: ReactNode
 } & HTMLAttributes<HTMLDivElement>
 
-const Sprite = forwardRef<HTMLDivElement, SpriteProps>(
-	({ data, children, ...props }, ref) => {
-		switch (data.part) {
-			case '1':
-				return (
-					<SpriteOneParts
-						ref={ref}
-						{...data}
-						{...props}
-						meta={SPRITESHEET_ICON.meta.size}
-					>
-						{children}
-					</SpriteOneParts>
-				)
+const Sprite = forwardRef<HTMLDivElement, SpriteProps>(({ data, children, ...props }, ref) => {
+	switch (data.part) {
+		case '1':
+			return (
+				<SpriteOneParts ref={ref} {...data} {...props} meta={SPRITESHEET_ICON.meta.size}>
+					{children}
+				</SpriteOneParts>
+			)
 
-			case '2':
-				return (
-					<SpriteTwoParts
-						ref={ref}
-						{...data}
-						{...props}
-						meta={SPRITESHEET_ELEMENT.meta.size}
-					>
-						{children}
-					</SpriteTwoParts>
-				)
-			case '3':
-				return (
-					<SpriteThreeParts
-						ref={ref}
-						{...data}
-						{...props}
-						meta={SPRITESHEET_ELEMENT.meta.size}
-					>
-						{children}
-					</SpriteThreeParts>
-				)
-			default:
-				return (
-					<SpriteNineParts
-						ref={ref}
-						{...data}
-						{...props}
-						meta={SPRITESHEET_ELEMENT.meta.size}
-					>
-						{children}
-					</SpriteNineParts>
-				)
-		}
-	},
-)
+		case '2':
+			return (
+				<SpriteTwoParts ref={ref} {...data} {...props} meta={SPRITESHEET_ELEMENT.meta.size}>
+					{children}
+				</SpriteTwoParts>
+			)
+		case '3':
+			return (
+				<SpriteThreeParts ref={ref} {...data} {...props} meta={SPRITESHEET_ELEMENT.meta.size}>
+					{children}
+				</SpriteThreeParts>
+			)
+		default:
+			return (
+				<SpriteNineParts ref={ref} {...data} {...props} meta={SPRITESHEET_ELEMENT.meta.size}>
+					{children}
+				</SpriteNineParts>
+			)
+	}
+})
 
 Sprite.displayName = 'Sprite'
 

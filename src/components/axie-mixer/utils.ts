@@ -5,10 +5,7 @@ export function getPartPosition(part: string, variant: string) {
 	return PART_POSITION[part][variant]
 }
 
-export function calculateNewPosition(
-	nodePosition: THREE.Vector3,
-	bonePosition: THREE.Vector3,
-): THREE.Vector3 {
+export function calculateNewPosition(nodePosition: THREE.Vector3, bonePosition: THREE.Vector3): THREE.Vector3 {
 	return new THREE.Vector3(
 		nodePosition.x - bonePosition.x,
 		nodePosition.y - bonePosition.y,
@@ -16,10 +13,7 @@ export function calculateNewPosition(
 	)
 }
 
-export function calculateNewRotation(
-	nodeRotation: THREE.Euler,
-	boneRotation: THREE.Euler,
-): THREE.Euler {
+export function calculateNewRotation(nodeRotation: THREE.Euler, boneRotation: THREE.Euler): THREE.Euler {
 	return new THREE.Euler(
 		nodeRotation.x - boneRotation.x,
 		nodeRotation.y - boneRotation.y,

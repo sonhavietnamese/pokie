@@ -1,22 +1,5 @@
-export const AXIE_CLASSES = [
-	'aqua',
-	'beast',
-	'bird',
-	'bug',
-	'mystic',
-	'plant',
-	'reptile',
-	'japanese',
-]
-export const AXIE_BODY_SHAPES = [
-	'bigyak',
-	'curly',
-	'furry',
-	'normal',
-	'spiky',
-	'sumo',
-	'wetdog',
-] as const
+export const AXIE_CLASSES = ['aqua', 'beast', 'bird', 'bug', 'mystic', 'plant', 'reptile', 'japanese']
+export const AXIE_BODY_SHAPES = ['bigyak', 'curly', 'furry', 'normal', 'spiky', 'sumo', 'wetdog'] as const
 
 export const AXIE_PARTS_MAP: Record<string, string> = {
 	zeal: 'beast_02',

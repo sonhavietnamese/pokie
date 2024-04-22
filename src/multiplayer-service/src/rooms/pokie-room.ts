@@ -1,14 +1,6 @@
-import {
-	UserChangeAnimationCommand,
-	UserJoinCommand,
-	UserLeaveCommand,
-	UserMoveCommand,
-} from '@/commands/user-command'
+import { UserChangeAnimationCommand, UserJoinCommand, UserLeaveCommand, UserMoveCommand } from '@/commands/user-command'
 import type { JoinOptions } from '@/types/join'
-import type {
-	UserChangeAnimationMessage,
-	UserMoveMessage,
-} from '@/types/messages'
+import type { UserChangeAnimationMessage, UserMoveMessage } from '@/types/messages'
 import { Dispatcher } from '@colyseus/command'
 import { type Client, Room } from '@colyseus/core'
 import { RoomState } from './schema/room-state'
@@ -26,15 +18,12 @@ export class PokieRoom extends Room<RoomState> {
 				rotation: message.rotation,
 			})
 		})
-		this.onMessage(
-			'change-animation',
-			(client, message: UserChangeAnimationMessage) => {
-				this.dispatcher.dispatch(new UserChangeAnimationCommand(), {
-					sessionId: client.sessionId,
-					animation: message.animation,
-				})
-			},
-		)
+		this.onMessage('change-animation', (client, message: UserChangeAnimationMessage) => {
+			this.dispatcher.dispatch(new UserChangeAnimationCommand(), {
+				sessionId: client.sessionId,
+				animation: message.animation,
+			})
+		})
 
 		this.onMessage('change-skin', (client, message: { skin: string }) => {
 			this.state.players.get(client.sessionId).skin = message.skin
