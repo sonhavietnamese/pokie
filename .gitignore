@@ -34,3 +34,23 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Foundry
+cache/
+out/
+
+#Hardhat files
+cache_hardhat/
+artifacts/
+
+cache
+
+artifacts
+
+#Hardhat plugin files
+typechain-types/
+
+scripts/typechain-types/
+
+.idea
+.vscode

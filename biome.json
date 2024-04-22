@@ -4,6 +4,7 @@
     "enabled": true
   },
   "linter": {
+    "ignore": ["scripts/*.js", "src/contracts/*.sol", "assets", "public"],
     "enabled": true,
     "rules": {
       "recommended": true,
@@ -16,10 +17,11 @@
     }
   },
   "formatter": {
-    "enabled": true
+    "enabled": true,
+    "ignore": ["scripts/*.js", "src/contracts/*.sol", "assets", "public"]
   },
   "files": {
-    "ignore": ["scripts/*.js"]
+    "ignore": ["scripts/*.js", "src/contracts/*.sol", "assets", "public"]
   },
   "javascript": {
     "formatter": {
