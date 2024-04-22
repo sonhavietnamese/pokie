@@ -9,9 +9,13 @@ const config: Config = {
 		'./src/scenes/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			animationDuration: {
+				'2s': '2s',
+			},
+		},
 	},
-	plugins: [],
+	plugins: [require('tailwindcss-animate')],
 }
 
 export default config

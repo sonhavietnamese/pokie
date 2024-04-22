@@ -165,7 +165,7 @@ const SpriteNineParts = forwardRef<HTMLDivElement, SpriteNinePartsProps>(
 			<div
 				ref={ref}
 				className={cn(
-					'relative grid h-[500px] w-[1200px] grid-cols-[7cqw_minmax(0px,1fr)_7cqw] grid-rows-[_min-content_minmax(0px,1fr)_min-content] lg:grid-cols-[3cqw_minmax(0px,1fr)_3cqw]',
+					'relative grid h-[500px] w-[1200px] grid-cols-[50px_minmax(0px,1fr)_50px] grid-rows-[_min-content_minmax(0px,1fr)_min-content]',
 					className,
 				)}
 				{...props}

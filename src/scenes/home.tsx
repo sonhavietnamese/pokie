@@ -1,14 +1,11 @@
 'use client'
 
-import { AxieMixer } from '@/components/axie-mixer'
 import AxieManager from '@/features/axie/axie-manager'
-import { useAxie } from '@/features/axie/use-axie'
 import { Ground } from '@/features/environment/ground'
 import { Sapidae } from '@/features/movement/character'
 import CharacterController from '@/features/movement/character-controller'
-import { Environment, OrbitControls, View } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
-import React from 'react'
 
 export default function Home() {
 	return (
@@ -37,10 +34,6 @@ export default function Home() {
 				files={['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']}
 				path="/sky/"
 			/>
-
-			{/* <group position={[0, 2, 0]}>
-				<AxieMixer axieId="123" animation="idle" />
-			</group> */}
 
 			<Physics debug={true}>
 				<Ground />

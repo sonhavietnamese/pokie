@@ -94,6 +94,8 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 	const { clips } = useAnimationClipStore()
 
 	useEffect(() => {
+		if (!clips) return
+
 		const clip = clips[`${body}_${selectedAnimation}`]
 		const action = new THREE.AnimationAction(mixer, clip, cloneScenes)
 
@@ -117,7 +119,7 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 
 			mixer.removeEventListener('finished', () => resetAnimation())
 		}
-	}, [animation])
+	}, [animation, body, clips, cloneScenes, mixer, selectedAnimation])
 
 	useFrame((_, delta) => {
 		mixer.update(delta)

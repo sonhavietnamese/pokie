@@ -1,13 +1,9 @@
 'use client'
 
-import Avatar from '@/components/avatar'
-import Energy from '@/features/energy-system/energy'
-import { useMavisIdStore } from '@/features/mavis-id/store'
-import PokieCoinBalance from '@/features/pokie-coin/balance'
-import Home from '@/scenes/home'
-import Login from '@/scenes/login'
+import ScreenSizeBreakpoint from '@/components/screen-size-breakpoint'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog'
 import { useWalletgo } from '@roninnetwork/walletgo'
-// import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 export default function Page() {
@@ -24,8 +20,25 @@ export default function Page() {
 	}, [walletProvider])
 
 	return (
-		<main className="relative flex h-screen w-screen flex-col items-center justify-center">
-			<Avatar />
+		<main className="relative flex h-screen w-screen flex-col items-center justify-center bg-slate-200">
+			<Dialog>
+				<DialogTrigger asChild>
+					<Button>Open</Button>
+				</DialogTrigger>
+				<DialogContent className="h-[800px] w-[800px]">
+					<div className="flex h-full items-center  bg-red-100">
+						<span>wau</span>
+						<DialogClose asChild>
+							<Button>Closasdasdase</Button>
+						</DialogClose>
+					</div>
+				</DialogContent>
+			</Dialog>
+
+			<ScreenSizeBreakpoint />
+			{/* <Dialog /> */}
+
+			{/* <Avatar /> */}
 
 			{/* <Energy /> */}
 			{/* {!loading ? <PokieCoinBalance /> : <div>Loading...</div>}

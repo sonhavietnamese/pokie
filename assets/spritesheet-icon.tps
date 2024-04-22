@@ -242,6 +242,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">icon-bag-01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,15,30,30</rect>
+                <key>scale9Paddings</key>
+                <rect>15,15,30,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">icon-energy.png</key>
             <key type="filename">icon-pokie-coin.png</key>
             <struct type="IndividualSpriteSettings">
@@ -295,6 +310,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">icon-red-dot.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,8,15,15</rect>
+                <key>scale9Paddings</key>
+                <rect>8,8,15,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">icon-tick.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,16,39,33</rect>
+                <key>scale9Paddings</key>
+                <rect>20,16,39,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -326,6 +371,9 @@
                     <filename>btn-copy-01.png</filename>
                     <filename>btn-close-01.png</filename>
                     <filename>btn-close-02.png</filename>
+                    <filename>icon-red-dot.png</filename>
+                    <filename>icon-bag-01.png</filename>
+                    <filename>icon-tick.png</filename>
                 </array>
             </struct>
         </map>
