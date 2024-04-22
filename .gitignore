@@ -51,6 +51,7 @@ artifacts
 typechain-types/
 
 scripts/typechain-types/
+src/contracts/typechain/
 
 .idea
 .vscode

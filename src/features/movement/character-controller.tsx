@@ -132,9 +132,9 @@ const CharacterController = ({
 	// const jumpAnimation = useCharacterControl((state) => state.jump)
 	const fallAnimation = useCharacterControl((state) => state.fall)
 	const action1Animation = useCharacterControl((state) => state.action1)
-	const action2Animation = useCharacterControl((state) => state.action2)
+	// const action2Animation = useCharacterControl((state) => state.action2)
 	const swingAnimation = useCharacterControl((state) => state.swing)
-	const action4Animation = useCharacterControl((state) => state.action4)
+	// const action4Animation = useCharacterControl((state) => state.action4)
 	const swimAnimation = useCharacterControl((state) => state.swim)
 	const petAnimation = useCharacterControl((state) => state.pet)
 
@@ -497,8 +497,8 @@ const CharacterController = ({
 
 	useEffect(() => {
 		let unSubscribeAction1 = () => {}
-		let unSubscribeAction2 = () => {}
-		let unSubscribeAction4 = () => {}
+		// let unSubscribeAction2 = () => {}
+		// let unSubscribeAction4 = () => {}
 		let unSubscribeAction = () => {}
 		let unSubscribeAction7 = () => {}
 
@@ -521,23 +521,23 @@ const CharacterController = ({
 				},
 			)
 
-			unSubscribeAction2 = subscribeKeys(
-				(state) => state.action2,
-				(value) => {
-					if (value) {
-						action2Animation()
-					}
-				},
-			)
+			// unSubscribeAction2 = subscribeKeys(
+			// 	(state) => state.action2,
+			// 	(value) => {
+			// 		if (value) {
+			// 			action2Animation()
+			// 		}
+			// 	},
+			// )
 
-			unSubscribeAction4 = subscribeKeys(
-				(state) => state.action4,
-				(value) => {
-					if (value) {
-						action4Animation()
-					}
-				},
-			)
+			// unSubscribeAction4 = subscribeKeys(
+			// 	(state) => state.action4,
+			// 	(value) => {
+			// 		if (value) {
+			// 			action4Animation()
+			// 		}
+			// 	},
+			// )
 
 			unSubscribeAction = subscribeKeys(
 				(state) => state.action,
@@ -566,8 +566,8 @@ const CharacterController = ({
 
 		return () => {
 			unSubscribeAction1()
-			unSubscribeAction2()
-			unSubscribeAction4()
+			// unSubscribeAction2()
+			// unSubscribeAction4()
 
 			unSubscribeAction7()
 			unSubscribeAction()

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import type * as THREE from 'three'
 import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
@@ -225,7 +227,7 @@ export const ANIMATION_SET = {
 	pet: 'pet-animal',
 } as const
 
-export type AnimationSet = Partial<typeof ANIMATION_SET>
+export type AnimationSet = typeof ANIMATION_SET
 
 type State = {
 	moveToPoint: THREE.Vector3 | null

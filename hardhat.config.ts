@@ -1,13 +1,13 @@
+// @ts-nocheck
+
 import '@nomicfoundation/hardhat-foundry'
 import '@nomiclabs/hardhat-waffle'
 import '@typechain/hardhat'
 import 'hardhat-deploy'
+
 import type { HardhatUserConfig } from 'hardhat/config'
 import type { NetworkUserConfig } from 'hardhat/types'
-
-// import example from './scripts/tasks/example'
-
-// task('example', 'Example task').setAction(example)
+import 'typechain'
 
 const testnet: NetworkUserConfig = {
 	chainId: 2021,
@@ -23,7 +23,7 @@ const config: HardhatUserConfig = {
 		version: '0.8.20',
 	},
 	typechain: {
-		outDir: './scripts/typechain-types',
+		outDir: './src/contract/typechain',
 	},
 	paths: {
 		sources: './src/contracts',
