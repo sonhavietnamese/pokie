@@ -188,6 +188,37 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">btn-close-01.png</key>
+            <key type="filename">btn-close-02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>26,27,51,54</rect>
+                <key>scale9Paddings</key>
+                <rect>26,27,51,54</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">btn-copy-01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,14,26,27</rect>
+                <key>scale9Paddings</key>
+                <rect>13,14,26,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">class-aquatic.png</key>
             <key type="filename">class-beast.png</key>
             <key type="filename">class-bird.png</key>
@@ -208,21 +239,6 @@
                 <rect>8,8,16,16</rect>
                 <key>scale9Paddings</key>
                 <rect>8,8,16,16</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">icon-copy-01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,14,26,27</rect>
-                <key>scale9Paddings</key>
-                <rect>13,14,26,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -307,7 +323,9 @@
                     <filename>icon-item-plant.png</filename>
                     <filename>icon-item-rock.png</filename>
                     <filename>avatar-default.png</filename>
-                    <filename>icon-copy-01.png</filename>
+                    <filename>btn-copy-01.png</filename>
+                    <filename>btn-close-01.png</filename>
+                    <filename>btn-close-02.png</filename>
                 </array>
             </struct>
         </map>

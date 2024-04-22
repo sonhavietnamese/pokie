@@ -4,7 +4,7 @@ import { Sprite } from './ui/sprite'
 
 export default function Avatar() {
 	const avatarImg = SPRITESHEET_ICON.frames['avatar-default.png'].frame
-	const copyIcon = SPRITESHEET_ELEMENT.frames['btn-copy-01.png'].frame
+	const copyIcon = SPRITESHEET_ICON.frames['btn-copy-01.png'].frame
 
 	return (
 		<div className="relative flex items-center justify-center rounded-full">
