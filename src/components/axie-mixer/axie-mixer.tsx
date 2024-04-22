@@ -31,6 +31,8 @@ export default function AxieMixer({ axieId, animation }: AxieMixerProps) {
 		state.addAxie,
 	])
 
+	console.log('rerender')
+
 	useEffect(() => {
 		if (!axieId) return
 

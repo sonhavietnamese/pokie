@@ -1,3 +1,4 @@
+import { ANIMATION_SET } from '@/features/movement/use-character-control'
 import { Detailed, useAnimations, useGLTF } from '@react-three/drei'
 import { useGraph } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -19,23 +20,13 @@ type GLTFResult = GLTF & {
 	animations: string[]
 }
 
-const animationSet = {
-	idle: 'idle-00',
-	walk: 'walk',
-	run: 'run',
-	punch: 'punch',
-	slap: 'slap',
-	getHitSlap: 'get-hit-slap',
-	getHitGroin: 'get-hit-groin',
-}
-
 type SapidaeRawProps = JSX.IntrinsicElements['group'] & {
 	animation?: string
 	enableShadow?: boolean
 	skin?: string
 }
 
-export function SapidaeRaw({
+export function SapidaeModel({
 	animation = 'idle-00',
 	skin = 'default',
 	enableShadow = true,
@@ -72,8 +63,8 @@ export function SapidaeRaw({
 		if (!action) return
 
 		if (
-			anim === animationSet.punch ||
-			anim === animationSet.slap
+			anim === ANIMATION_SET.punch ||
+			anim === ANIMATION_SET.slap
 			// ||
 			// anim === animationSet.getHitSlap ||
 			// anim === animationSet.getHitGroin
