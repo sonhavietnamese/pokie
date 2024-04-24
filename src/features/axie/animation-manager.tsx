@@ -1,20 +1,46 @@
+import pako from 'pako'
 import { useEffect } from 'react'
-import useSWRImmutable, { useSWRConfig } from 'swr'
-import useSWR from 'swr'
+import useSWRImmutable from 'swr'
 import * as THREE from 'three'
-import ANIMATIONS_DATA from './animations.json'
 import { useAnimationClipStore } from './use-animation-clips'
 
+const fetcher = (url: string) => fetch(url).then((res) => res.arrayBuffer())
+
 export default function AnimationManager() {
+	const { data } = useSWRImmutable('/compressed-animations.json', fetcher, {
+		refreshWhenHidden: false,
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	})
 	const setAnimationClips = useAnimationClipStore((state) => state.setClips)
 
-	// const { data, isLoading } = useSWR(
-	// 	'https://gohbmlljstcgfhwtjiey.supabase.co/storage/v1/object/public/assets/compressed-animations.json',
-	// )
+	useEffect(() => {
+		const load = async () => {
+			if (!data) return
 
-	// if (isLoading) return <div>Loading...</div>
+			const restored = JSON.parse(pako.inflate(data, { to: 'string' }))
 
-	// console.log(data)
+			const animations: Record<string, THREE.AnimationClip> = {}
+
+			for (const key in restored.body) {
+				if (Object.prototype.hasOwnProperty.call(restored.body, key)) {
+					const raw = restored.body[key]
+
+					for (const animationKey in raw) {
+						if (['idle', 'run'].includes(animationKey)) {
+							const animation = raw[animationKey]
+
+							animations[`${key}_${animationKey}`] = THREE.AnimationClip.parse(animation)
+						}
+					}
+				}
+			}
+
+			setAnimationClips(animations)
+		}
+
+		load()
+	}, [data])
 
 	// useEffect(() => {
 	// 	const animations: Record<string, THREE.AnimationClip> = {}

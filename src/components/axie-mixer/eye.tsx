@@ -1,5 +1,5 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import { forwardRef, useEffect, useMemo } from 'react'
+import { forwardRef, useDeferredValue, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { type GLTF, SkeletonUtils } from 'three-stdlib'
 
@@ -18,9 +18,11 @@ type GLTFResult = GLTF & {
 }
 
 export const Eye = forwardRef<THREE.Group, EyeProps>(({ variant }, ref) => {
-	const { scene } = useGLTF(`/glb/${variant}_eye_m_1_idle.glb`) as GLTFResult
+	const deferredModel = useDeferredValue(`/glb/${variant}_eye_m_1_idle.glb`)
+	const deferredTexture = useDeferredValue(`/textures/axie/${variant.split('_')[0]}_eyes_${variant.split('_')[1]}.jpg`)
+	const { scene } = useGLTF(deferredModel) as GLTFResult
 	const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
-	const texture = useTexture(`/textures/axie/${variant.split('_')[0]}_eyes_${variant.split('_')[1]}.jpg`)
+	const texture = useTexture(deferredTexture)
 
 	texture.flipY = false
 

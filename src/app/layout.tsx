@@ -10,7 +10,7 @@ const prompt = Prompt({
 })
 
 export const metadata: Metadata = {
-	title: 'Pokie',
+	title: 'Poxie',
 }
 
 export default function RootLayout({

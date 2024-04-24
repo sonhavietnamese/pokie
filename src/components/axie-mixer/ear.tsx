@@ -1,5 +1,5 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import { forwardRef, useEffect, useMemo } from 'react'
+import { forwardRef, useDeferredValue, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { SkeletonUtils } from 'three-stdlib'
 
@@ -9,9 +9,11 @@ interface EarProps {
 }
 
 export const Ear = forwardRef<THREE.Group, EarProps>(({ variant, position }, ref) => {
-	const { scene } = useGLTF(`/glb/${variant}_ear_${position}_1_idle.glb`)
+	const deferredModel = useDeferredValue(`/glb/${variant}_ear_${position}_1_idle.glb`)
+	const deferredTexture = useDeferredValue(`/textures/axie/${variant.split('_')[0]}_ear_${variant.split('_')[1]}.jpg`)
+	const { scene } = useGLTF(deferredModel)
+	const texture = useTexture(deferredTexture)
 	const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
-	const texture = useTexture(`/textures/axie/${variant.split('_')[0]}_ear_${variant.split('_')[1]}.jpg`)
 
 	texture.flipY = false
 

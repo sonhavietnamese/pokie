@@ -44,6 +44,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.163.0",
+    "tunnel-rat": "^0.1.2",
     "viem": "^2.9.25",
     "zod": "^3.22.5",
     "zustand": "^4.5.2"
@@ -76,6 +77,7 @@
     "ethers": "5.7.2",
     "hardhat": "^2.9.5",
     "hardhat-deploy": "^0.11.26",
+    "leva": "^0.9.35",
     "postcss": "^8",
     "prettier": "^2.8.8",
     "sharp": "^0.33.3",

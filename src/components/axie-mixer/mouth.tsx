@@ -1,5 +1,5 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import { forwardRef, useEffect, useMemo } from 'react'
+import { forwardRef, useDeferredValue, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { type GLTF, SkeletonUtils } from 'three-stdlib'
 
@@ -18,11 +18,13 @@ type GLTFResult = GLTF & {
 }
 
 export const Mouth = forwardRef<THREE.Group, MouthProps>(({ variant }, ref) => {
-	const { scene } = useGLTF(`/glb/${variant}_mouth_1_idle.glb`) as GLTFResult
+	const deferredModel = useDeferredValue(`/glb/${variant}_mouth_1_idle.glb`)
+	const deferredTexture = useDeferredValue(`/textures/axie/${variant.split('_')[0]}_mouth_${variant.split('_')[1]}.jpg`)
+
+	const { scene } = useGLTF(deferredModel) as GLTFResult
+	const texture = useTexture(deferredTexture)
 
 	const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
-
-	const texture = useTexture(`/textures/axie/${variant.split('_')[0]}_mouth_${variant.split('_')[1]}.jpg`)
 
 	texture.wrapS = THREE.RepeatWrapping
 	texture.repeat.x = -1

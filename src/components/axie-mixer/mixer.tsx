@@ -99,6 +99,7 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 		if (!clips) return
 
 		const clip = clips[`${body}_${selectedAnimation}`]
+
 		const action = new THREE.AnimationAction(mixer, clip, cloneScenes)
 
 		if (!action) return

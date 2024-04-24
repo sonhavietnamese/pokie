@@ -10,7 +10,9 @@ export default function usePokieCoin() {
 	const setBalance = usePokieCoinBalanceStore((s) => s.setBalance)
 
 	const fetchBalances = async () => {
-		const address = await walletProvider?.getSigner().getAddress()
+		if (!walletProvider) return
+
+		const address = await walletProvider.getSigner().getAddress()
 		const contract = loadContract(POKIECOIN_ADDRESS, abi)
 		const balance = await contract.balanceOf(address)
 

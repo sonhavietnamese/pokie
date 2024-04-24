@@ -25,7 +25,7 @@ export default function Page() {
 		<main className="relative flex h-screen w-screen flex-col items-center justify-center bg-slate-200">
 			<AnimationManager />
 
-			<Dialog>
+			{/* <Dialog>
 				<DialogTrigger asChild>
 					<Button>Open</Button>
 				</DialogTrigger>
@@ -37,11 +37,11 @@ export default function Page() {
 						</DialogClose>
 					</div>
 				</DialogContent>
-			</Dialog>
+			</Dialog> */}
 
 			<ScreenSizeBreakpoint />
 
-			<Login />
+			{/* <Login /> */}
 
 			{/* <Dialog /> */}
 

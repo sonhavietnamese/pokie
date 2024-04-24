@@ -4,14 +4,13 @@ import AxieManager from '@/features/axie/axie-manager'
 import { Ground } from '@/features/environment/ground'
 import { Sapidae } from '@/features/movement/character'
 import CharacterController from '@/features/movement/character-controller'
-import { Environment, OrbitControls } from '@react-three/drei'
+import { Environment } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
+import { Suspense } from 'react'
 
 export default function Home() {
 	return (
 		<>
-			<OrbitControls />
-
 			<directionalLight
 				castShadow
 				rotation={[42.2, -30.65, -24]}
@@ -38,9 +37,11 @@ export default function Home() {
 			<Physics debug={true}>
 				<Ground />
 
-				{/* <group position={[1, 2, 0]}>
-					<AxieManager />
-				</group> */}
+				<Suspense>
+					<group position={[1, 2, 0]}>
+						<AxieManager />
+					</group>
+				</Suspense>
 
 				<CharacterController
 					followLight
