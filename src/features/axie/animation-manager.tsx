@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import useSWRImmutable, { useSWRConfig } from 'swr'
+import useSWR from 'swr'
 import * as THREE from 'three'
 import ANIMATIONS_DATA from './animations.json'
 import { useAnimationClipStore } from './use-animation-clips'
@@ -6,28 +8,36 @@ import { useAnimationClipStore } from './use-animation-clips'
 export default function AnimationManager() {
 	const setAnimationClips = useAnimationClipStore((state) => state.setClips)
 
-	useEffect(() => {
-		const animations: Record<string, THREE.AnimationClip> = {}
+	// const { data, isLoading } = useSWR(
+	// 	'https://gohbmlljstcgfhwtjiey.supabase.co/storage/v1/object/public/assets/compressed-animations.json',
+	// )
 
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		const { body } = ANIMATIONS_DATA as { body: any }
+	// if (isLoading) return <div>Loading...</div>
 
-		for (const key in body) {
-			if (Object.prototype.hasOwnProperty.call(body, key)) {
-				const raw = body[key]
+	// console.log(data)
 
-				for (const animationKey in raw) {
-					if (['idle', 'run'].includes(animationKey)) {
-						const animation = raw[animationKey]
+	// useEffect(() => {
+	// 	const animations: Record<string, THREE.AnimationClip> = {}
 
-						animations[`${key}_${animationKey}`] = THREE.AnimationClip.parse(animation)
-					}
-				}
-			}
-		}
+	// 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// 	const { body } = ANIMATIONS_DATA as { body: any }
 
-		setAnimationClips(animations)
-	}, [])
+	// 	for (const key in body) {
+	// 		if (Object.prototype.hasOwnProperty.call(body, key)) {
+	// 			const raw = body[key]
+
+	// 			for (const animationKey in raw) {
+	// 				if (['idle', 'run'].includes(animationKey)) {
+	// 					const animation = raw[animationKey]
+
+	// 					animations[`${key}_${animationKey}`] = THREE.AnimationClip.parse(animation)
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+
+	// 	setAnimationClips(animations)
+	// }, [])
 
 	return <></>
 }

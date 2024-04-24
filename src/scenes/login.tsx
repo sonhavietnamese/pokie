@@ -56,8 +56,13 @@ export default function Login() {
 	}
 
 	return (
-		<main className="relative flex h-screen w-screen flex-col items-center justify-center">
-			<Button onClick={() => setOpenMavisId(true)}>
+		<main className="relative flex h-screen w-screen flex-col items-center justify-center gap-10 w-[400px]">
+			<Button
+				// className="w-[100px] origin-center hover:w-[111px] hover:h-[45px] h-[40px] ease-in-out transform transition-all"
+				// className="hover:scale-[1.1] hover:rotate-6 ease-in-out transform transition-all w-full"
+				onClick={() => setOpenMavisId(true)}
+				className="items-center"
+			>
 				<span className="">Login</span>
 			</Button>
 

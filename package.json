@@ -13,7 +13,8 @@
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio",
     "sc:compile": "hardhat compile && forge build",
-    "sc:deploy": "hardhat deploy --network ronin-testnet"
+    "sc:deploy": "hardhat deploy --network ronin-testnet",
+    "audiosprite": "audiosprite --path public/audio *.MP3 "
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.0.0",
@@ -56,6 +57,7 @@
     "@typechain/ethers-v5": "^10.0.0",
     "@typechain/ethers-v6": "^0.5.1",
     "@typechain/hardhat": "^9.1.0",
+    "@types/audiosprite": "^0.7.3",
     "@types/chai": "^4.3.0",
     "@types/lodash-es": "^4.17.12",
     "@types/mocha": "^9.1.0",
@@ -64,6 +66,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/three": "^0.163.0",
+    "audiosprite": "^0.7.2",
     "autoprefixer": "^10.0.1",
     "chai": "^4.3.6",
     "dotenv": "^16.0.3",

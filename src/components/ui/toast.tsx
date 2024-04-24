@@ -3,13 +3,13 @@
 import { cn } from '@/libs/utils'
 
 import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
-import { type Variants, motion } from 'framer-motion'
+import { type HTMLMotionProps, type Variants, motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { Sprite } from './sprite'
 
 type ToastProps = {
 	children: ReactNode
-}
+} & HTMLMotionProps<'div'>
 
 const toastVariants: Variants = {
 	hidden: {
@@ -22,17 +22,18 @@ const toastVariants: Variants = {
 	},
 }
 
-export function Toast({ children }: ToastProps) {
+export function Toast({ className, children, ...props }: ToastProps) {
 	const l = SPRITESHEET_ELEMENT.frames['toast-l.png'].frame
 	const r = SPRITESHEET_ELEMENT.frames['toast-r.png'].frame
 
 	return (
 		<motion.div
-			className={cn('relative flex h-[50px] w-[800px] items-center')}
+			className={cn('relative flex h-[50px] w-[800px] items-center', className)}
 			variants={toastVariants}
 			initial={'hidden'}
 			animate={'visible'}
 			exit={'hidden'}
+			{...props}
 		>
 			<Sprite
 				data={{

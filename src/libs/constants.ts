@@ -1,3 +1,5 @@
+import type { Stuff } from '@/features/backpack/type'
+
 export const VERSION = '0.0.1'
 
 export const KEYBOARD_MAP = [
@@ -39,3 +41,60 @@ export const AXIE_ADDRESS = '0xcaca1c072d26e46686d932686015207fbe08fdb8'
 export const POKIECOIN_DECIMALS = 1e18
 
 export const STUFFS = ['milks', 'fishes', 'feathers', 'rocks', 'nuts', 'plants', 'bugs', 'stars', 'moons'] as const
+
+export const STUFFS_DATA: Record<(typeof STUFFS)[number], Stuff> = {
+	milks: {
+		name: 'Milks',
+		slug: 'milk',
+		id: 'milks-milk-01',
+		description: '',
+	},
+	fishes: {
+		name: 'Fishes',
+		slug: 'fish',
+		id: 'fishes-fish-01',
+		description: '',
+	},
+	feathers: {
+		name: 'Feathers',
+		slug: 'feather',
+		id: 'feathers-feather-01',
+		description: '',
+	},
+	rocks: {
+		name: 'Rocks',
+		slug: 'rock',
+		id: 'rocks-rock-01',
+		description: '',
+	},
+	nuts: {
+		name: 'Nuts',
+		slug: 'nut',
+		id: 'nuts-nut-01',
+		description: '',
+	},
+	plants: {
+		name: 'Plants',
+		slug: 'plant',
+		id: 'plants-plant-01',
+		description: '',
+	},
+	bugs: {
+		name: 'Bugs',
+		slug: 'bug',
+		id: 'bugs-bug-01',
+		description: '',
+	},
+	stars: {
+		name: 'Stars',
+		slug: 'star',
+		id: 'stars-star-01',
+		description: '',
+	},
+	moons: {
+		name: 'Moons',
+		slug: 'moon',
+		id: 'moons-moon-01',
+		description: '',
+	},
+}

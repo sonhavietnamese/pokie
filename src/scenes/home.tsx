@@ -38,9 +38,9 @@ export default function Home() {
 			<Physics debug={true}>
 				<Ground />
 
-				<group position={[1, 2, 0]}>
+				{/* <group position={[1, 2, 0]}>
 					<AxieManager />
-				</group>
+				</group> */}
 
 				<CharacterController
 					followLight

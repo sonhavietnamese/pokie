@@ -3,6 +3,7 @@
 import ScreenSizeBreakpoint from '@/components/screen-size-breakpoint'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog'
+import AnimationManager from '@/features/axie/animation-manager'
 import Login from '@/scenes/login'
 import { useWalletgo } from '@roninnetwork/walletgo'
 import { useEffect, useState } from 'react'
@@ -22,12 +23,14 @@ export default function Page() {
 
 	return (
 		<main className="relative flex h-screen w-screen flex-col items-center justify-center bg-slate-200">
+			<AnimationManager />
+
 			<Dialog>
 				<DialogTrigger asChild>
 					<Button>Open</Button>
 				</DialogTrigger>
 				<DialogContent className="h-[800px] w-[800px]">
-					<div className="flex h-full items-center  bg-red-100">
+					<div className="flex h-full items-center bg-red-100">
 						<span>wau</span>
 						<DialogClose asChild>
 							<Button>Closasdasdase</Button>

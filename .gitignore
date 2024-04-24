@@ -55,3 +55,6 @@ src/contracts/typechain/
 
 .idea
 .vscode
+
+assets
+audios

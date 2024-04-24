@@ -28,7 +28,7 @@ export default function Page() {
 				<Avatar />
 
 				<div className="flex items-center gap-5">
-					<div className="flex gap-4 h-fit">
+					<div className="flex h-fit gap-4">
 						<Energy />
 						<PokieCoinBalance />
 					</div>
@@ -60,7 +60,7 @@ export default function Page() {
 					<Home />
 				</Canvas>
 
-				<Loader />
+				{/* <Loader /> */}
 				<ShortcutManager />
 			</KeyboardControls>
 

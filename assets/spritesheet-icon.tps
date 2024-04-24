@@ -173,7 +173,53 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../../pokemon/app/public/sprites/backpack/background.webp</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>464,224,927,448</rect>
+                <key>scale9Paddings</key>
+                <rect>464,224,927,448</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../pokemon/app/public/sprites/backpack/panel-detail.webp</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>131,178,261,355</rect>
+                <key>scale9Paddings</key>
+                <rect>131,178,261,355</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">aura-01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>100,100,200,200</rect>
+                <key>scale9Paddings</key>
+                <rect>100,100,200,200</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">avatar-default.png</key>
+            <key type="filename">avatar-paladinlll.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -219,6 +265,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">btn-frame-circle-01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>21,21,41,41</rect>
+                <key>scale9Paddings</key>
+                <rect>21,21,41,41</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">class-aquatic.png</key>
             <key type="filename">class-beast.png</key>
             <key type="filename">class-bird.png</key>
@@ -239,6 +300,51 @@
                 <rect>8,8,16,16</rect>
                 <key>scale9Paddings</key>
                 <rect>8,8,16,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">frame-bubble.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,26,59,53</rect>
+                <key>scale9Paddings</key>
+                <rect>30,26,59,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">frame-item-01-selected.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>52,52,103,103</rect>
+                <key>scale9Paddings</key>
+                <rect>52,52,103,103</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">frame-item-01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>46,46,91,91</rect>
+                <key>scale9Paddings</key>
+                <rect>46,46,91,91</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -288,14 +394,29 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">icon-item-dawn.png</key>
-            <key type="filename">icon-item-dusk.png</key>
+            <key type="filename">icon-item-bug.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,20,39,39</rect>
+                <key>scale9Paddings</key>
+                <rect>20,20,39,39</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">icon-item-feather.png</key>
             <key type="filename">icon-item-fish.png</key>
             <key type="filename">icon-item-milk.png</key>
+            <key type="filename">icon-item-moon.png</key>
             <key type="filename">icon-item-nut.png</key>
             <key type="filename">icon-item-plant.png</key>
             <key type="filename">icon-item-rock.png</key>
+            <key type="filename">icon-item-star.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -359,8 +480,6 @@
                     <filename>class-reptile.png</filename>
                     <filename>icon-pokie-coin.png</filename>
                     <filename>icon-energy.png</filename>
-                    <filename>icon-item-dawn.png</filename>
-                    <filename>icon-item-dusk.png</filename>
                     <filename>icon-item-feather.png</filename>
                     <filename>icon-item-fish.png</filename>
                     <filename>icon-item-milk.png</filename>
@@ -374,6 +493,17 @@
                     <filename>icon-red-dot.png</filename>
                     <filename>icon-bag-01.png</filename>
                     <filename>icon-tick.png</filename>
+                    <filename>aura-01.png</filename>
+                    <filename>avatar-paladinlll.png</filename>
+                    <filename>btn-frame-circle-01.png</filename>
+                    <filename>icon-item-moon.png</filename>
+                    <filename>icon-item-star.png</filename>
+                    <filename>icon-item-bug.png</filename>
+                    <filename>frame-bubble.png</filename>
+                    <filename>frame-item-01-selected.png</filename>
+                    <filename>frame-item-01.png</filename>
+                    <filename>../../pokemon/app/public/sprites/backpack/background.webp</filename>
+                    <filename>../../pokemon/app/public/sprites/backpack/panel-detail.webp</filename>
                 </array>
             </struct>
         </map>

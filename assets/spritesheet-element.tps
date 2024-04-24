@@ -446,6 +446,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">btn-copy-01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,14,26,27</rect>
+                <key>scale9Paddings</key>
+                <rect>13,14,26,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">btn-frame-01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -658,36 +673,6 @@
                 <rect>30,26,59,53</rect>
                 <key>scale9Paddings</key>
                 <rect>30,26,59,53</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">frame-item-selected.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>52,52,103,103</rect>
-                <key>scale9Paddings</key>
-                <rect>52,52,103,103</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">frame-item.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>46,46,91,91</rect>
-                <key>scale9Paddings</key>
-                <rect>46,46,91,91</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -961,9 +946,8 @@
                     <filename>panel-item-l.png</filename>
                     <filename>panel-item-m.png</filename>
                     <filename>panel-item-r.png</filename>
-                    <filename>frame-item-selected.png</filename>
-                    <filename>frame-item.png</filename>
                     <filename>frame-bubble.png</filename>
+                    <filename>btn-copy-01.png</filename>
                 </array>
             </struct>
         </map>

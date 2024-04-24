@@ -11,8 +11,8 @@ export function getSpriteStyles(
 	meta: { w: number; h: number },
 ) {
 	return {
-		backgroundPosition: `${(dimensions.x / (meta.w - dimensions.w)) * 100}% ${
-			(dimensions.y / (meta.h - dimensions.h)) * 100
+		backgroundPosition: `${(dimensions.x / Math.max(meta.w - dimensions.w, 1)) * 100}% ${
+			(dimensions.y / Math.max(meta.h - dimensions.h, 1)) * 100
 		}%`,
 		backgroundSize: `${(meta.w / dimensions.w) * 100}% ${(meta.h / dimensions.h) * 100}%`,
 	}
