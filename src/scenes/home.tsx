@@ -1,15 +1,13 @@
 'use client'
 
-import AxieManager from '@/features/axie/axie-manager'
 import { Ground } from '@/features/environment/ground'
+import AxieController from '@/features/movement/axie-animation-controller'
 import { Sapidae } from '@/features/movement/character'
 import CharacterController from '@/features/movement/character-controller'
-import { Environment, useFBO } from '@react-three/drei'
-import { extend, useFrame, useThree } from '@react-three/fiber'
+import { Environment } from '@react-three/drei'
+import { useFrame, useThree } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
-import { useControls } from 'leva'
-import { Suspense, useEffect, useRef, useState } from 'react'
-import { MathUtils } from 'three'
+import { Suspense } from 'react'
 import { OutlineEffect } from 'three/examples/jsm/effects/OutlineEffect'
 
 export default function Home() {
@@ -51,7 +49,7 @@ export default function Home() {
 
 				<Suspense>
 					<group position={[1, 2, 0]}>
-						<AxieManager />
+						<AxieController />
 					</group>
 				</Suspense>
 

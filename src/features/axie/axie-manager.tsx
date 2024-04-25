@@ -25,7 +25,7 @@ export default function AxieManager() {
 	useEffect(() => {
 		if (!data) return
 
-		const selectedAxies = [data[0]]
+		const selectedAxies = [data[10]]
 
 		if (!selectedAxies) return
 
@@ -75,7 +75,7 @@ export default function AxieManager() {
 						back: parts[0].parts.back,
 					}}
 					primaryColor={parts[0].primaryColor}
-					animation={'idle'}
+					animation={'run'}
 				/>
 			)}
 		</>

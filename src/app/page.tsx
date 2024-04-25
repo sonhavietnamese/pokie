@@ -21,7 +21,7 @@ const Home = dynamic(() => import('@/scenes/home'))
 export default function Page() {
 	return (
 		<main className="relative flex h-screen w-screen justify-center">
-			<div className="absolute top-5 z-[1] flex w-full items-center justify-between px-5">
+			{/* <div className="absolute top-5 z-[1] flex w-full items-center justify-between px-5">
 				<Avatar />
 
 				<div className="flex items-center gap-5">
@@ -34,7 +34,7 @@ export default function Page() {
 						<BackpackTrigger />
 					</div>
 				</div>
-			</div>
+			</div> */}
 
 			<KeyboardControls map={KEYBOARD_MAP}>
 				<Suspense>

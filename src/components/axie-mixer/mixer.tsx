@@ -1,7 +1,7 @@
 import { useAnimationClipStore } from '@/features/axie/use-animation-clips'
 import { Capsule, Detailed, useGLTF, useTexture } from '@react-three/drei'
-import { useFrame, useGraph, useThree } from '@react-three/fiber'
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
+import { useFrame, useGraph } from '@react-three/fiber'
+import { useDeferredValue, useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { type GLTF, SkeletonUtils } from 'three-stdlib'
 import { Back } from './back'
@@ -77,13 +77,11 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 
 	diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
 
-	const axieref = useRef<THREE.Group>(null)
+	const axieRef = useRef<THREE.Group>(null)
 
 	const cloneScenes = useMemo(() => SkeletonUtils.clone(scene), [scene])
 	const bodyGraph = useGraph(cloneScenes) as GLTFResult
 	const mixer = useMemo(() => new THREE.AnimationMixer(cloneScenes), [cloneScenes])
-
-	const [selectedAnimation, setSelectedAnimation] = useState<AxieAnimation>(animation)
 
 	const mouthRef = useRef<THREE.Group>(null)
 	const hornLRef = useRef<THREE.Group>(null)
@@ -102,7 +100,7 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 	useEffect(() => {
 		if (!clips) return
 
-		const clip = clips[`${body}_${selectedAnimation}`]
+		const clip = clips[`${body}_${animation}`]
 		const action = new THREE.AnimationAction(mixer, clip, cloneScenes)
 
 		if (!action) return
@@ -114,15 +112,10 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 			action.reset().fadeIn(0.2).play()
 		}
 
-		const resetAnimation = () => setSelectedAnimation('idle')
-
-		mixer.addEventListener('finished', () => resetAnimation())
-
 		return () => {
 			action.fadeOut(0.2)
-			mixer.removeEventListener('finished', () => resetAnimation())
 		}
-	}, [animation, body, clips, cloneScenes, mixer, selectedAnimation])
+	}, [animation, body, clips, cloneScenes, mixer])
 
 	useFrame((_, delta) => {
 		mixer.update(delta)
@@ -149,18 +142,12 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 		hornRRef.current?.rotation.copy(bodyGraph.nodes.Root_Horn_R_JNT.rotation)
 		hornTRef.current?.position.copy(bodyGraph.nodes.Root_Horn_T_JNT.position)
 		hornTRef.current?.rotation.copy(bodyGraph.nodes.Root_Horn_T_JNT.rotation)
-
-		// if (!axieref.current) return
-		// axieref.current.position.x += 0.001
 	})
 
 	useEffect(() => {
 		if (!cloneScenes) return
 		cloneScenes.traverse((object: THREE.Object3D) => {
 			if (object instanceof THREE.Mesh) {
-				// object.material = new THREE.MeshStandardMaterial({
-				// 	color: primaryColor,
-				// })
 				object.material = new THREE.MeshToonMaterial({
 					color: primaryColor,
 					gradientMap: diffuse,
@@ -170,7 +157,7 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 	}, [cloneScenes])
 
 	return (
-		<group ref={axieref}>
+		<group ref={axieRef}>
 			<Detailed distances={[0, 45]}>
 				<group>
 					<primitive object={cloneScenes} />

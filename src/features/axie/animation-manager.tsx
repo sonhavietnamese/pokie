@@ -19,7 +19,6 @@ export default function AnimationManager() {
 			if (!data) return
 
 			const restored = JSON.parse(pako.inflate(data, { to: 'string' }))
-
 			const animations: Record<string, THREE.AnimationClip> = {}
 
 			for (const key in restored.body) {
@@ -27,7 +26,7 @@ export default function AnimationManager() {
 					const raw = restored.body[key]
 
 					for (const animationKey in raw) {
-						if (['idle', 'run'].includes(animationKey)) {
+						if (['idle', 'walk', 'run'].includes(animationKey)) {
 							const animation = raw[animationKey]
 
 							animations[`${key}_${animationKey}`] = THREE.AnimationClip.parse(animation)
@@ -41,29 +40,6 @@ export default function AnimationManager() {
 
 		load()
 	}, [data])
-
-	// useEffect(() => {
-	// 	const animations: Record<string, THREE.AnimationClip> = {}
-
-	// 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	// 	const { body } = ANIMATIONS_DATA as { body: any }
-
-	// 	for (const key in body) {
-	// 		if (Object.prototype.hasOwnProperty.call(body, key)) {
-	// 			const raw = body[key]
-
-	// 			for (const animationKey in raw) {
-	// 				if (['idle', 'run'].includes(animationKey)) {
-	// 					const animation = raw[animationKey]
-
-	// 					animations[`${key}_${animationKey}`] = THREE.AnimationClip.parse(animation)
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-
-	// 	setAnimationClips(animations)
-	// }, [])
 
 	return <></>
 }
