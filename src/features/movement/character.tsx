@@ -5,6 +5,7 @@ import { SapidaeModel } from '@/components/sapidae/model'
 // import { useMultiplayerStore } from '@/stores/multiplayer'
 // import { useGame } from '@/stores/use-game'
 import { useAnimations, useGLTF } from '@react-three/drei'
+import { sample } from 'lodash-es'
 import { type JSX, useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import type { GLTF } from 'three-stdlib'
@@ -42,7 +43,7 @@ export function Sapidae(props: JSX.IntrinsicElements['group']) {
 	useEffect(() => {
 		const a = curAnimation ? curAnimation : ANIMATION_SET.idle
 
-		const customAnim = a === 'idle' ? 'idle-00' : a
+		const customAnim = a === 'idle' ? sample(['idle-01', 'idle-00', 'idle-00', 'idle-00', 'idle-00']) : a
 		const action = actions[customAnim]
 
 		if (!action) return

@@ -13,6 +13,10 @@ const config: Config = {
 			animationDuration: {
 				'2s': '2s',
 			},
+			backgroundImage: {
+				vignette:
+					'radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 40%, rgba(59, 55, 119, .1) 70%, rgba(59, 55, 119, .4) 100%)',
+			},
 		},
 	},
 	plugins: [require('tailwindcss-animate')],

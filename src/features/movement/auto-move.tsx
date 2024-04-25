@@ -98,8 +98,6 @@ const MonsterFollow = ({
 
 	const { rapier, world } = useRapier()
 
-	let canJump = false
-	let isFalling = false
 	const initialGravityScale: number = props.gravityScale || 1
 
 	let isOnMovingObject = false
@@ -130,7 +128,6 @@ const MonsterFollow = ({
 		if (!characterRef.current) return
 		if (!actualSlopeAngle) actualSlopeAngle = 0
 
-		// Only apply slope extra force when slope angle is between 0.2 and slopeMaxAngle, actualSlopeAngle < slopeMaxAngle
 		if (actualSlopeAngle < slopeMaxAngle && Math.abs(slopeAngle) > 0.2 && Math.abs(slopeAngle) < slopeMaxAngle) {
 			movingDirection.set(0, Math.sin(slopeAngle), Math.cos(slopeAngle))
 		} else if (actualSlopeAngle >= slopeMaxAngle) {
@@ -174,8 +171,8 @@ const MonsterFollow = ({
 
 		if (!characterRotated) {
 			moveImpulse.set(
-				moveForceNeeded.x * turnVelMultiplier * (canJump ? 1 : airDragMultiplier),
-				slopeAngle === null || slopeAngle === 0
+				moveForceNeeded.x * turnVelMultiplier * airDragMultiplier,
+				slopeAngle === 0
 					? 0
 					: movingDirection.y *
 							turnVelMultiplier *
@@ -183,22 +180,22 @@ const MonsterFollow = ({
 								? slopeUpExtraForce
 								: slopeDownExtraForce) *
 							(run ? sprintMult : 1),
-				moveForceNeeded.z * turnVelMultiplier * (canJump ? 1 : airDragMultiplier), // if it's in the air, give it less control
+				moveForceNeeded.z * turnVelMultiplier * airDragMultiplier, // if it's in the air, give it less control
 			)
 		} else {
 			moveImpulse.set(
-				moveForceNeeded.x * (canJump ? 1 : airDragMultiplier),
-				slopeAngle === null || slopeAngle === 0
+				moveForceNeeded.x * airDragMultiplier,
+				slopeAngle === 0
 					? 0
 					: movingDirection.y *
 							(movingDirection.y > 0 ? slopeUpExtraForce : slopeDownExtraForce) *
 							(run ? sprintMult : 1),
-				moveForceNeeded.z * (canJump ? 1 : airDragMultiplier),
+				moveForceNeeded.z * airDragMultiplier,
 			)
 		}
 
 		characterRef.current.applyImpulseAtPoint(
-			moveImpulse.multiplyScalar(2),
+			moveImpulse.multiplyScalar(3),
 			{
 				x: currentPos.x,
 				y: currentPos.y + moveImpulsePointY,
@@ -286,8 +283,6 @@ const MonsterFollow = ({
 
 	useFrame((_, delta) => {
 		if (!characterRef.current) return
-
-		characterRef.current?.setEnabled(true)
 		if (!characterModelRef.current) return
 
 		currentPos.copy(characterRef.current.translation() as THREE.Vector3)
@@ -313,8 +308,6 @@ const MonsterFollow = ({
 			(collider) => !collider.isSensor(),
 		)
 
-		canJump = true
-
 		isOnMovingObject = false
 		bodyContactForce.set(0, 0, 0)
 		movingObjectVelocity.set(0, 0, 0)
@@ -339,13 +332,8 @@ const MonsterFollow = ({
 				actualSlopeAngle = actualSlopeNormalVec?.angleTo(floorNormal)
 			}
 		}
+
 		if (slopeRayHit && rayHit && slopeRayHit.toi < floatingDis + 0.5) {
-			if (canJump) {
-				slopeAngle = Number(Math.atan((rayHit.toi - slopeRayHit.toi) / slopeRayOriginOffset).toFixed(2))
-			} else {
-				slopeAngle = 0
-			}
-		} else {
 			slopeAngle = 0
 		}
 
@@ -359,7 +347,7 @@ const MonsterFollow = ({
 			}
 		}
 
-		if (canJump && !isPointMoving) {
+		if (!isPointMoving) {
 			if (!isOnMovingObject) {
 				dragForce.set(-currentVel.x * dragDampingC, 0, -currentVel.z * dragDampingC)
 				characterRef.current.applyImpulse(dragForce, false)
@@ -373,13 +361,9 @@ const MonsterFollow = ({
 			}
 		}
 
-		isFalling = !!(currentVel.y < 0 && !canJump)
-
 		if (currentVel.y < fallingMaxVel && characterRef.current.gravityScale() !== 0) {
 			characterRef.current.setGravityScale(0, true)
-		} else if (isFalling && characterRef.current.gravityScale() !== fallingGravityScale) {
-			characterRef.current.setGravityScale(fallingGravityScale, true)
-		} else if (!isFalling && characterRef.current.gravityScale() !== initialGravityScale) {
+		} else if (characterRef.current.gravityScale() !== initialGravityScale) {
 			characterRef.current.setGravityScale(initialGravityScale, true)
 		}
 
@@ -387,9 +371,9 @@ const MonsterFollow = ({
 
 		isModePointToMove && pointToMove(delta, slopeAngle, movingObjectVelocity)
 
-		if (!isPointMoving && canJump) {
+		if (!isPointMoving) {
 			setAnimation('idle')
-		} else if (canJump && isPointMoving) {
+		} else if (isPointMoving) {
 			setAnimation('walk')
 		}
 
@@ -406,7 +390,6 @@ const MonsterFollow = ({
 				position={props.position}
 				onContactForce={(e) => bodyContactForce.set(e.totalForce.x, e.totalForce.y, e.totalForce.z)}
 				onCollisionExit={() => bodyContactForce.set(0, 0, 0)}
-				userData={{ canJump: false }}
 				{...props}
 			>
 				<CapsuleCollider name="monster-capsule-collider" args={[capsuleHalfHeight, capsuleRadius]} />
@@ -475,8 +458,4 @@ type Props = RigidBodyProps & {
 	autoBalanceDampingC?: number
 	autoBalanceSpringOnY?: number
 	autoBalanceDampingOnY?: number
-}
-
-export interface userDataType {
-	canJump?: boolean
 }

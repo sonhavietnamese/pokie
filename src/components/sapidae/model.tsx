@@ -1,9 +1,11 @@
-import { Detailed, useGLTF } from '@react-three/drei'
-import { useGraph } from '@react-three/fiber'
+import { Detailed, Trail, useGLTF, useTexture } from '@react-three/drei'
+import { extend, useFrame, useGraph } from '@react-three/fiber'
+import { useControls } from 'leva'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
-import type * as THREE from 'three'
+import * as THREE from 'three'
 import type { GLTF } from 'three-stdlib'
 import { SkeletonUtils } from 'three-stdlib'
+import MeshFresnelMaterial from '../fresnel'
 import useTextureFactory from './use-texture-factory'
 
 type GLTFResult = GLTF & {
@@ -35,6 +37,10 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 
 		const { skins } = useTextureFactory()
 
+		const diffuse = useTexture('/fourTone.jpg')
+
+		diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
+
 		const texture = skins[skin.toUpperCase()]
 		const textureEyeClose = skins.EYE_CLOSE
 		const textureEyeOpen = skins.EYE_OPEN
@@ -61,12 +67,58 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 			}
 		}, [])
 
+		const { FresnelFactor, FresnelBias, FresnelIntensity, rimColor, bodyColor, fresnelAlpha, fresnelOnly } =
+			useControls({
+				FresnelFactor: {
+					value: 0.6,
+					min: 0,
+					max: 30,
+					step: 0.001,
+				},
+				FresnelBias: {
+					value: 0.05,
+					min: 0,
+					max: 1,
+					step: 0.001,
+				},
+				FresnelIntensity: {
+					value: 1.5,
+					min: 0,
+					max: 50,
+					step: 0.001,
+				},
+				rimColor: {
+					value: '#02FEFF',
+				},
+				bodyColor: {
+					value: '#0777FD',
+				},
+				fresnelAlpha: {
+					value: 1,
+					min: 0.001,
+					max: 1,
+					step: 0.01,
+				},
+				fresnelOnly: {
+					value: false,
+				},
+			})
+
 		return (
 			<group ref={ref} {...props} dispose={null}>
 				<group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.009}>
 					<primitive object={nodes.mixamorigHips} />
 
-					<Detailed distances={[0, 20]}>
+					{/* <Trail
+						width={4} // Width of the line
+						color={'hotpink'} // Color of the line
+						length={5} // Length of the line
+						decay={1} // How fast the line fades away
+						local={false} // Wether to use the target's world or local positions
+						stride={0} // Min distance between previous and current point
+						interval={10} // Number of frames to wait before next calculation
+					> */}
+					<Detailed distances={[0, 20]} position={[0, 2, 0]}>
 						<skinnedMesh
 							name="Sapidae_male_arms2_new001"
 							geometry={nodes.Sapidae_male_arms2_new003.geometry}
@@ -84,17 +136,25 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 						<skinnedMesh
 							name="Sapidae_male_arms2_new001"
 							geometry={nodes.Sapidae_male_arms2_new001.geometry}
-							material={nodes.Sapidae_male_arms2_new001.material}
 							skeleton={nodes.Sapidae_male_arms2_new001.skeleton}
 						>
-							<meshToonMaterial map={texture} />
-							{/* <meshStandardMaterial map={texture} roughness={1} /> */}
+							{/* <MeshFresnelMaterial
+								fresnelColor={rimColor}
+								baseColor={bodyColor}
+								amount={FresnelFactor}
+								offset={FresnelBias}
+								intensity={FresnelIntensity}
+								fresnelAlpha={fresnelAlpha}
+								alpha={fresnelOnly}
+							/> */}
+							<meshToonMaterial map={texture} gradientMap={diffuse} />
 						</skinnedMesh>
 						<mesh scale={80} rotation={[Math.PI / 2, 0, 0]} position={[0, 10, 0]}>
 							<capsuleGeometry args={[1, 1.5, 1]} />
 							<meshStandardMaterial color={'red'} />
 						</mesh>
 					</Detailed>
+					{/* </Trail> */}
 				</group>
 			</group>
 		)

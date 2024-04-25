@@ -1,0 +1,81 @@
+{
+  "onboarding": {
+    "_entry": "hello",
+    "hello": {
+      "isSpeak": true,
+      "id": "hello-12312312123",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["asdasasd"]
+        }
+      ],
+      "bubbles": ["hello 1", "hello 2", "hello 3"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "hello_02"
+        }
+      ]
+    },
+    "hello_02": {
+      "isSpeak": true,
+      "id": "hello-12312312412331235",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["asdasasd"]
+        }
+      ],
+      "bubbles": ["hello 21", "hello 22"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "hello_03"
+        }
+      ]
+    },
+    "hello_03": {
+      "isPrompt": true,
+      "id": "AskMore",
+      "choices": {
+        "no": {
+          "id": "no",
+          "value": "Maybe later.",
+          "next": [
+            {
+              "action": "END"
+            }
+          ]
+        },
+        "yes": {
+          "id": "yes",
+          "value": "Yes please!",
+          "next": [
+            {
+              "action": "GOTO",
+              "node": "hello_04"
+            }
+          ]
+        }
+      }
+    },
+    "hello_04": {
+      "isSpeak": true,
+      "id": "hello-12312312123",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["asdasasd"]
+        }
+      ],
+      "bubbles": ["hello 41", "hello 42", "hello 43"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "hello_03"
+        }
+      ]
+    }
+  }
+}
