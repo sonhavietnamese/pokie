@@ -59,11 +59,11 @@ body {
 
 @layer components {
   .spritesheet-element {
-    background: url("/spritesheet-element.png");
+    background: url("/spritesheet-element.webp");
   }
 
   .spritesheet-icon {
-    background: url("/spritesheet-icon.png");
+    background: url("/spritesheet-icon.webp");
   }
 }
 

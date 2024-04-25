@@ -14,6 +14,10 @@ export const Back = forwardRef<THREE.Group, BackProps>(({ variant, position }, r
 	const { scene } = useGLTF(deferredModel)
 	const texture = useTexture(deferredTexture)
 
+	const diffuse = useTexture('/fourTone.jpg')
+
+	diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
+
 	const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
 
 	texture.flipY = false
@@ -38,7 +42,7 @@ export const Back = forwardRef<THREE.Group, BackProps>(({ variant, position }, r
 			}
 
 			if (o instanceof THREE.Mesh) {
-				o.material = new THREE.MeshStandardMaterial({ map: texture })
+				o.material = new THREE.MeshToonMaterial({ map: texture, gradientMap: diffuse })
 			}
 		})
 	}, [variant, position])

@@ -4,18 +4,30 @@ import AxieManager from '@/features/axie/axie-manager'
 import { Ground } from '@/features/environment/ground'
 import { Sapidae } from '@/features/movement/character'
 import CharacterController from '@/features/movement/character-controller'
-import { Environment } from '@react-three/drei'
+import { Environment, useFBO } from '@react-three/drei'
+import { extend, useFrame, useThree } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
-import { Suspense } from 'react'
+import { useControls } from 'leva'
+import { Suspense, useEffect, useRef, useState } from 'react'
+import { MathUtils } from 'three'
+import { OutlineEffect } from 'three/examples/jsm/effects/OutlineEffect'
 
 export default function Home() {
+	const { gl } = useThree()
+
+	const effect = new OutlineEffect(gl)
+
+	useFrame(({ scene, camera }) => {
+		effect.render(scene, camera)
+	})
+
 	return (
 		<>
 			<directionalLight
 				castShadow
 				rotation={[42.2, -30.65, -24]}
-				position={[0, 3, 0]}
-				intensity={1}
+				position={[2, 3, 0]}
+				intensity={2}
 				color={'#FFE396'}
 				shadow-mapSize={[1024, 1024]}
 				shadow-camera-near={1}
@@ -25,7 +37,7 @@ export default function Home() {
 				shadow-camera-bottom={-50}
 				shadow-camera-left={-50}
 			/>
-			<ambientLight intensity={1.5} />
+			<ambientLight intensity={2} />
 
 			<Environment
 				background

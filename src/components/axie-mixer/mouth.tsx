@@ -20,7 +20,9 @@ type GLTFResult = GLTF & {
 export const Mouth = forwardRef<THREE.Group, MouthProps>(({ variant }, ref) => {
 	const deferredModel = useDeferredValue(`/glb/${variant}_mouth_1_idle.glb`)
 	const deferredTexture = useDeferredValue(`/textures/axie/${variant.split('_')[0]}_mouth_${variant.split('_')[1]}.jpg`)
+	const diffuse = useTexture('/fourTone.jpg')
 
+	diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
 	const { scene } = useGLTF(deferredModel) as GLTFResult
 	const texture = useTexture(deferredTexture)
 
@@ -34,7 +36,8 @@ export const Mouth = forwardRef<THREE.Group, MouthProps>(({ variant }, ref) => {
 	useEffect(() => {
 		clone.traverse((o: THREE.Object3D) => {
 			if (o instanceof THREE.Mesh) {
-				o.material = new THREE.MeshStandardMaterial({ map: texture })
+				// o.material = new THREE.MeshStandardMaterial({ map: texture })
+				o.material = new THREE.MeshToonMaterial({ map: texture, gradientMap: diffuse })
 			}
 		})
 	}, [])

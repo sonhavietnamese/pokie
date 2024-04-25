@@ -171,9 +171,9 @@ export function Sapidae(props: JSX.IntrinsicElements['group']) {
 				<primitive object={nodes.mixamorigHips} />
 				<skinnedMesh
 					geometry={nodes.Sapidae_male_arms2_new001.geometry}
-					material={nodes.Sapidae_male_arms2_new001.material}
 					skeleton={nodes.Sapidae_male_arms2_new001.skeleton}
 				>
+					{/* <meshToonMaterial map={texture} /> */}
 					<meshStandardMaterial map={texture} roughness={1} />
 				</skinnedMesh>
 

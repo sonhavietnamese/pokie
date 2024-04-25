@@ -1,7 +1,7 @@
 import { useAnimationClipStore } from '@/features/axie/use-animation-clips'
-import { Capsule, Detailed, useGLTF } from '@react-three/drei'
-import { useFrame, useGraph } from '@react-three/fiber'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Capsule, Detailed, useGLTF, useTexture } from '@react-three/drei'
+import { useFrame, useGraph, useThree } from '@react-three/fiber'
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { type GLTF, SkeletonUtils } from 'three-stdlib'
 import { Back } from './back'
@@ -71,7 +71,11 @@ type GLTFResult = GLTF & {
 }
 
 export default function Mixer({ parts, body, primaryColor, animation = 'idle' }: MixerProps) {
-	const { scene } = useGLTF(`/glb/body_${body}_idle.glb`)
+	const deferredModel = useDeferredValue(`/glb/body_${body}_idle.glb`)
+	const { scene } = useGLTF(deferredModel) as GLTFResult
+	const diffuse = useTexture('/fourTone.jpg')
+
+	diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
 
 	const axieref = useRef<THREE.Group>(null)
 
@@ -99,7 +103,6 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 		if (!clips) return
 
 		const clip = clips[`${body}_${selectedAnimation}`]
-
 		const action = new THREE.AnimationAction(mixer, clip, cloneScenes)
 
 		if (!action) return
@@ -111,15 +114,12 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 			action.reset().fadeIn(0.2).play()
 		}
 
-		const resetAnimation = () => {
-			setSelectedAnimation('idle')
-		}
+		const resetAnimation = () => setSelectedAnimation('idle')
 
 		mixer.addEventListener('finished', () => resetAnimation())
 
 		return () => {
 			action.fadeOut(0.2)
-
 			mixer.removeEventListener('finished', () => resetAnimation())
 		}
 	}, [animation, body, clips, cloneScenes, mixer, selectedAnimation])
@@ -158,8 +158,12 @@ export default function Mixer({ parts, body, primaryColor, animation = 'idle' }:
 		if (!cloneScenes) return
 		cloneScenes.traverse((object: THREE.Object3D) => {
 			if (object instanceof THREE.Mesh) {
-				object.material = new THREE.MeshStandardMaterial({
+				// object.material = new THREE.MeshStandardMaterial({
+				// 	color: primaryColor,
+				// })
+				object.material = new THREE.MeshToonMaterial({
 					color: primaryColor,
+					gradientMap: diffuse,
 				})
 			}
 		})

@@ -15,6 +15,10 @@ export const Ear = forwardRef<THREE.Group, EarProps>(({ variant, position }, ref
 	const texture = useTexture(deferredTexture)
 	const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
 
+	const diffuse = useTexture('/fourTone.jpg')
+
+	diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
+
 	texture.flipY = false
 
 	useEffect(() => {
@@ -36,7 +40,8 @@ export const Ear = forwardRef<THREE.Group, EarProps>(({ variant, position }, ref
 			}
 
 			if (o instanceof THREE.Mesh) {
-				o.material = new THREE.MeshStandardMaterial({ map: texture })
+				// o.material = new THREE.MeshStandardMaterial({ map: texture })
+				o.material = new THREE.MeshToonMaterial({ map: texture, gradientMap: diffuse })
 			}
 		})
 	}, [])
