@@ -23,7 +23,6 @@ type GLTFResult = GLTF & {
 	materials: {
 		lambert11: THREE.MeshStandardMaterial
 	}
-	animations: string[]
 }
 
 export function Sapidae(props: JSX.IntrinsicElements['group']) {

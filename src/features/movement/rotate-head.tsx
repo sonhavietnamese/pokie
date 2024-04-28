@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { SapidaeModel } from '@/components/sapidae/model'
 import useTextureFactory from '@/components/sapidae/use-texture-factory'
 // import { useBackpackStore } from '@/components/backpack/store'

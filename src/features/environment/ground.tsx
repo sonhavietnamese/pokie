@@ -1,6 +1,6 @@
 import { useGLTF, useTexture } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { type CollisionPayload, RigidBody } from '@react-three/rapier'
+import { type CollisionPayload, CylinderCollider, RigidBody } from '@react-three/rapier'
 import { useEffect } from 'react'
 import * as THREE from 'three'
 import type { GLTF } from 'three-stdlib'
@@ -308,18 +308,13 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
 
 	return (
 		<group {...props} dispose={null}>
-			{/* <mesh geometry={nodes.Plane.geometry} material={nodes.Plane.material} position={[-8.503, -0.391, -12.436]} />
-      <mesh geometry={nodes.Plane001.geometry} material={nodes.Plane001.material} position={[-8.503, -25.048, -12.436]} />
-      <mesh geometry={nodes.Plane002.geometry} material={nodes.Plane002.material} position={[42.1, 0.041, -22.907]} />
-      <mesh geometry={nodes.grass.geometry} material={nodes.grass.material} position={[-8.503, -0.391, -12.436]} /> */}
-
 			<RigidBody type="fixed" colliders="trimesh">
 				<mesh geometry={nodes.Plane.geometry} receiveShadow position={[-8.503, -0.391, -12.436]}>
 					<meshStandardMaterial color={'#1f352a'} />
 				</mesh>
 			</RigidBody>
 
-			<RigidBody type="fixed" colliders="trimesh">
+			{/* <RigidBody type="fixed" colliders="trimesh">
 				<mesh
 					userData={{ camExcludeCollision: true }}
 					geometry={nodes.Plane001.geometry}
@@ -327,15 +322,15 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
 				>
 					<meshStandardMaterial opacity={0} transparent depthWrite={false} />
 				</mesh>
-			</RigidBody>
+			</RigidBody> */}
 
-			<RigidBody type="fixed" position={[42.1, -0.5, -22.907]} onCollisionEnter={onEnter}>
+			{/* <RigidBody type="fixed" position={[42.1, -0.5, -22.907]} onCollisionEnter={onEnter}>
 				<mesh geometry={nodes.Plane002.geometry}>
 					<meshStandardMaterial opacity={0} transparent depthWrite={false} />
 				</mesh>
-			</RigidBody>
+			</RigidBody> */}
 
-			<RigidBody
+			{/* <RigidBody
 				type="fixed"
 				position={[42.1, -0.2, -22.907]}
 				onIntersectionEnter={onEnter}
@@ -345,7 +340,7 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
 				<mesh geometry={nodes.Plane002.geometry}>
 					<meshStandardMaterial opacity={0} transparent depthWrite={false} />
 				</mesh>
-			</RigidBody>
+			</RigidBody> */}
 		</group>
 	)
 }

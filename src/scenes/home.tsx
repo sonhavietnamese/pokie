@@ -4,21 +4,15 @@ import { Ground } from '@/features/environment/ground'
 import AxieController from '@/features/movement/axie-animation-controller'
 import { Sapidae } from '@/features/movement/character'
 import CharacterController from '@/features/movement/character-controller'
-import { Environment } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
 import { Suspense } from 'react'
 import { OutlineEffect } from 'three/examples/jsm/effects/OutlineEffect'
 
+import { Perf } from 'r3f-perf'
+
 export default function Home() {
-	const { gl } = useThree()
-
-	const effect = new OutlineEffect(gl)
-
-	useFrame(({ scene, camera }) => {
-		effect.render(scene, camera)
-	})
-
 	return (
 		<>
 			<directionalLight
@@ -47,11 +41,11 @@ export default function Home() {
 			<Physics debug={true}>
 				<Ground />
 
-				<Suspense>
+				{/* <Suspense>
 					<group position={[1, 2, 0]}>
 						<AxieController />
 					</group>
-				</Suspense>
+				</Suspense> */}
 
 				<CharacterController
 					followLight

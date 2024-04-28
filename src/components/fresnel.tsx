@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { shaderMaterial } from '@react-three/drei'
 import { extend } from '@react-three/fiber'
 import { Color } from 'three'
@@ -79,7 +81,7 @@ export default function MeshFresnelMaterial({
 
 	const MeshFresnelMaterial = shaderMaterial(uniforms, vertexShader, fragmentShader)
 
-	extend({ MeshFresnelMaterial })
-
 	return <meshFresnelMaterial key={MeshFresnelMaterial.key} transparent={true} />
 }
+
+extend({ MeshFresnelMaterial })

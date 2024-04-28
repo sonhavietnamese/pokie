@@ -1,33 +1,27 @@
+// @ts-nocheck
+
 'use client'
 
 import ScreenSizeBreakpoint from '@/components/screen-size-breakpoint'
 import { Button } from '@/components/ui/button'
 import AnimationManager from '@/features/axie/animation-manager'
-import { Billboard, useTexture } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { KEYBOARD_MAP } from '@/libs/constants'
+import { KeyboardControls, View } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { type MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 import { size } from 'lodash-es'
-import { z } from 'zod'
+import { Perf } from 'r3f-perf'
 import dialogues from './dialogues.json'
 
-// const onboarding: Dialogue = dialogues.onboarding as Dialogue
-const onboarding: Dialogue = {}
+const Home = dynamic(() => import('@/scenes/home'))
+const Avatar = dynamic(() => import('@/components/avatar'))
+const BottomDialogue = dynamic(() => import('@/components/dialogue/bottom-dialogue'))
 
-onboarding._entry = '1'
-onboarding['1'] = {
-	id: '1',
-	isSpeak: true,
-	bubbles: ['Hello there!'],
-	next: [
-		{
-			action: 'GOTO',
-			node: '2',
-		},
-	],
-}
+const onboarding: Dialogue = dialogues.onboarding as Dialogue
 
 type Dialogue = {
 	[key: string]: DialogueNode
@@ -72,6 +66,8 @@ export default function Page() {
 	const [choices, setChoices] = useState(dialog.choices ?? {})
 	const bubble = useMemo(() => bubbles[Math.min(bubbleIndex, bubbles.length)], [bubbleIndex, bubbles])
 
+	const ref = useRef<HTMLDivElement>(null)
+
 	const onBubbleClick = useCallback(() => {
 		if (size(choices) > 0) return
 
@@ -88,6 +84,8 @@ export default function Page() {
 		if (!next) return
 
 		const { action, node } = next
+
+		if (!node) return
 
 		if (action === 'GOTO') {
 			setDialog(onboarding[node])
@@ -109,7 +107,9 @@ export default function Page() {
 		}
 	}
 
-	const onChoiceClick = (choice) => {
+	const onChoiceClick = (choice: Choice) => {
+		if (!choice.next) return
+
 		check(choice.next[0])
 	}
 
@@ -122,10 +122,13 @@ export default function Page() {
 	}, [bubbleIndex])
 
 	return (
-		<main className="relative flex h-screen w-screen flex-col items-center justify-center bg-slate-200">
+		<main
+			ref={ref}
+			className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden bg-slate-200"
+		>
 			<AnimationManager />
 
-			<div className="absolute z-[1] top-20 ">
+			<div className="absolute top-20 z-[2]">
 				<AnimatePresence mode="wait">
 					<motion.div
 						key={bubbleIndex}
@@ -134,16 +137,16 @@ export default function Page() {
 						animate={'visible'}
 						onClick={onBubbleClick}
 						exit={'hidden'}
-						className="w-[200px] h-[50px] bg-red-300 origin-left"
+						className="h-[50px] w-[200px] origin-left bg-red-300"
 					>
 						<span>{bubble}</span>
 					</motion.div>
 				</AnimatePresence>
 			</div>
 
-			<div className="pointer-events-none absolute top-0 left-0 z-[10] h-screen w-screen bg-vignette" />
+			{/* <div className="pointer-events-none absolute top-0 left-0 z-[1] h-screen w-screen bg-vignette" /> */}
 
-			<div className="absolute z-[1] bottom-10 flex">
+			<div className="absolute bottom-10 z-[2] flex">
 				{size(choices) > 0 && (
 					<div className="flex gap-4">
 						{Object.entries(choices).map(([key, value]) => (
@@ -153,41 +156,38 @@ export default function Page() {
 						))}
 					</div>
 				)}
-				{/* <Button onMouseUp={() => setDialog(dialog + 1)}>Change</Button> */}
 			</div>
 
-			{/* <Canvas>
-				<directionalLight
-					castShadow
-					rotation={[42.2, -30.65, -24]}
-					position={[2, 3, 0]}
-					intensity={2}
-					color={'#FFE396'}
-					shadow-mapSize={[1024, 1024]}
-					shadow-camera-near={1}
-					shadow-camera-far={50}
-					shadow-camera-top={50}
-					shadow-camera-right={50}
-					shadow-camera-bottom={-50}
-					shadow-camera-left={-50}
-				/>
+			<KeyboardControls map={KEYBOARD_MAP}>
+				<Canvas
+					dpr={0.75}
+					shadows={{
+						enabled: true,
+						type: THREE.PCFShadowMap,
+					}}
+					gl={{
+						outputColorSpace: THREE.SRGBColorSpace,
+						toneMapping: THREE.ACESFilmicToneMapping,
+					}}
+					camera={{
+						fov: 40,
+						near: 0.1,
+						far: 200,
+						position: [0, 20, 40],
+					}}
+					eventSource={ref as MutableRefObject<HTMLElement>}
+				>
+					<View.Port />
+				</Canvas>
+			</KeyboardControls>
 
-				<OrbitControls />
-				<ambientLight intensity={2} />
+			<View index={1} className="absolute z-[1] h-screen w-screen">
+				<Perf />
+				<Home />
+			</View>
 
-				<Environment
-					background
-					blur={0.05}
-					files={['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']}
-					path="/sky/"
-				/>
-
-				<axesHelper />
-
-				<BackDrop />
-
-				<Sapidae />
-			</Canvas> */}
+			<Avatar />
+			<BottomDialogue />
 
 			<ScreenSizeBreakpoint />
 		</main>
@@ -219,31 +219,5 @@ const Dialogue = ({ text }) => {
 		>
 			<span>{text}</span>
 		</motion.div>
-	)
-}
-
-const BackDrop = () => {
-	const ref = useRef<THREE.Mesh>(null)
-
-	const backdrop = useTexture('/backdrop.png')
-
-	backdrop.wrapS = THREE.RepeatWrapping
-	backdrop.wrapT = THREE.RepeatWrapping
-	backdrop.repeat.set(100, 100)
-
-	useFrame((state, delta) => {
-		if (!ref.current) return
-
-		ref.current.material.map.offset.x += delta / 2
-		ref.current.material.map.offset.y += delta / 2
-	})
-
-	return (
-		<Billboard>
-			<mesh ref={ref} position={[0, 0, -10]}>
-				<planeGeometry args={[100, 100]} />
-				<meshBasicMaterial map={backdrop} />
-			</mesh>
-		</Billboard>
 	)
 }

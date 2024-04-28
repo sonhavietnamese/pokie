@@ -1,4 +1,4 @@
-import { useTexture } from '@react-three/drei'
+import { useKTX2, useTexture } from '@react-three/drei'
 import type * as THREE from 'three'
 
 export default function useTextureFactory() {

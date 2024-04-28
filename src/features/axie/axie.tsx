@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { AxieMixer } from '@/components/axie-mixer'
 import { animated, useSpring } from '@react-spring/three'
 import { Billboard, useTexture } from '@react-three/drei'

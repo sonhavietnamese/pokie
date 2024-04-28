@@ -1,5 +1,6 @@
 import { MavisIdProvider } from '@/components/providers/mavis-id-provider'
 import NextAuthSessionProvider from '@/components/providers/nextauth-session-provider'
+import { SquircleNoScript } from '@squircle-js/react'
 import type { Metadata } from 'next'
 import { Prompt } from 'next/font/google'
 import './globals.css'
@@ -24,6 +25,7 @@ export default function RootLayout({
 				<NextAuthSessionProvider>
 					<MavisIdProvider>{children}</MavisIdProvider>
 				</NextAuthSessionProvider>
+				<SquircleNoScript />
 			</body>
 		</html>
 	)
