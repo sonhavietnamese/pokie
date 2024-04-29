@@ -32,7 +32,7 @@ export default function TopBubble({ message, author, ...props }: TopBubbleProps)
 			className="origin-bottom-left"
 			{...props}
 		>
-			<div role="button" className={'relative flex items-center justify-center p-9 px-20 pb-12 pl-12'}>
+			<div role="button" className={'relative ml-20 flex items-center justify-center p-9 px-20 pb-12 pl-12'}>
 				<Sprite
 					data={{
 						part: '9',
@@ -52,7 +52,7 @@ export default function TopBubble({ message, author, ...props }: TopBubbleProps)
 					{capitalize(author)}
 				</span>
 
-				<span className="z-[2] font-extrabold text-[#735427] text-[20px] tracking-wide">{message}</span>
+				<span className="z-[2] font-extrabold text-[#735427] text-[20px] leading-5 tracking-wide">{message}</span>
 
 				<div className="absolute right-[58px] bottom-5 z-[2] flex items-center justify-center gap-1 text-[#F3A84B] text-[14px] tracking-wide">
 					<span className="">Next</span>

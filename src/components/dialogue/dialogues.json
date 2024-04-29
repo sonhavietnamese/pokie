@@ -1,16 +1,16 @@
 {
   "onboarding": {
-    "_entry": "hello",
-    "hello": {
+    "_entry": "hello_01",
+    "hello_01": {
       "isSpeak": true,
-      "id": "hello-12312312123",
+      "id": "hello-01",
       "before": [
         {
           "action": "EMOTE",
-          "opts": ["asdasasd"]
+          "opts": ["wave-01"]
         }
       ],
-      "bubbles": ["hello 1", "hello 2", "hello 3"],
+      "bubbles": ["Hey, you're here!"],
       "next": [
         {
           "action": "GOTO",
@@ -20,14 +20,18 @@
     },
     "hello_02": {
       "isSpeak": true,
-      "id": "hello-12312312412331235",
+      "id": "hello_02",
       "before": [
         {
           "action": "EMOTE",
-          "opts": ["asdasasd"]
+          "opts": ["idle-00"]
         }
       ],
-      "bubbles": ["hello 21", "hello 22"],
+      "bubbles": [
+        "I've been waiting for you. I know it's confused to start with Axie Infinity journey, but you'll love it!",
+        "Again, this is a demo, everything is under control. I'll give you a detailed explanation once you ready!",
+        "But first, let's connect your Mavis ID."
+      ],
       "next": [
         {
           "action": "GOTO",
@@ -37,21 +41,15 @@
     },
     "hello_03": {
       "isPrompt": true,
-      "id": "AskMore",
+      "id": "hello_03",
       "choices": {
-        "no": {
-          "id": "no",
-          "value": "Maybe later.",
-          "next": [
-            {
-              "action": "END"
-            }
-          ]
-        },
         "yes": {
           "id": "yes",
-          "value": "Yes please!",
+          "value": "Connect",
           "next": [
+            {
+              "action": "CONNECT_WALLET"
+            },
             {
               "action": "GOTO",
               "node": "hello_04"
@@ -62,18 +60,17 @@
     },
     "hello_04": {
       "isSpeak": true,
-      "id": "hello-12312312123",
+      "id": "hello_04",
       "before": [
         {
           "action": "EMOTE",
-          "opts": ["asdasasd"]
+          "opts": ["clap-01"]
         }
       ],
-      "bubbles": ["hello 41", "hello 42", "hello 43"],
+      "bubbles": ["Awesome, let's go!"],
       "next": [
         {
-          "action": "GOTO",
-          "node": "hello_03"
+          "action": "END"
         }
       ]
     }

@@ -21,8 +21,7 @@ const DEFAULT_WALLETS = createRoninWallets({
 			universal: EXPLORER_DOMAIN,
 		},
 	},
-	ethereumWallets: true,
-	noInjected: false,
+	ethereumWallets: false,
 })
 
 const WITH_ID_WALLETS = [idConnectorImpl, ...DEFAULT_WALLETS]
