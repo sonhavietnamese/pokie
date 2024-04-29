@@ -18,6 +18,25 @@ const config: Config = {
 					'radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 40%, rgba(59, 55, 119, .1) 70%, rgba(59, 55, 119, .4) 100%)',
 			},
 		},
+		animation: {
+			shake: 'shake 1s linear infinite',
+		},
+		keyframes: {
+			shake: {
+				'0%': {
+					transform: 'translateY(0rem)',
+				},
+				'25%': {
+					transform: 'translateY(-1px)',
+				},
+				'75%': {
+					transform: 'translateY(1px)',
+				},
+				'100%': {
+					transform: 'translateY(0rem)',
+				},
+			},
+		},
 	},
 	plugins: [require('tailwindcss-animate')],
 }

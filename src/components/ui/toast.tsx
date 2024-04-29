@@ -23,8 +23,8 @@ const toastVariants: Variants = {
 }
 
 export function Toast({ className, children, ...props }: ToastProps) {
-	const l = SPRITESHEET_ELEMENT.frames['toast-l.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['toast-r.png'].frame
+	const l = SPRITESHEET_ELEMENT.frames['toast-01-l.png'].frame
+	const r = SPRITESHEET_ELEMENT.frames['toast-01-r.png'].frame
 
 	return (
 		<motion.div

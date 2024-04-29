@@ -1,6 +1,6 @@
 'use client'
 
-import { SPRITESHEET_ELEMENT, SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { cn, getSpriteStyles } from '@/libs/utils'
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 
@@ -47,14 +47,14 @@ type SpriteOnePartsProps = { children?: ReactNode } & OnePart & HTMLAttributes<H
 
 const SpriteOneParts = forwardRef<HTMLDivElement, SpriteOnePartsProps>(
 	({ children, className, meta, m, ...props }, ref) => {
-		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
+		if (!meta) meta = SPRITESHEET_DATA.meta.size
 
 		return (
 			<div ref={ref} className={cn('relative flex w-[300px] items-center', className)} {...props}>
 				<div className="relative w-full" style={{ aspectRatio: `${m.w}/${m.h}` }}>
 					<div className="absolute top-0 left-0 w-full">
 						<svg
-							className="spritesheet-icon w-full bg-no-repeat"
+							className="spritesheet-element w-full bg-no-repeat"
 							style={getSpriteStyles(m, meta)}
 							viewBox={`0 0 1 ${m.h / m.w}`}
 						/>
@@ -73,7 +73,7 @@ type SpriteTwoPartsProps = { children?: ReactNode } & TwoPart & HTMLAttributes<H
 
 const SpriteTwoParts = forwardRef<HTMLDivElement, SpriteTwoPartsProps>(
 	({ children, className, meta, l, r, ...props }, ref) => {
-		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
+		if (!meta) meta = SPRITESHEET_DATA.meta.size
 
 		return (
 			<div ref={ref} className={cn('relative flex h-[50px] w-[300px] items-center', className)} {...props}>
@@ -112,7 +112,7 @@ type SpriteThreePartsProps = {
 
 const SpriteThreeParts = forwardRef<HTMLDivElement, SpriteThreePartsProps>(
 	({ children, className, meta, l, m, r, ...props }, ref) => {
-		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
+		if (!meta) meta = SPRITESHEET_DATA.meta.size
 
 		return (
 			<div ref={ref} className={cn('relative flex h-[50px] w-[200px]', className)} {...props}>
@@ -159,13 +159,13 @@ type SpriteNinePartsProps = {
 
 const SpriteNineParts = forwardRef<HTMLDivElement, SpriteNinePartsProps>(
 	({ className, children, meta, tl, tm, tr, ml, mm, mr, bl, bm, br, ...props }, ref) => {
-		if (!meta) meta = SPRITESHEET_ELEMENT.meta.size
+		if (!meta) meta = SPRITESHEET_DATA.meta.size
 
 		return (
 			<div
 				ref={ref}
 				className={cn(
-					'relative grid h-[500px] w-[1200px] grid-cols-[50px_minmax(0px,1fr)_50px] grid-rows-[_min-content_minmax(0px,1fr)_min-content]',
+					'relative grid h-[500px] w-[1200px] grid-cols-[70px_minmax(0px,1fr)_70px] grid-rows-[_min-content_minmax(0px,1fr)_min-content]',
 					className,
 				)}
 				{...props}
@@ -263,26 +263,26 @@ const Sprite = forwardRef<HTMLDivElement, SpriteProps>(({ data, children, ...pro
 	switch (data.part) {
 		case '1':
 			return (
-				<SpriteOneParts ref={ref} {...data} {...props} meta={SPRITESHEET_ICON.meta.size}>
+				<SpriteOneParts ref={ref} {...data} {...props} meta={SPRITESHEET_DATA.meta.size}>
 					{children}
 				</SpriteOneParts>
 			)
 
 		case '2':
 			return (
-				<SpriteTwoParts ref={ref} {...data} {...props} meta={SPRITESHEET_ELEMENT.meta.size}>
+				<SpriteTwoParts ref={ref} {...data} {...props} meta={SPRITESHEET_DATA.meta.size}>
 					{children}
 				</SpriteTwoParts>
 			)
 		case '3':
 			return (
-				<SpriteThreeParts ref={ref} {...data} {...props} meta={SPRITESHEET_ELEMENT.meta.size}>
+				<SpriteThreeParts ref={ref} {...data} {...props} meta={SPRITESHEET_DATA.meta.size}>
 					{children}
 				</SpriteThreeParts>
 			)
 		default:
 			return (
-				<SpriteNineParts ref={ref} {...data} {...props} meta={SPRITESHEET_ELEMENT.meta.size}>
+				<SpriteNineParts ref={ref} {...data} {...props} meta={SPRITESHEET_DATA.meta.size}>
 					{children}
 				</SpriteNineParts>
 			)

@@ -20,9 +20,9 @@ type NotificationProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(({ children, className, ...props }, ref) => {
-	const l = SPRITESHEET_ELEMENT.frames['notification-l.png'].frame
-	const m = SPRITESHEET_ELEMENT.frames['notification-m.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['notification-r.png'].frame
+	const l = SPRITESHEET_ELEMENT.frames['notification-01-l.png'].frame
+	const m = SPRITESHEET_ELEMENT.frames['notification-01-m.png'].frame
+	const r = SPRITESHEET_ELEMENT.frames['notification-01-r.png'].frame
 
 	return (
 		<motion.div

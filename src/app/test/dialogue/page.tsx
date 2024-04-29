@@ -1,20 +1,20 @@
-// @ts-nocheck
-
 'use client'
 
+import TopBubble from '@/components/dialogue/top-bubble'
 import ScreenSizeBreakpoint from '@/components/screen-size-breakpoint'
 import { Button } from '@/components/ui/button'
+import { Sprite } from '@/components/ui/sprite'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import AnimationManager from '@/features/axie/animation-manager'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { KeyboardControls, View } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
+import { size } from 'lodash-es'
 import dynamic from 'next/dynamic'
+import { Perf } from 'r3f-perf'
 import { type MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
-
-import { size } from 'lodash-es'
-import { Perf } from 'r3f-perf'
 import dialogues from './dialogues.json'
 
 const Home = dynamic(() => import('@/scenes/home'))
@@ -130,21 +130,9 @@ export default function Page() {
 
 			<div className="absolute top-20 z-[2]">
 				<AnimatePresence mode="wait">
-					<motion.div
-						key={bubbleIndex}
-						variants={variant}
-						initial={'hidden'}
-						animate={'visible'}
-						onClick={onBubbleClick}
-						exit={'hidden'}
-						className="h-[50px] w-[200px] origin-left bg-red-300"
-					>
-						<span>{bubble}</span>
-					</motion.div>
+					<TopBubble message={bubble} author="bino" onMouseUp={onBubbleClick} key={bubble} />
 				</AnimatePresence>
 			</div>
-
-			{/* <div className="pointer-events-none absolute top-0 left-0 z-[1] h-screen w-screen bg-vignette" /> */}
 
 			<div className="absolute bottom-10 z-[2] flex">
 				{size(choices) > 0 && (
@@ -191,33 +179,5 @@ export default function Page() {
 
 			<ScreenSizeBreakpoint />
 		</main>
-	)
-}
-
-const variant: Variants = {
-	hidden: {
-		opacity: 0,
-		rotate: -15,
-		transition: {
-			duration: 0.1,
-		},
-	},
-	visible: {
-		opacity: 1,
-		rotate: 0,
-	},
-}
-
-const Dialogue = ({ text }) => {
-	return (
-		<motion.div
-			variants={variant}
-			initial={'hidden'}
-			animate={'visible'}
-			exit={'hidden'}
-			className="w-[200px] h-[50px] bg-red-300 origin-left"
-		>
-			<span>{text}</span>
-		</motion.div>
 	)
 }

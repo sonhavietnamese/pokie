@@ -12,9 +12,9 @@ type TipProps = {
 }
 
 export default function Tip({ children }: TipProps) {
-	const l = SPRITESHEET_ELEMENT.frames['tag-l.png'].frame
-	const m = SPRITESHEET_ELEMENT.frames['tag-m.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['tag-r.png'].frame
+	const l = SPRITESHEET_ELEMENT.frames['badge-02-l.png'].frame
+	const m = SPRITESHEET_ELEMENT.frames['badge-02-m.png'].frame
+	const r = SPRITESHEET_ELEMENT.frames['badge-02-r.png'].frame
 
 	const mIcon = SPRITESHEET_ICON.frames['icon-exclamation.png'].frame
 

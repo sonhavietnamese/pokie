@@ -10,8 +10,8 @@ type DividerProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 const Divider = React.forwardRef<HTMLDivElement, DividerProps>(({ className, size = 'small', ...props }, ref) => {
-	const l = SPRITESHEET_ELEMENT.frames[`divider-${size}-l.png`].frame
-	const r = SPRITESHEET_ELEMENT.frames[`divider-${size}-r.png`].frame
+	const l = SPRITESHEET_ELEMENT.frames['divider-01-l.png'].frame
+	const r = SPRITESHEET_ELEMENT.frames['divider-01-r.png'].frame
 
 	return (
 		<div ref={ref} className={cn('relative flex w-[300px] items-center', className)} {...props}>

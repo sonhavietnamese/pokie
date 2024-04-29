@@ -8,9 +8,9 @@ type BadgeProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 const Badge = forwardRef<HTMLDivElement, BadgeProps>(({ children, className, ...props }) => {
-	const l = SPRITESHEET_ELEMENT.frames['badge-l.png'].frame
-	const m = SPRITESHEET_ELEMENT.frames['badge-m.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['badge-r.png'].frame
+	const l = SPRITESHEET_ELEMENT.frames['badge-01-l.png'].frame
+	const m = SPRITESHEET_ELEMENT.frames['badge-01-m.png'].frame
+	const r = SPRITESHEET_ELEMENT.frames['badge-01-r.png'].frame
 
 	return (
 		<div className={cn('relative flex h-[50px] w-[100px]', className)} {...props}>

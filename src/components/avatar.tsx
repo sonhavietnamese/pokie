@@ -1,6 +1,6 @@
 'use client'
 
-import { SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA, SPRITESHEET_ICON } from '@/configs/spritesheet'
 import { Sapidae } from '@/features/movement/character'
 import { OrthographicCamera, View } from '@react-three/drei'
 import { Squircle } from '@squircle-js/react'
@@ -21,11 +21,21 @@ export default function Avatar() {
 						cornerSmoothing={1}
 					/>
 
-					<Squircle className="-bottom-[70px] absolute" cornerRadius={32} cornerSmoothing={1}>
-						<div className="bg-red-400 px-2">
-							<span>HHHHHHHHHH</span>
+					<div className="absolute bottom-[-70px]">
+						<div role="button" className={'relative flex items-center justify-center p-1 px-7'}>
+							<Sprite
+								data={{
+									part: '3',
+									l: SPRITESHEET_DATA.frames['badge-01-l.png'].frame,
+									m: SPRITESHEET_DATA.frames['badge-01-m.png'].frame,
+									r: SPRITESHEET_DATA.frames['badge-01-r.png'].frame,
+								}}
+								className="absolute top-0 left-0 z-[0] h-full w-full"
+							/>
+
+							<span className="z-[1]">HHHHHHHHHH</span>
 						</div>
-					</Squircle>
+					</div>
 
 					<button type="button" className="-right-[70px] -top-[50px] absolute rounded-full" onClick={() => {}}>
 						<Sprite
