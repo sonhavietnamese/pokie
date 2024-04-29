@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "onboarding" integer DEFAULT 0 NOT NULL;

@@ -1,7 +1,7 @@
 import Backdrop from '@/components/backdrop'
-import { useDialogueStore } from '@/components/dialogue/store'
 import Sapidae from '@/components/sapidae/sapidae'
 import type { SapidaeAnimation } from '@/components/sapidae/type'
+import { useDialogueStore } from '@/features/dialogue/store'
 import { Environment, PerspectiveCamera } from '@react-three/drei'
 import React, { useMemo } from 'react'
 

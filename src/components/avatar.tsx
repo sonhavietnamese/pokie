@@ -1,16 +1,20 @@
 'use client'
 
 import { SPRITESHEET_DATA, SPRITESHEET_ICON } from '@/configs/spritesheet'
-import { Sapidae } from '@/features/movement/character'
+import { trimWallet } from '@/libs/utils'
 import { OrthographicCamera, View } from '@react-three/drei'
+import { useWalletgo } from '@roninnetwork/walletgo'
 import { Squircle } from '@squircle-js/react'
 import dynamic from 'next/dynamic'
 import React from 'react'
+import Sapidae from './sapidae/sapidae'
 import { Sprite } from './ui/sprite'
 
 const Backdrop = dynamic(() => import('@/components/backdrop'))
 
 export default function Avatar() {
+	const { account } = useWalletgo()
+
 	return (
 		<>
 			<div className="absolute top-[90px] left-[90px] z-[2]">
@@ -33,7 +37,7 @@ export default function Avatar() {
 								className="absolute top-0 left-0 z-[0] h-full w-full"
 							/>
 
-							<span className="z-[1]">HHHHHHHHHH</span>
+							<span className="z-[1]">{trimWallet(account ?? '', 3)}</span>
 						</div>
 					</div>
 
@@ -50,7 +54,7 @@ export default function Avatar() {
 				<OrthographicCamera makeDefault position={[0, 0, 5]} zoom={64} />
 				<ambientLight intensity={4} />
 
-				<Sapidae position={[0.02, -1.6, 0]} rotation={[0, 0.5, 0]} />
+				<Sapidae animation="idle-00" position={[0.02, -1.6, 0]} rotation={[0, 0.5, 0]} />
 				<Backdrop position={[0, 0, -20]} />
 			</View>
 		</>

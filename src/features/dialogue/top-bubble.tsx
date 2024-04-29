@@ -1,7 +1,7 @@
+import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { type HTMLMotionProps, type Variants, motion } from 'framer-motion'
 import { capitalize } from 'lodash-es'
-import { Sprite } from '../ui/sprite'
 
 const variant: Variants = {
 	hidden: {
