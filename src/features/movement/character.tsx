@@ -1,4 +1,4 @@
-import { SapidaeModel } from '@/components/sapidae/model'
+import { SapidaeModel } from '@/components/sapidae/sapidae-model'
 // import { useBackpackStore } from '@/components/backpack/store'
 // import { useCustomAvatarStore } from '@/components/custom-avatar/store'
 // import { useButterflyStore } from '@/stores/butterfly'

@@ -28,9 +28,7 @@
         }
       ],
       "bubbles": [
-        "I've been waiting for you. I know it's confused to start with Axie Infinity journey, but you'll love it!",
-        "Again, this is a demo, everything is under control. I'll give you a detailed explanation once you ready!",
-        "But first, let's connect your Mavis ID."
+        "I've been waiting for you. I know it's confused to start with Axie Infinity journey, but you'll love it!"
       ],
       "next": [
         {
@@ -40,27 +38,50 @@
       ]
     },
     "hello_03": {
-      "isPrompt": true,
+      "isSpeak": true,
       "id": "hello_03",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "Again, this is a demo, everything is under control. I'll give you a detailed explanation once you ready!"
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "hello_04"
+        }
+      ]
+    },
+    "hello_04": {
+      "isSpeak": true,
+      "id": "hello_04",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-01"]
+        }
+      ],
+      "bubbles": ["But first, you need to connect your Mavis ID!"],
       "choices": {
         "yes": {
-          "id": "yes",
           "value": "Connect",
           "next": [
             {
-              "action": "CONNECT_WALLET"
-            },
-            {
-              "action": "GOTO",
-              "node": "hello_04"
+              "action": "CONNECT_WALLET",
+              "node": "hello_06"
             }
           ]
         }
       }
     },
-    "hello_04": {
+
+    "hello_06": {
       "isSpeak": true,
-      "id": "hello_04",
+      "id": "hello_06",
       "before": [
         {
           "action": "EMOTE",
@@ -111,6 +132,98 @@
       "next": [
         {
           "action": "OPEN_NEW_TAB"
+        }
+      ]
+    }
+  },
+  "test": {
+    "_entry": "hello_01",
+    "hello_01": {
+      "isSpeak": true,
+      "id": "hello-01",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["wave-01"]
+        }
+      ],
+      "bubbles": ["Hey, you're here!"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "hello_02"
+        }
+      ]
+    },
+    "hello_02": {
+      "isSpeak": true,
+      "id": "hello_02",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "I've been waiting for you. I know it's confused to start with Axie Infinity journey, but you'll love it!"
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "hello_03"
+        }
+      ]
+    },
+    "hello_03": {
+      "isSpeak": true,
+      "id": "hello_03",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "Again, this is a demo, everything is under control. I'll give you a detailed explanation once you ready!"
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "hello_04"
+        }
+      ]
+    },
+    "hello_04": {
+      "isSpeak": true,
+      "id": "hello_04",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-01"]
+        }
+      ],
+      "bubbles": ["But first, you need to connect your Mavis ID!"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "hello_06"
+        }
+      ]
+    },
+
+    "hello_06": {
+      "isSpeak": true,
+      "id": "hello_06",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["clap-01"]
+        }
+      ],
+      "bubbles": ["Awesome, let's go!"],
+      "next": [
+        {
+          "action": "END"
         }
       ]
     }

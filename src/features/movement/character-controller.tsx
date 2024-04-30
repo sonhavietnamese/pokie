@@ -1,20 +1,12 @@
 import { getMovingDirection } from '@/libs/utils'
+import { useCharacterStore } from '@/stores/character'
 import type { Collider, RayColliderToi, Vector } from '@dimforge/rapier3d-compat'
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import {
-	BallCollider,
-	CapsuleCollider,
-	CylinderCollider,
-	type RapierRigidBody,
-	RigidBody,
-	quat,
-	useRapier,
-} from '@react-three/rapier'
+import { BallCollider, CapsuleCollider, type RapierRigidBody, RigidBody, quat, useRapier } from '@react-three/rapier'
 import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import type { Props, userDataType } from './type'
-// import { useCharacterStore } from '@/stores/character'
 // import { useMultiplayerStore } from '@/stores/multiplayer'
 import { useCharacterControl } from './use-character-control'
 // import { useBackpackStore } from '@/components/backpack/store'
@@ -134,10 +126,7 @@ const CharacterController = ({
 	const swimAnimation = useCharacterControl((state) => state.swim)
 	const petAnimation = useCharacterControl((state) => state.pet)
 
-	// const [canControl, isUnderWater] = useCharacterStore((s) => [
-	// 	s.canControl,
-	// 	s.isUnderWater,
-	// ])
+	const [canControl] = useCharacterStore((s) => [s.canControl])
 
 	function useIsInsideKeyboardControls() {
 		try {
@@ -179,11 +168,6 @@ const CharacterController = ({
 	const distanceFromCharacterToObject = useMemo(() => new THREE.Vector3(), [])
 	const objectAngvelToLinvel = useMemo(() => new THREE.Vector3(), [])
 	const velocityDiff = useMemo(() => new THREE.Vector3(), [])
-
-	/**
-	 * Initial light setup
-	 */
-	const dirLight: THREE.DirectionalLight = new THREE.DirectionalLight()
 
 	/**
 	 * Follow camera initial setups from props
@@ -248,27 +232,7 @@ const CharacterController = ({
 	const slopeRayCast = new rapier.Ray(slopeRayorigin, slopeRayDir)
 	let slopeRayHit: RayColliderToi | null = null
 
-	/**
-	 * Point to move setup
-	 */
-	let isBodyHitWall = false
-	let isPointMoving = false
-	const crossVector = useMemo(() => new THREE.Vector3(), [])
-	const pointToPoint = useMemo(() => new THREE.Vector3(), [])
-	const getMoveToPoint = useCharacterControl((state) => state.getMoveToPoint)
-	const bodySensorRef = useRef<Collider>(null)
-	const handleOnIntersectionEnter = () => {
-		isBodyHitWall = true
-	}
-	const handleOnIntersectionExit = () => {
-		isBodyHitWall = false
-	}
-
-	/**
-	 * Character moving function
-	 */
 	const moveCharacter = (_: number, run: boolean, slopeAngle: number, movingObjectVelocity: THREE.Vector3) => {
-		// if (!canControl) return
 		if (!characterRef.current) return
 		if (!actualSlopeAngle) actualSlopeAngle = 0
 
@@ -413,35 +377,8 @@ const CharacterController = ({
 		}
 	}
 
-	/**
-	 * Point-to-move function
-	 */
-	const pointToMove = (delta: number, slopeAngle: number, movingObjectVelocity: THREE.Vector3) => {
-		const moveToPoint = getMoveToPoint().moveToPoint
-
-		if (moveToPoint) {
-			pointToPoint.set(moveToPoint.x - currentPos.x, 0, moveToPoint.z - currentPos.z)
-			crossVector.crossVectors(pointToPoint, vectorZ)
-			// Rotate character to moving direction
-			modelEuler.y = (crossVector.y > 0 ? -1 : 1) * pointToPoint.angleTo(vectorZ)
-			// Once character close to the target point (distance<0.3),
-			// Or character close to the wall (bodySensor intersects)
-			// stop moving
-			if (characterRef.current) {
-				if (pointToPoint.length() > 0.3 && !isBodyHitWall) {
-					moveCharacter(delta, false, slopeAngle, movingObjectVelocity)
-					isPointMoving = true
-				} else {
-					isPointMoving = false
-				}
-			}
-		}
-	}
-
 	useEffect(() => {
 		let unSubscribeAction1 = () => {}
-		// let unSubscribeAction2 = () => {}
-		// let unSubscribeAction4 = () => {}
 		let unSubscribeAction = () => {}
 		let unSubscribeAction7 = () => {}
 
@@ -463,24 +400,6 @@ const CharacterController = ({
 					}
 				},
 			)
-
-			// unSubscribeAction2 = subscribeKeys(
-			// 	(state) => state.action2,
-			// 	(value) => {
-			// 		if (value) {
-			// 			action2Animation()
-			// 		}
-			// 	},
-			// )
-
-			// unSubscribeAction4 = subscribeKeys(
-			// 	(state) => state.action4,
-			// 	(value) => {
-			// 		if (value) {
-			// 			action4Animation()
-			// 		}
-			// 	},
-			// )
 
 			unSubscribeAction = subscribeKeys(
 				(state) => state.action,
@@ -562,13 +481,6 @@ const CharacterController = ({
 			;(characterRef.current.userData as userDataType).canJump = canJump
 		}
 
-		if (followLight && dirLight) {
-			dirLight.position.x = currentPos.x + followLightPos.x
-			dirLight.position.y = currentPos.y + followLightPos.y
-			dirLight.position.z = currentPos.z + followLightPos.z
-			// dirLight.target = characterModelRef.current
-		}
-
 		const { forward, backward, leftward, rightward, run } = getKeys()
 
 		// Getting moving directions (IIFE)
@@ -577,7 +489,8 @@ const CharacterController = ({
 		)
 
 		// Move character to the moving direction
-		if (forward || backward || leftward || rightward) moveCharacter(delta, run, slopeAngle, movingObjectVelocity)
+		if ((forward || backward || leftward || rightward) && canControl)
+			moveCharacter(delta, run, slopeAngle, movingObjectVelocity)
 
 		// Character current velocity
 		if (characterRef.current) currentVel.copy(characterRef.current.linvel() as THREE.Vector3)
@@ -587,13 +500,6 @@ const CharacterController = ({
 		characterModelIndicator.quaternion.rotateTowards(modelQuat, delta * turnSpeed)
 
 		// If autobalance is off, rotate character model itself
-		if (!autoBalance) {
-			if (getCameraBased().isCameraBased) {
-				characterModelRef.current.quaternion.copy(pivot.quaternion)
-			} else {
-				characterModelRef.current.quaternion.copy(characterModelIndicator.quaternion)
-			}
-		}
 
 		/**
 		 *  Camera movement
@@ -641,7 +547,7 @@ const CharacterController = ({
 		/**
 		 * Ray detect if on rigid body or dynamic platform, then apply the linear velocity and angular velocity to character
 		 */
-		if (rayHit && canJump) {
+		if (rayHit) {
 			const parentCol = rayHit.collider.parent()
 
 			if (!parentCol) return
@@ -676,23 +582,8 @@ const CharacterController = ({
 				velocityDiff.subVectors(movingObjectVelocity, currentVel)
 				if (velocityDiff.length() > 30) movingObjectVelocity.multiplyScalar(1 / velocityDiff.length())
 
-				// Apply opposite drage force to the stading rigid body, body type 0
-				// Character moving and unmoving should provide different drag force to the platform
 				if (rayHitObjectBodyType === 0) {
-					if (
-						!forward &&
-						!backward &&
-						!leftward &&
-						!rightward &&
-						canJump &&
-						// joystickDis === 0 &&
-						!isPointMoving
-						// &&
-						// !gamepadKeys.forward &&
-						// !gamepadKeys.backward &&
-						// !gamepadKeys.leftward &&
-						// !gamepadKeys.rightward
-					) {
+					if (!forward && !backward && !leftward && !rightward && canJump) {
 						movingObjectDragForce
 							.copy(bodyContactForce)
 							.multiplyScalar(delta)
@@ -777,20 +668,7 @@ const CharacterController = ({
 		/**
 		 * Apply drag force if it's not moving
 		 */
-		if (
-			!forward &&
-			!backward &&
-			!leftward &&
-			!rightward &&
-			canJump &&
-			// joystickDis === 0 &&
-			!isPointMoving
-			// &&
-			// !gamepadKeys.forward &&
-			// !gamepadKeys.backward &&
-			// !gamepadKeys.leftward &&
-			// !gamepadKeys.rightward
-		) {
+		if (!forward && !backward && !leftward && !rightward && canJump) {
 			// not on a moving object
 			if (!isOnMovingObject) {
 				dragForce.set(-currentVel.x * dragDampingC, 0, -currentVel.z * dragDampingC)
@@ -819,30 +697,16 @@ const CharacterController = ({
 			}
 		}
 
-		/**
-		 * Apply auto balance force to the character
-		 */
-		if (autoBalance && characterRef.current) autoBalanceCharacter()
+		autoBalanceCharacter()
 
-		/**
-		 * Camera collision detect
-		 */
 		camCollision && cameraCollisionDetect(delta)
 
-		/**
-		 * Point to move feature
-		 */
-		isModePointToMove && pointToMove(delta, slopeAngle, movingObjectVelocity)
-
-		/**
-		 * Apply all the animations
-		 */
-		if (!forward && !backward && !leftward && !rightward && !isPointMoving && canJump) {
+		if (!forward && !backward && !leftward && !rightward && canJump) {
 			idleAnimation()
 			// isUnderWater ? swimAnimation() : idleAnimation()
 			// SOUNDS.RUN_FOOTSTEP.stop()
 			// SOUNDS.WALK_FOOTSTEP.stop()
-		} else if (forward || backward || leftward || rightward || isPointMoving) {
+		} else if (forward || backward || leftward || rightward) {
 			if (run) {
 				runAnimation()
 				// isUnderWater ? swimAnimation() : runAnimation()
@@ -874,16 +738,6 @@ const CharacterController = ({
 			<CapsuleCollider name="character-body" args={[capsuleHalfHeight, capsuleRadius]} />
 			<BallCollider args={[0.5]} position={[0, 0.3, 0]} />
 
-			{isModePointToMove && (
-				<CylinderCollider
-					ref={bodySensorRef}
-					sensor
-					args={[capsuleHalfHeight / 2, capsuleRadius]}
-					position={[0, 0, capsuleRadius / 2]}
-					onIntersectionEnter={handleOnIntersectionEnter}
-					onIntersectionExit={handleOnIntersectionExit}
-				/>
-			)}
 			<group name="character" ref={characterModelRef} userData={{ camExcludeCollision: true }}>
 				<mesh
 					position={[rayOriginOffest.x, rayOriginOffest.y, rayOriginOffest.z + slopeRayOriginOffest]}

@@ -74,7 +74,7 @@ export default function Page() {
 
 				<LogoutButton />
 
-				<BottomDialogue />
+				{/* <BottomDialogue /> */}
 
 				{/* <div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" /> */}
 			</main>

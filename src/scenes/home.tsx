@@ -7,10 +7,11 @@ import CharacterController from '@/features/movement/character-controller'
 import { Environment, OrbitControls } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
-import { Suspense } from 'react'
-import { OutlineEffect } from 'three/examples/jsm/effects/OutlineEffect'
 
+import Bano from '@/app/test/npc/bano'
+import SapidaeNotation from '@/components/sapidae/sapidae-notation'
 import { Perf } from 'r3f-perf'
+import { Suspense } from 'react'
 
 export default function Home() {
 	return (
@@ -41,11 +42,13 @@ export default function Home() {
 			<Physics debug={true}>
 				<Ground />
 
-				<Suspense>
+				{/* <Bano position={[1, 1.8, 0]} /> */}
+
+				{/* <Suspense>
 					<group position={[1, 2, 0]}>
 						<AxieController />
 					</group>
-				</Suspense>
+				</Suspense> */}
 
 				<CharacterController
 					followLight

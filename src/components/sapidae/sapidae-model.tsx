@@ -1,7 +1,7 @@
-import { Detailed, useGLTF } from '@react-three/drei'
+import { Detailed, useGLTF, useTexture } from '@react-three/drei'
 import { useGraph } from '@react-three/fiber'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
-import type * as THREE from 'three'
+import * as THREE from 'three'
 import type { GLTF } from 'three-stdlib'
 import { SkeletonUtils } from 'three-stdlib'
 import useTextureFactory from './use-texture-factory'
@@ -27,16 +27,14 @@ type SapidaeRawProps = JSX.IntrinsicElements['group'] & {
 export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 	({ skin = 'default', enableShadow = true, ...props }, ref) => {
 		const eyeMaterialRef = useRef<THREE.MeshStandardMaterial>(null)
-
 		const { scene } = useGLTF('/models/character.glb') as GLTFResult
 		const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
 		const { nodes } = useGraph(clone) as GLTFResult
-
 		const { skins } = useTextureFactory()
 
-		// const diffuse = useTexture('/fourTone.jpg')
+		const diffuse = useTexture('/fourTone.jpg')
 
-		// diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
+		diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
 
 		const texture = skins[skin.toUpperCase()]
 		const textureEyeClose = skins.EYE_CLOSE
@@ -89,8 +87,8 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 							geometry={nodes.Sapidae_male_arms2_new001.geometry}
 							skeleton={nodes.Sapidae_male_arms2_new001.skeleton}
 						>
-							<meshStandardMaterial map={texture} roughness={1} />
-							{/* <meshToonMaterial map={texture} gradientMap={diffuse} /> */}
+							{/* <meshStandardMaterial map={texture} roughness={1} /> */}
+							<meshToonMaterial map={texture} gradientMap={diffuse} />
 						</skinnedMesh>
 						<mesh scale={80} rotation={[Math.PI / 2, 0, 0]} position={[0, 10, 0]}>
 							<capsuleGeometry args={[1, 1.5, 1]} />

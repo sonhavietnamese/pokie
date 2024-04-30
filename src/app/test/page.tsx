@@ -1,105 +1,78 @@
 'use client'
 
-import MeshFresnelMaterial from '@/components/fresnel'
-import ScreenSizeBreakpoint from '@/components/screen-size-breakpoint'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
 import AnimationManager from '@/features/axie/animation-manager'
-import Axie from '@/features/axie/axie'
-import { Sapidae } from '@/features/movement/character'
-import PhoneScreen from '@/features/phone/phone-screen'
-import { usePhoneStore } from '@/features/phone/store'
-import { Environment, OrbitControls, useScroll, useTexture } from '@react-three/drei'
-import { Canvas, extend, useFrame } from '@react-three/fiber'
-import { useWalletgo } from '@roninnetwork/walletgo'
-import { useControls } from 'leva'
-import { useEffect, useRef, useState } from 'react'
+import { useDialogueStore } from '@/features/dialogue/store'
+import { KEYBOARD_MAP } from '@/libs/constants'
+import { useStageStore } from '@/stores/stage'
+import { KeyboardControls, View } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import dynamic from 'next/dynamic'
+import { Perf } from 'r3f-perf'
+import { type MutableRefObject, useRef } from 'react'
 import * as THREE from 'three'
 
+const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
+const Avatar = dynamic(() => import('@/components/avatar'), { ssr: false })
+const Vignette = dynamic(() => import('@/components/vignette'), { ssr: false })
+const Onboarding = dynamic(() => import('@/scenes/onboarding'), { ssr: false })
+const OnboardingDialog = dynamic(() => import('@/features/onboarding/onboarding-dialog'), { ssr: false })
+const LogoutButton = dynamic(() => import('@/features/user/logout-button'), { ssr: false })
+const ToastManager = dynamic(() => import('@/features/toast/toast-manager'), { ssr: false })
+const RonManager = dynamic(() => import('@/features/ron'), { ssr: false })
+const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
+
 export default function Page() {
-	const [loading, setLoading] = useState(true)
-
-	const { walletProvider } = useWalletgo()
-
-	const { setIsOpen } = usePhoneStore()
-
-	useEffect(() => {
-		setLoading(true)
-
-		if (walletProvider) {
-			setLoading(false)
-		}
-	}, [walletProvider])
+	const ref = useRef<HTMLDivElement>(null)
+	const selectedDialogue = useDialogueStore((s) => s.selectedDialogue)
+	const stage = useStageStore((s) => s.stage)
 
 	return (
-		<main className="relative flex h-screen w-screen flex-col items-center justify-center bg-slate-200">
-			<AnimationManager />
+		<>
+			<main ref={ref} className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden">
+				<OnboardingManager />
+				<ToastManager />
+				{/* <RonManager /> */}
 
-			{/* <Canvas>
-				<directionalLight
-					castShadow
-					rotation={[42.2, -30.65, -24]}
-					position={[2, 3, 0]}
-					intensity={2}
-					color={'#FFE396'}
-					shadow-mapSize={[1024, 1024]}
-					shadow-camera-near={1}
-					shadow-camera-far={50}
-					shadow-camera-top={50}
-					shadow-camera-right={50}
-					shadow-camera-bottom={-50}
-					shadow-camera-left={-50}
-				/>
+				<KeyboardControls map={KEYBOARD_MAP}>
+					<Canvas
+						className="absolute z-0 h-screen w-screen"
+						dpr={0.75}
+						shadows={{
+							enabled: true,
+							type: THREE.PCFShadowMap,
+						}}
+						gl={{
+							outputColorSpace: THREE.SRGBColorSpace,
+							toneMapping: THREE.ACESFilmicToneMapping,
+						}}
+						camera={{
+							fov: 40,
+							near: 0.1,
+							far: 200,
+						}}
+						eventSource={ref as MutableRefObject<HTMLElement>}
+					>
+						<View.Port />
+					</Canvas>
+				</KeyboardControls>
+				<AnimationManager />
 
-				<OrbitControls />
-				<ambientLight intensity={2} />
+				{stage === 'onboarding' && selectedDialogue === 'onboarding' && <OnboardingDialog />}
 
-				<Environment
-					background
-					blur={0.05}
-					files={['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']}
-					path="/sky/"
-				/>
+				{/* <Vignette /> */}
 
-				<Banner />
+				<View index={1} className="absolute z-0 h-screen w-screen">
+					<Perf />
+					{stage === 'home' && <Home />}
+					{stage === 'onboarding' && <Onboarding />}
+				</View>
 
-				<axesHelper />
+				{stage === 'home' && <Avatar />}
 
-				<Axie />
-				<Sapidae />
-			</Canvas> */}
+				<LogoutButton />
 
-			{/* <motion.div whileHover={{ scale: 2 }}>
-				<Button color="yellow" className="items-center justify-center w-[100px]  h-[50px]">
-					<span>Click me</span>
-				</Button>
-			</motion.div> */}
-
-			<Button onClick={() => setIsOpen(true)}>
-				<span className="leading-none">asdasd</span>
-			</Button>
-
-			<PhoneScreen />
-
-			{/* <Dialog open>
-				<DialogContent className="w-[300px] h-[300px]">
-					<div className="bg-slate-400">
-						<span>asdasd</span>
-					</div>
-				</DialogContent>
-			</Dialog> */}
-
-			<ScreenSizeBreakpoint />
-
-			{/* <Dialog /> */}
-
-			{/* <Avatar /> */}
-
-			{/* <Energy /> */}
-			{/* {!loading ? <PokieCoinBalance /> : <div>Loading...</div>}
-
-
-			<Login /> */}
-		</main>
+				{/* <div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" /> */}
+			</main>
+		</>
 	)
 }

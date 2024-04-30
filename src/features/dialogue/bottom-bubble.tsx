@@ -20,7 +20,7 @@ type TopBubbleProps = {
 	message: string
 } & HTMLMotionProps<'div'>
 
-export default function GuideBubble({ message, ...props }: TopBubbleProps) {
+export default function BottomBubble({ message, ...props }: TopBubbleProps) {
 	return (
 		<motion.div
 			variants={variant}

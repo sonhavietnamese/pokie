@@ -1,19 +1,20 @@
-// @ts-nocheck
-
-import { AxieMixer } from '@/components/axie-mixer'
 import { animated, useSpring } from '@react-spring/three'
 import { Billboard, useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { type ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
-export default function Axie() {
+type AxieNotationProps = {
+	children: ReactNode
+}
+
+export default function AxieNotation({ children }: AxieNotationProps) {
 	const notationRef = useRef<THREE.Mesh>(null)
 	const angryMarkRef = useRef<THREE.Mesh>(null)
 
-	const exclamation = useTexture('/exclamation.png')
-	const happy = useTexture('/emote-happy.png')
+	const happy = useTexture('/exclamation.png')
+	const exclamation = useTexture('/emote-happy.png')
 	const angry = useTexture('/emote-angry.png')
 	const angryMark = useTexture('/angry.png')
 
@@ -31,12 +32,13 @@ export default function Axie() {
 			options: ['run', 'idle', 'walk'],
 		},
 	})
+	const materialRef = useRef<THREE.MeshBasicMaterial>(null)
 
 	const [textureAspect, setTextureAspect] = useState(exclamation.image.width / exclamation.image.height)
 
 	const prevEmote = useRef(cf.emote)
 
-	const springs = useSpring<{ rotate: [number, number, number]; scale: number }>({
+	const springs = useSpring({
 		rotate: prevEmote.current !== cf.emote ? [0, 0, 0.5] : [0, 0, 0],
 		scale: prevEmote.current !== cf.emote ? [0.2, 0.2, 1] : [1.2, 1.2, 1.2],
 		config:
@@ -53,8 +55,10 @@ export default function Axie() {
 					},
 
 		onRest: () => {
-			;(notationRef.current?.material as THREE.MeshBasicMaterial).map =
-				cf.emote === 'normal' ? exclamation : cf.emote === 'happy' ? happy : angry
+			if (!materialRef.current) return
+
+			materialRef.current.map = cf.emote === 'normal' ? exclamation : cf.emote === 'happy' ? happy : angry
+			materialRef.current.needsUpdate = true
 
 			setTextureAspect(getTextureAspect())
 			prevEmote.current = cf.emote
@@ -94,16 +98,28 @@ export default function Axie() {
 
 	const geoRef = useRef<THREE.PlaneGeometry>(null)
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		geoRef.current?.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 0.3 / 2, 0))
 	}, [textureAspect])
 
 	return (
 		<group>
 			<Billboard position={[0, 1.3, 0]}>
-				<animated.mesh scale={springs.scale} rotation={springs.rotate} ref={notationRef}>
+				<animated.mesh
+					scale={springs.scale as unknown as number}
+					rotation={springs.rotate as unknown as [number, number, number]}
+					ref={notationRef}
+				>
 					<planeGeometry ref={geoRef} args={[0.3 * textureAspect, 0.3]} />
-					<meshBasicMaterial map={exclamation} alphaTest={0.5} />
+					<meshBasicMaterial
+						ref={materialRef}
+						map={exclamation}
+						alphaTest={0.5}
+						toneMapped={false}
+						onUpdate={(self) => {
+							self.needsUpdate = true
+						}}
+					/>
 				</animated.mesh>
 			</Billboard>
 
@@ -114,7 +130,7 @@ export default function Axie() {
 				</mesh>
 			)}
 
-			<AxieMixer animation={'idle'} axieId="7566722" />
+			{children}
 		</group>
 	)
 }

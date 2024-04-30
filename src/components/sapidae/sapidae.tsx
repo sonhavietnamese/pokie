@@ -2,7 +2,7 @@ import { useAnimations, useGLTF } from '@react-three/drei'
 import { useEffect, useRef } from 'react'
 import type * as THREE from 'three'
 import type { GLTF } from 'three-stdlib'
-import { SapidaeModel } from './model'
+import { SapidaeModel } from './sapidae-model'
 import type { SapidaeAnimation } from './type'
 
 type GLTFResult = GLTF & {
@@ -37,5 +37,9 @@ export default function Sapidae({ animation, ...props }: SapidaeProps) {
 		}
 	}, [animation])
 
-	return <SapidaeModel ref={group} {...props} />
+	return (
+		<group>
+			<SapidaeModel ref={group} {...props} />
+		</group>
+	)
 }

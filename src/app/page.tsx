@@ -2,43 +2,39 @@
 
 import AnimationManager from '@/features/axie/animation-manager'
 import { KEYBOARD_MAP } from '@/libs/constants'
-import { KeyboardControls } from '@react-three/drei'
+import { useStageStore } from '@/stores/stage'
+import { KeyboardControls, View } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
+import { type MutableRefObject, useRef } from 'react'
 import * as THREE from 'three'
 
-const Avatar = dynamic(() => import('@/components/avatar'))
-const ScreenSizeBreakpoint = dynamic(() => import('@/components/screen-size-breakpoint'))
-const ToastManager = dynamic(() => import('@/features/toast/toast-manager'))
-const Energy = dynamic(() => import('@/features/energy-system/energy'))
-const PokieCoinBalance = dynamic(() => import('@/features/pokie-coin/balance'))
-const Backpack = dynamic(() => import('@/features/backpack/ui'))
-const BackpackTrigger = dynamic(() => import('@/features/backpack/trigger'))
-const ShortcutManager = dynamic(() => import('@/features/shortcut/shortcut-manager'))
-const Home = dynamic(() => import('@/scenes/home'))
+const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
+const Avatar = dynamic(() => import('@/components/avatar'), { ssr: false })
+const Vignette = dynamic(() => import('@/components/vignette'), { ssr: false })
+const Onboarding = dynamic(() => import('@/scenes/onboarding'), { ssr: false })
+const OnboardingDialog = dynamic(() => import('@/features/onboarding/onboarding-dialog'))
+const LogoutButton = dynamic(() => import('@/features/user/logout-button'), { ssr: false })
+const ToastManager = dynamic(() => import('@/features/toast/toast-manager'), { ssr: false })
+const RonManager = dynamic(() => import('@/features/ron'))
+const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
 
 export default function Page() {
+	const ref = useRef<HTMLDivElement>(null)
+	const stage = useStageStore((s) => s.stage)
+
+	console.log('stage', stage)
+
 	return (
-		<main className="relative flex h-screen w-screen justify-center">
-			{/* <div className="absolute top-5 z-[1] flex w-full items-center justify-between px-5">
-				<Avatar />
+		<>
+			<main ref={ref} className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden">
+				<OnboardingManager />
+				<ToastManager />
+				{/* <RonManager /> */}
 
-				<div className="flex items-center gap-5">
-					<div className="flex h-fit gap-4">
-						<Energy />
-						<PokieCoinBalance />
-					</div>
-
-					<div>
-						<BackpackTrigger />
-					</div>
-				</div>
-			</div> */}
-
-			<KeyboardControls map={KEYBOARD_MAP}>
-				<Suspense>
+				<KeyboardControls map={KEYBOARD_MAP}>
 					<Canvas
+						className="absolute z-0 h-screen w-screen"
 						dpr={0.75}
 						shadows={{
 							enabled: true,
@@ -52,22 +48,30 @@ export default function Page() {
 							fov: 40,
 							near: 0.1,
 							far: 200,
-							position: [0, 20, 40],
 						}}
+						eventSource={ref as MutableRefObject<HTMLElement>}
 					>
-						<Home />
+						<View.Port />
 					</Canvas>
-				</Suspense>
+				</KeyboardControls>
+				<AnimationManager />
 
-				<ShortcutManager />
-			</KeyboardControls>
+				{/* {stage === 'onboarding' && selectedDialogue === 'onboarding' && <OnboardingDialog />} */}
 
-			<ToastManager />
-			<AnimationManager />
+				{/* <Vignette /> */}
 
-			<Backpack />
+				<View index={1} className="absolute z-0 h-screen w-screen">
+					<Home />
+					{/* {stage === 'home' && <Home />} */}
+					{/* {stage === 'onboarding' && <Onboarding />} */}
+				</View>
 
-			<ScreenSizeBreakpoint />
-		</main>
+				{stage === 'home' && <Avatar />}
+
+				<LogoutButton />
+
+				{/* <div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" /> */}
+			</main>
+		</>
 	)
 }

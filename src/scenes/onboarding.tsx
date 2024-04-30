@@ -8,14 +8,14 @@ import React, { useMemo } from 'react'
 export default function Onboarding() {
 	const [subDialogue] = useDialogueStore((s) => [s.subDialogue])
 
-	const animation = useMemo<SapidaeAnimation>(() => {
-		if (!subDialogue.before) return 'idle-00'
+	// const animation = useMemo<SapidaeAnimation>(() => {
+	// 	if (!subDialogue.before) return 'idle-00'
 
-		if (subDialogue.before[0].action === 'EMOTE')
-			return subDialogue.before[0].opts ? (subDialogue.before[0].opts[0] as SapidaeAnimation) : 'idle-00'
+	// 	if (subDialogue.before[0].action === 'EMOTE')
+	// 		return subDialogue.before[0].opts ? (subDialogue.before[0].opts[0] as SapidaeAnimation) : 'idle-00'
 
-		return 'idle-00'
-	}, [subDialogue.before])
+	// 	return 'idle-00'
+	// }, [subDialogue.before])
 
 	return (
 		<>
@@ -43,7 +43,7 @@ export default function Onboarding() {
 				path="/sky/"
 			/>
 
-			<Sapidae animation={animation} />
+			<Sapidae animation={'idle-00'} />
 			<Backdrop position={[0, 0, -2]} />
 		</>
 	)
