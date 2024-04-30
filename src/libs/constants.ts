@@ -39,6 +39,7 @@ export const POKIEAXIE_ADDRESS = '0x424fb719816f30c88d7e8477e0111cb0cb162358'
 export const AXIE_ADDRESS = '0xcaca1c072d26e46686d932686015207fbe08fdb8'
 
 export const POKIECOIN_DECIMALS = 1e18
+export const RON_DECIMALS = 1e18
 
 export const STUFFS = ['milks', 'fishes', 'feathers', 'rocks', 'nuts', 'plants', 'bugs', 'stars', 'moons'] as const
 

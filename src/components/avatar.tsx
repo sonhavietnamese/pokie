@@ -1,12 +1,13 @@
 'use client'
 
-import { SPRITESHEET_DATA, SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
+import { useToastStore } from '@/features/toast/store'
 import { trimWallet } from '@/libs/utils'
 import { OrthographicCamera, View } from '@react-three/drei'
 import { useWalletgo } from '@roninnetwork/walletgo'
 import { Squircle } from '@squircle-js/react'
 import dynamic from 'next/dynamic'
-import React from 'react'
+import { useCopyToClipboard } from 'react-use'
 import Sapidae from './sapidae/sapidae'
 import { Sprite } from './ui/sprite'
 
@@ -14,6 +15,14 @@ const Backdrop = dynamic(() => import('@/components/backdrop'))
 
 export default function Avatar() {
 	const { account } = useWalletgo()
+	const [state, copy] = useCopyToClipboard()
+
+	const showToast = useToastStore((s) => s.showToast)
+
+	const handleCopy = () => {
+		copy(account ?? '')
+		showToast('Copied address!')
+	}
 
 	return (
 		<>
@@ -41,9 +50,9 @@ export default function Avatar() {
 						</div>
 					</div>
 
-					<button type="button" className="-right-[70px] -top-[50px] absolute rounded-full" onClick={() => {}}>
+					<button type="button" className="-right-[70px] -top-[50px] absolute rounded-full" onMouseUp={handleCopy}>
 						<Sprite
-							data={{ part: '1', m: SPRITESHEET_ICON.frames['btn-copy-01.png'].frame }}
+							data={{ part: '1', m: SPRITESHEET_DATA.frames['btn-copy-01.png'].frame }}
 							className="h-[30px] w-[30px]"
 						/>
 					</button>

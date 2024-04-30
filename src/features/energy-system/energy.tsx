@@ -1,14 +1,14 @@
 'use client'
 
 import { Sprite } from '@/components/ui/sprite'
-import { SPRITESHEET_ELEMENT, SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA, SPRITESHEET_ICON } from '@/configs/spritesheet'
 import { useEffect } from 'react'
 import useEnergy from './use-energy'
 
 export default function Energy() {
-	const l = SPRITESHEET_ELEMENT.frames['tag-l.png'].frame
-	const m = SPRITESHEET_ELEMENT.frames['tag-m.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['tag-r.png'].frame
+	const l = SPRITESHEET_DATA.frames['badge-02-l.png'].frame
+	const m = SPRITESHEET_DATA.frames['badge-02-m.png'].frame
+	const r = SPRITESHEET_DATA.frames['badge-02-r.png'].frame
 
 	const mIcon = SPRITESHEET_ICON.frames['icon-energy.png'].frame
 

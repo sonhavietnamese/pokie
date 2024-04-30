@@ -42,7 +42,7 @@ export function Sapidae(props: JSX.IntrinsicElements['group']) {
 	useEffect(() => {
 		const a = curAnimation ? curAnimation : ANIMATION_SET.idle
 
-		const customAnim = a === 'idle' ? sample(['idle-01', 'idle-00', 'idle-00', 'idle-00', 'idle-00']) : a
+		const customAnim = a === 'idle' ? sample(['idle-01', 'idle-02', 'idle-00']) : a
 		const action = actions[customAnim]
 
 		if (!action) return

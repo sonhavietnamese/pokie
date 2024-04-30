@@ -1,6 +1,6 @@
 'use client'
 
-import { Toast } from '@/components/ui/toast' // Import the Toast component
+import { Toast } from '@/components/ui/toast'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 import { useToastStore } from './store'
@@ -24,11 +24,11 @@ export default function ToastManager() {
 	}, [toasts])
 
 	return (
-		<section className="absolute top-16 w-[800px]">
+		<section className="absolute top-16 z-10 w-[800px]">
 			<AnimatePresence mode="wait">
 				{toasts && (
 					<Toast key={toasts.id} className="w-full">
-						<span className="z-[1] font-extrabold text-[#FFF0C7] text-xl tracking-wide">{toasts.content}</span>
+						<span className="font-extrabold text-[#FFF0C7] text-xl tracking-wide">{toasts.content}</span>
 					</Toast>
 				)}
 			</AnimatePresence>

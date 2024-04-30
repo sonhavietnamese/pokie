@@ -41,11 +41,11 @@ export default function Home() {
 			<Physics debug={true}>
 				<Ground />
 
-				{/* <Suspense>
+				<Suspense>
 					<group position={[1, 2, 0]}>
 						<AxieController />
 					</group>
-				</Suspense> */}
+				</Suspense>
 
 				<CharacterController
 					followLight

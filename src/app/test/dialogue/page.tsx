@@ -2,8 +2,6 @@
 
 import AnimationManager from '@/features/axie/animation-manager'
 import { useDialogueStore } from '@/features/dialogue/store'
-import OnboardingManager from '@/features/onboarding/onboarding-manager'
-import LogoutButton from '@/features/user/logout-button'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -15,10 +13,14 @@ import * as THREE from 'three'
 
 const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
 const Avatar = dynamic(() => import('@/components/avatar'), { ssr: false })
-const Vignette = dynamic(() => import('@/components/vignette'))
-const Onboarding = dynamic(() => import('@/scenes/onboarding'))
-const DialogueSystem = dynamic(() => import('@/features/dialogue/dialogue-system'))
-const OnboardingDialog = dynamic(() => import('@/features/onboarding/onboarding-dialog'))
+const Vignette = dynamic(() => import('@/components/vignette'), { ssr: false })
+const Onboarding = dynamic(() => import('@/scenes/onboarding'), { ssr: false })
+const OnboardingDialog = dynamic(() => import('@/features/onboarding/onboarding-dialog'), { ssr: false })
+const LogoutButton = dynamic(() => import('@/features/user/logout-button'), { ssr: false })
+const ToastManager = dynamic(() => import('@/features/toast/toast-manager'), { ssr: false })
+const BottomDialogue = dynamic(() => import('@/features/dialogue/bottom-dialogue'), { ssr: false })
+const RonManager = dynamic(() => import('@/features/ron'), { ssr: false })
+const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
 
 export default function Page() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -27,11 +29,10 @@ export default function Page() {
 
 	return (
 		<>
-			<main
-				ref={ref}
-				className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden bg-slate-200"
-			>
+			<main ref={ref} className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden">
 				<OnboardingManager />
+				<ToastManager />
+				<RonManager />
 
 				<KeyboardControls map={KEYBOARD_MAP}>
 					<Canvas
@@ -61,7 +62,7 @@ export default function Page() {
 
 				{/* <Vignette /> */}
 
-				<View index={1} className="absolute h-screen w-screen">
+				<View index={1} className="absolute z-0 h-screen w-screen">
 					<Perf />
 
 					{stage === 'home' && <Home />}
@@ -73,7 +74,7 @@ export default function Page() {
 
 				<LogoutButton />
 
-				{/* <BottomDialogue /> */}
+				<BottomDialogue />
 
 				{/* <div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" /> */}
 			</main>

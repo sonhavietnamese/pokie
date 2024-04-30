@@ -1,13 +1,13 @@
 import { Sprite } from '@/components/ui/sprite'
-import { SPRITESHEET_ELEMENT, SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA, SPRITESHEET_ICON } from '@/configs/spritesheet'
 import React, { useEffect } from 'react'
 import { usePokieCoinBalanceStore } from './store'
 import usePokieCoin from './use-pokie-coin'
 
 export default function PokieCoinBalance() {
-	const l = SPRITESHEET_ELEMENT.frames['tag-l.png'].frame
-	const m = SPRITESHEET_ELEMENT.frames['tag-m.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['tag-r.png'].frame
+	const l = SPRITESHEET_DATA.frames['badge-02-l.png'].frame
+	const m = SPRITESHEET_DATA.frames['badge-02-m.png'].frame
+	const r = SPRITESHEET_DATA.frames['badge-02-r.png'].frame
 
 	const mIcon = SPRITESHEET_ICON.frames['icon-pokie-coin.png'].frame
 

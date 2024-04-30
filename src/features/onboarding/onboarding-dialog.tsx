@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Button } from '@/components/ui/button'
 import { useDialogueStore } from '@/features/dialogue/store'
 import type { Choice, NextNode } from '@/features/dialogue/type'
@@ -26,17 +28,14 @@ export default function OnboardingDialog() {
 	const [nextActionIndex, setNextActionIndex] = useState(0)
 	const bubble = useMemo(() => bubbles[Math.min(bubbleIndex, bubbles.length)], [bubbleIndex, bubbles])
 
+	const setOpenMavisId = useMavisIdStore((s) => s.setOpen)
 	const setStage = useStageStore((s) => s.setStage)
-
 	const { walletProvider } = useWalletgo()
-
 	const { login } = useUser()
 
 	useEffect(() => {
 		if (walletProvider) login()
 	}, [walletProvider])
-
-	const setOpenMavisId = useMavisIdStore((s) => s.setOpen)
 
 	const onBubbleClick = () => {
 		if (size(choices) > 0) return
@@ -60,13 +59,13 @@ export default function OnboardingDialog() {
 				setSubDialogue(dialogues[node])
 
 				if (dialogues[node].bubbles) {
-					setBubbles(dialogues[node].bubbles)
+					setBubbles(dialogues[node].bubbles ?? [])
 					setChoices({})
 					setBubbleIndex(0)
 					setNextActionIndex(0)
 				}
 				if (dialogues[node].choices) {
-					setChoices(dialogues[node].choices)
+					setChoices(dialogues[node].choices ?? {})
 				}
 
 				return

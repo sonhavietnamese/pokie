@@ -74,5 +74,45 @@
         }
       ]
     }
+  },
+  "ron_insufficient": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "id": "ron_insufficient-01",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["talk-01"]
+        }
+      ],
+      "bubbles": [
+        "To testing all the features, you need to have at least 1 RON."
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "id": "ron_insufficient-02",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "You can get testnet RON from faucet. Click here to copy your address and open the faucet page."
+      ],
+      "next": [
+        {
+          "action": "OPEN_NEW_TAB"
+        }
+      ]
+    }
   }
 }
