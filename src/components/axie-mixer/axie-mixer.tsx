@@ -17,7 +17,7 @@ export const fetcher = (url: string, axieId: string) =>
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-API-Key': 'tkHTIdbKZApvgfCT2xktz9njf0xlkb69',
+			'X-API-Key': process.env.NEXT_PUBLIC_DEV_PORTAL_API_KEY as string,
 		},
 		body: JSON.stringify({
 			query: `query AxieQuery {
@@ -37,7 +37,7 @@ export const fetcher = (url: string, axieId: string) =>
 export default function AxieMixer({ axieId, animation }: AxieMixerProps) {
 	const { data, isLoading } = useSWRImmutable(
 		axieId ? 'https://api-gateway.skymavis.com/graphql/marketplace' : null,
-		(url) => fetcher(url, axieId || '123'),
+		(url) => fetcher(url, axieId as string),
 		{
 			refreshWhenHidden: false,
 			revalidateOnFocus: false,
@@ -61,39 +61,67 @@ export default function AxieMixer({ axieId, animation }: AxieMixerProps) {
 	>([])
 
 	useEffect(() => {
-		if (!data) return
+		const handle = async () => {
+			const res = await fetch('https://api-gateway.skymavis.com/graphql/marketplace', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-API-Key': process.env.NEXT_PUBLIC_DEV_PORTAL_API_KEY as string,
+				},
+				body: JSON.stringify({
+					query: `query AxieQuery {
+                  axie(axieId: "${axieId}") {
+                    bodyShape
+                    primaryColor
+                    parts {
+                      id
+                    }
+                    class
+                    id
+                  }
+                }`,
+				}),
+			})
 
-		const axie = data.data.axie
+			const data = await res.json()
 
-		const selectedAxieParts: {
-			bodyShape: BodyShape
-			parts: {
-				mouth: string
-				tail: string
-				eyes: string
-				horn: string
-				ear: string
-				back: string
+			if (!data) return
+
+			const axie = data.data.axie
+
+			const selectedAxieParts: {
+				bodyShape: BodyShape
+				parts: {
+					mouth: string
+					tail: string
+					eyes: string
+					horn: string
+					ear: string
+					back: string
+				}
+				primaryColor: string
+			}[] = []
+
+			const parts = {
+				bodyShape: axie.bodyShape.toLowerCase() as BodyShape,
+				parts: {
+					eyes: AXIE_PARTS_MAP[axie.parts[0].id.split('-').slice(1).join('-')],
+					ear: AXIE_PARTS_MAP[axie.parts[1].id.split('-').slice(1).join('-')],
+					back: AXIE_PARTS_MAP[axie.parts[2].id.split('-').slice(1).join('-')],
+					mouth: AXIE_PARTS_MAP[axie.parts[3].id.split('-').slice(1).join('-')],
+					horn: AXIE_PARTS_MAP[axie.parts[4].id.split('-').slice(1).join('-')],
+					tail: AXIE_PARTS_MAP[axie.parts[5].id.split('-').slice(1).join('-')],
+				},
+				primaryColor: AXIE_COLORS_MAP[axie.primaryColor],
 			}
-			primaryColor: string
-		}[] = []
 
-		const parts = {
-			bodyShape: axie.bodyShape.toLowerCase() as BodyShape,
-			parts: {
-				eyes: AXIE_PARTS_MAP[axie.parts[0].id.split('-').slice(1).join('-')],
-				ear: AXIE_PARTS_MAP[axie.parts[1].id.split('-').slice(1).join('-')],
-				back: AXIE_PARTS_MAP[axie.parts[2].id.split('-').slice(1).join('-')],
-				mouth: AXIE_PARTS_MAP[axie.parts[3].id.split('-').slice(1).join('-')],
-				horn: AXIE_PARTS_MAP[axie.parts[4].id.split('-').slice(1).join('-')],
-				tail: AXIE_PARTS_MAP[axie.parts[5].id.split('-').slice(1).join('-')],
-			},
-			primaryColor: AXIE_COLORS_MAP[axie.primaryColor],
+			selectedAxieParts.push(parts)
+			setParts(selectedAxieParts)
 		}
 
-		selectedAxieParts.push(parts)
-		setParts(selectedAxieParts)
-	}, [data])
+		handle()
+		// }, [data])
+	}, [])
 
 	return (
 		<>

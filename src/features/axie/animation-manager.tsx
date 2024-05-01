@@ -2,7 +2,7 @@ import pako from 'pako'
 import { useEffect } from 'react'
 import useSWRImmutable from 'swr'
 import * as THREE from 'three'
-import { useAnimationClipStore } from './use-animation-clips'
+import { useAnimationClipStore } from './use-axie-clips'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.arrayBuffer())
 

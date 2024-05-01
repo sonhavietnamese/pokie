@@ -62,7 +62,7 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 		}, [])
 
 		return (
-			<group ref={ref} {...props} dispose={null}>
+			<group renderOrder={1} ref={ref} {...props} dispose={null}>
 				<group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.009}>
 					<primitive object={nodes.mixamorigHips} />
 

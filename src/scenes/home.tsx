@@ -1,21 +1,24 @@
 'use client'
 
 import { Ground } from '@/features/environment/ground'
-import AxieController from '@/features/movement/axie-animation-controller'
 import { Sapidae } from '@/features/movement/character'
 import CharacterController from '@/features/movement/character-controller'
-import { Environment, OrbitControls } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
+import { Environment } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
-
-import Bano from '@/app/test/npc/bano'
-import SapidaeNotation from '@/components/sapidae/sapidae-notation'
+import dynamic from 'next/dynamic'
 import { Perf } from 'r3f-perf'
-import { Suspense } from 'react'
+
+const AxieAutoMove = dynamic(() => import('@/features/axie/axie-auto-move'))
+const Bano = dynamic(() => import('@/app/test/npc/bano'))
 
 export default function Home() {
+	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
+
 	return (
 		<>
+			<Perf />
+
 			<directionalLight
 				castShadow
 				rotation={[42.2, -30.65, -24]}
@@ -39,19 +42,18 @@ export default function Home() {
 				path="/sky/"
 			/>
 
-			<Physics debug={true}>
+			<Physics debug={true} timeStep="vary">
+				<Bano position={[1, 1.8, 0]} />
+
 				<Ground />
 
-				{/* <Bano position={[1, 1.8, 0]} /> */}
-
-				{/* <Suspense>
-					<group position={[1, 2, 0]}>
-						<AxieController />
-					</group>
-				</Suspense> */}
+				<AxieAutoMove followCharacter position={[1, 3, 0]} key={'1'} axieId="123567" />
+				<AxieAutoMove position={[-1, 3, 0]} key={'2'} axieId="123" />
 
 				<CharacterController
 					followLight
+					camMaxDis={-10}
+					camInitDis={isPokiedexOpen ? -2 : -8}
 					camInitDir={{ x: 0, y: Math.PI, z: 0 }}
 					springK={2}
 					dampingC={0.2}

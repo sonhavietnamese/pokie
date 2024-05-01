@@ -1,11 +1,11 @@
 import { Mixer } from '@/components/axie-mixer'
 import { AXIE_COLORS_MAP, AXIE_PARTS_MAP } from '@/components/axie-mixer/constants'
 import type { BodyShape } from '@/components/axie-mixer/types'
+import { usePokieAxie } from '@/features/pokie-axie/use-pokie-axie'
 import { useEffect, useState } from 'react'
-import { useAxie } from './use-axie'
 
 export default function AxieManager() {
-	const { data } = useAxie()
+	const { data } = usePokieAxie()
 
 	const [parts, setParts] = useState<
 		{

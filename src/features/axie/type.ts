@@ -52,3 +52,5 @@ export type SearchAxieResponse = {
 		items: AxieItem[]
 	}
 }
+
+export type AxieEmote = 'normal' | 'happy' | 'angry'

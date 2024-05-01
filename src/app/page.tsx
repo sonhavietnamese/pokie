@@ -18,6 +18,8 @@ const RonManager = dynamic(() => import('@/features/ron-manager'))
 const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
 const DialogueSystem = dynamic(() => import('@/features/dialogue/dialogue-system'), { ssr: false })
 const AnimationManager = dynamic(() => import('@/features/axie/animation-manager'), { ssr: false })
+const ShortcutManager = dynamic(() => import('@/features/shortcut/shortcut-manager'), { ssr: false })
+const Pokiedex = dynamic(() => import('@/features/pokiedex/pokiedex'), { ssr: false })
 
 export default function Page() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -27,48 +29,51 @@ export default function Page() {
 		<>
 			<main ref={ref} className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden">
 				<OnboardingManager />
+				<AnimationManager />
+
+				<Vignette />
 				<ToastManager />
 				<DialogueSystem />
 				<RonManager />
 
 				<KeyboardControls map={KEYBOARD_MAP}>
-					<Canvas
-						className="absolute z-0 h-screen w-screen"
-						dpr={0.75}
-						shadows={{
-							enabled: true,
-							type: THREE.PCFShadowMap,
-						}}
-						gl={{
-							outputColorSpace: THREE.SRGBColorSpace,
-							toneMapping: THREE.ACESFilmicToneMapping,
-						}}
-						camera={{
-							fov: 40,
-							near: 0.1,
-							far: 200,
-						}}
-						eventSource={ref as MutableRefObject<HTMLElement>}
-					>
-						<View.Port />
-					</Canvas>
+					<ShortcutManager />
+
+					<Pokiedex>
+						<Canvas
+							className="absolute inset-0 z-0 h-screen w-screen"
+							dpr={0.75}
+							shadows={{
+								enabled: true,
+								type: THREE.PCFShadowMap,
+							}}
+							gl={{
+								outputColorSpace: THREE.SRGBColorSpace,
+								toneMapping: THREE.ACESFilmicToneMapping,
+							}}
+							camera={{
+								fov: 40,
+								near: 0.1,
+								far: 200,
+							}}
+							eventSource={ref as MutableRefObject<HTMLElement>}
+						>
+							<View.Port />
+						</Canvas>
+
+						<View index={1} className="absolute inset-0 z-0 h-screen w-screen">
+							{stage === 'home' && <Home />}
+							{stage === 'onboarding' && <Onboarding />}
+						</View>
+
+						{stage === 'home' && <Avatar />}
+						{stage === 'home' && <LogoutButton />}
+
+						{stage === 'onboarding' && (
+							<div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" />
+						)}
+					</Pokiedex>
 				</KeyboardControls>
-				<AnimationManager />
-
-				<Vignette />
-
-				<View index={1} className="absolute z-0 h-screen w-screen">
-					{stage === 'home' && <Home />}
-					{stage === 'onboarding' && <Onboarding />}
-				</View>
-
-				{stage === 'home' && <Avatar />}
-
-				{stage === 'home' && <LogoutButton />}
-
-				{stage === 'onboarding' && (
-					<div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" />
-				)}
 			</main>
 		</>
 	)

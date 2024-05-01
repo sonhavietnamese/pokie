@@ -1,4 +1,4 @@
-import { useAnimationClipStore } from '@/features/axie/use-animation-clips'
+import { useAnimationClipStore } from '@/features/axie/use-axie-clips'
 import { Capsule, Detailed, useGLTF, useTexture } from '@react-three/drei'
 import { useFrame, useGraph } from '@react-three/fiber'
 import { useDeferredValue, useEffect, useMemo, useRef } from 'react'

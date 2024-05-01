@@ -1,3 +1,4 @@
+import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { getMovingDirection } from '@/libs/utils'
 import { useCharacterStore } from '@/stores/character'
 import type { Collider, RayColliderToi, Vector } from '@dimforge/rapier3d-compat'
@@ -147,7 +148,7 @@ const CharacterController = ({
 	const { rapier, world } = useRapier()
 
 	// const isAiming = useRef(false)
-	// const { isOpen: isPokiedexOpen } = usePokiedex()
+	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
 	// const isCatchAxieUIOpen = useCatchAxieStore((s) => s.isOpenUI)
 	// const isOpenCustomAvatarUI = useCustomAvatarStore((s) => s.isOpenUI)
 
@@ -499,8 +500,6 @@ const CharacterController = ({
 		modelQuat.setFromEuler(modelEuler)
 		characterModelIndicator.quaternion.rotateTowards(modelQuat, delta * turnSpeed)
 
-		// If autobalance is off, rotate character model itself
-
 		/**
 		 *  Camera movement
 		 */
@@ -512,6 +511,12 @@ const CharacterController = ({
 		// } else {
 		// 	camTargetPos = { x: 0, y: 0, z: 0 }
 		// }
+
+		if (isPokiedexOpen) {
+			camTargetPos = { x: 0, y: 1.7, z: 0 }
+		} else {
+			camTargetPos = { x: 0, y: 0, z: 0 }
+		}
 
 		pivotPosition.set(
 			currentPos.x + camTargetPos.x,

@@ -1,48 +1,34 @@
 import { animated, useSpring } from '@react-spring/three'
 import { Billboard, useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useControls } from 'leva'
-import { type ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { type ReactNode, useLayoutEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
+import type { AxieEmote } from './type'
 
 type AxieNotationProps = {
 	children: ReactNode
+	emote: AxieEmote
 }
 
-export default function AxieNotation({ children }: AxieNotationProps) {
+export default function AxieNotation({ children, emote }: AxieNotationProps) {
 	const notationRef = useRef<THREE.Mesh>(null)
+	const materialRef = useRef<THREE.MeshBasicMaterial>(null)
 	const angryMarkRef = useRef<THREE.Mesh>(null)
 
-	const happy = useTexture('/exclamation.png')
-	const exclamation = useTexture('/emote-happy.png')
+	const exclamation = useTexture('/exclamation.png')
+	const happy = useTexture('/emote-happy.png')
 	const angry = useTexture('/emote-angry.png')
 	const angryMark = useTexture('/angry.png')
 
-	const cf = useControls('Position', {
-		position: {
-			value: [0, 1.5, 0],
-			step: 0.1,
-		},
-		emote: {
-			value: 'normal',
-			options: ['angry', 'normal', 'happy'],
-		},
-		animation: {
-			value: 'idle',
-			options: ['run', 'idle', 'walk'],
-		},
-	})
-	const materialRef = useRef<THREE.MeshBasicMaterial>(null)
-
 	const [textureAspect, setTextureAspect] = useState(exclamation.image.width / exclamation.image.height)
 
-	const prevEmote = useRef(cf.emote)
+	const prevEmote = useRef(emote)
 
 	const springs = useSpring({
-		rotate: prevEmote.current !== cf.emote ? [0, 0, 0.5] : [0, 0, 0],
-		scale: prevEmote.current !== cf.emote ? [0.2, 0.2, 1] : [1.2, 1.2, 1.2],
+		rotate: prevEmote.current !== emote ? [0, 0, 0.5] : [0, 0, 0],
+		scale: prevEmote.current !== emote ? [0.2, 0.2, 1] : [1.2, 1.2, 1.2],
 		config:
-			prevEmote.current !== cf.emote
+			prevEmote.current !== emote
 				? {
 						tension: 400,
 						friction: 35,
@@ -57,32 +43,24 @@ export default function AxieNotation({ children }: AxieNotationProps) {
 		onRest: () => {
 			if (!materialRef.current) return
 
-			materialRef.current.map = cf.emote === 'normal' ? exclamation : cf.emote === 'happy' ? happy : angry
+			materialRef.current.map = emote === 'normal' ? exclamation : emote === 'happy' ? happy : angry
 			materialRef.current.needsUpdate = true
 
 			setTextureAspect(getTextureAspect())
-			prevEmote.current = cf.emote
+			prevEmote.current = emote
 		},
 	})
 
-	const getTextureAspect = useCallback(() => {
-		if (cf.emote === 'normal') {
+	const getTextureAspect = () => {
+		if (emote === 'normal') {
 			return exclamation.image.width / exclamation.image.height
 		}
-		if (cf.emote === 'happy') {
+		if (emote === 'happy') {
 			return happy.image.width / happy.image.height
 		}
 
 		return angry.image.width / angry.image.height
-	}, [
-		angry.image.height,
-		angry.image.width,
-		cf.emote,
-		exclamation.image.height,
-		exclamation.image.width,
-		happy.image.height,
-		happy.image.width,
-	])
+	}
 	const angryAspect = angry.image.width / angry.image.height
 
 	useFrame((state) => {
@@ -123,7 +101,7 @@ export default function AxieNotation({ children }: AxieNotationProps) {
 				</animated.mesh>
 			</Billboard>
 
-			{cf.emote === 'angry' && (
+			{emote === 'angry' && (
 				<mesh ref={angryMarkRef} position={[-0.25, 0.95, 0.55]} scale={1.2}>
 					<planeGeometry args={[0.2 * angryAspect, 0.2]} />
 					<meshBasicMaterial map={angryMark} alphaTest={0.5} />

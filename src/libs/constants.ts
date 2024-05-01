@@ -15,7 +15,6 @@ export const KEYBOARD_MAP = [
 
 	{ name: 'action', keys: ['KeyF'] },
 
-	{ name: 'aim', keys: ['KeyZ'] },
 	{ name: 'spawn', keys: ['KeyQ'] },
 	{ name: 'open-ui', keys: ['Space'] },
 
@@ -25,6 +24,7 @@ export const KEYBOARD_MAP = [
 
 	{ name: 'ride-animal', keys: ['KeyR'] },
 	{ name: 'catch-axie', keys: ['KeyC'] },
+	{ name: 'pokiedex', keys: ['KeyE'] },
 
 	{ name: 'pet-axie', keys: ['KeyP'] },
 ]

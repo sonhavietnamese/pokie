@@ -31,6 +31,7 @@
     "@squircle-js/react": "^1.2.0",
     "clsx": "^2.1.0",
     "drizzle-orm": "^0.30.8",
+    "ecctrl": "1.0.60",
     "framer-motion": "^11.1.7",
     "glslify-loader": "^2.0.0",
     "lodash-es": "^4.17.21",
