@@ -7,7 +7,7 @@ import type { ReactNode } from 'react'
 
 export const EXPLORER_DOMAIN: string = 'https://app.roninchain.com'
 export const EXPLORER_CDN_URL: string = 'https://cdn.skymavis.com/explorer-cdn'
-const WC_PROJECT_ID: string = '2c8ad7fba00df7c63cea61ced996e4d3'
+const WC_PROJECT_ID = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string
 
 const DEFAULT_WALLETS = createRoninWallets({
 	projectId: WC_PROJECT_ID,
