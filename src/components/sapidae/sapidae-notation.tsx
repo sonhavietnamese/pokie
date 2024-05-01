@@ -19,6 +19,10 @@ export default function SapidaeNotation({ children, emote, ...props }: SapidaeNo
 	const question = useTexture('/npc-bubble-01.png')
 	const angry = useTexture('/emote-angry.png')
 
+	exclamation.colorSpace = THREE.SRGBColorSpace
+	question.colorSpace = THREE.SRGBColorSpace
+	angry.colorSpace = THREE.SRGBColorSpace
+
 	const [textureAspect, setTextureAspect] = useState(exclamation.image.width / exclamation.image.height)
 
 	const prevEmote = useRef(emote)

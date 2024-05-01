@@ -6,6 +6,9 @@ type PokiedexState = {
 
 	aimedAxie: string | null
 	setAimedAxie: (axieId: string | null) => void
+
+	foundedAxieId: string
+	setFoundedAxieId: (axieId: string) => void
 }
 
 export const usePokiedexStore = create<PokiedexState>()((set) => ({
@@ -14,4 +17,7 @@ export const usePokiedexStore = create<PokiedexState>()((set) => ({
 
 	aimedAxie: null,
 	setAimedAxie: (aimedAxie: string | null) => set({ aimedAxie }),
+
+	foundedAxieId: '',
+	setFoundedAxieId: (foundedAxieId: string) => set({ foundedAxieId }),
 }))

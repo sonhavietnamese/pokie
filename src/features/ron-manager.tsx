@@ -35,7 +35,7 @@ export default function RonManager() {
 		return () => {
 			document.removeEventListener('visibilitychange', fetchRonBalance)
 		}
-	}, [account, walletProvider, stage])
+	}, [account, walletProvider, stage, selectedDialogue])
 
 	return null
 }

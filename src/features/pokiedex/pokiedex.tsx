@@ -1,7 +1,9 @@
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { AnimatePresence, type Variants, animate, motion } from 'framer-motion'
+import { capitalize } from 'lodash-es'
 import { useEffect } from 'react'
+import { useAxieStore } from '../axie/axie-store'
 import { usePokiedexStore } from './pokiedex-store'
 
 const pokiedexVariants: Variants = {
@@ -56,7 +58,14 @@ type Props = {
 }
 
 export default function Pokiedex({ children }: Props) {
-	const [isOpen] = usePokiedexStore((s) => [s.isOpen])
+	const [isOpen, foundedAxieId, setFoundedAxieId] = usePokiedexStore((s) => [
+		s.isOpen,
+		s.foundedAxieId,
+		s.setFoundedAxieId,
+	])
+	const axies = useAxieStore((s) => s.axies)
+
+	console.log(foundedAxieId && axies[foundedAxieId])
 
 	useEffect(() => {
 		if (isOpen) open()
@@ -77,6 +86,7 @@ export default function Pokiedex({ children }: Props) {
 	}
 
 	const close = () => {
+		setFoundedAxieId('')
 		animate(
 			'#mask',
 			{
@@ -130,110 +140,62 @@ export default function Pokiedex({ children }: Props) {
 										id="pokiedex-axie-info"
 										className="absolute inset-0 h-full w-full p-[12%] px-[18%] py-[15%] pr-[30%]"
 									>
-										<div className="container flex h-full w-full flex-col items-center">
-											<figure className="relative mr-2 flex h-fit w-full flex-col items-center justify-center">
-												<img
-													id="axie-preview"
-													src={'https://axiecdn.axieinfinity.com/axies/123123/axie/axie-full-transparent.png'}
-													alt={'Axie'}
-													className="scale-x-[-1] w-full h-full object-cover z-[1]"
-												/>
-
-												<img
-													src={'https://axiecdn.axieinfinity.com/mixer-stuffs/v4/body-normal/shadow.png'}
-													alt={'Axie'}
-													className="absolute w-[60%] translate-x-[-50%] left-[55%] top-[75%] translate-y-[-50%] z-[0]"
-												/>
-											</figure>
-
-											<span id="axie-id" className="text-[1cqw] -mt-[10%] outline-2 text-[#F1DDA8]">
-												{'<axie-id>'}
-											</span>
-											<div className="flex w-full relative mt-3 h-fit items-center">
-												<figure className="w-[2cqw] aspect-square bg-[#462D17] p-[.25cqw] border-[.2cqw] border-[#7D5432] z-[1] rounded-full flex items-center justify-center">
+										{foundedAxieId && axies[foundedAxieId] && (
+											<div className="container flex h-full w-full flex-col items-center">
+												<figure className="relative mr-2 flex h-fit w-full flex-col items-center justify-center">
 													<img
-														id={'pokiedex-axie-info-class-image'}
-														src="https://cdn.axieinfinity.com/marketplace-website/asset-icon/class/plant.png"
-														alt=""
+														id="axie-preview"
+														src={`https://axiecdn.axieinfinity.com/axies/${foundedAxieId}/axie/axie-full-transparent.png`}
+														alt={'Axie'}
+														className="scale-x-[-1] w-full h-full object-cover z-[1]"
+													/>
+
+													<img
+														src={'https://axiecdn.axieinfinity.com/mixer-stuffs/v4/body-normal/shadow.png'}
+														alt={'Axie'}
+														className="absolute w-[60%] translate-x-[-50%] left-[55%] top-[75%] translate-y-[-50%] z-[0]"
 													/>
 												</figure>
-												<div className="absolute flex h-full w-full items-center justify-center rounded-full bg-[#301B0A]">
-													<span
-														id={'pokiedex-axie-info-class'}
-														className="ml-[1cqw] text-[#FFC45D] text-[1.2cqw] outline-2"
-													>
-														{'<axie-class>'}
-													</span>
+
+												<span id="axie-id" className="-mt-[10%] text-[#F1DDA8] text-[1cqw] outline-2">
+													#{foundedAxieId}
+												</span>
+												<div className="relative mt-3 flex h-fit w-full items-center">
+													<figure className="z-[1] flex aspect-square w-[2cqw] items-center justify-center rounded-full border-[#7D5432] border-[.2cqw] bg-[#462D17] p-[.25cqw]">
+														<img
+															id={'pokiedex-axie-info-class-image'}
+															src={`https://cdn.axieinfinity.com/marketplace-website/asset-icon/class/${axies[foundedAxieId].class}.png`}
+															alt=""
+														/>
+													</figure>
+													<div className="absolute flex h-full w-full items-center justify-center rounded-full bg-[#301B0A]">
+														<span
+															id={'pokiedex-axie-info-class'}
+															className="ml-[1cqw] text-[#FFC45D] text-[1.2cqw] outline-2"
+														>
+															{capitalize(axies[foundedAxieId].class)}
+														</span>
+													</div>
+												</div>
+												<div className="mt-[2cqw] grid h-fit w-full grid-cols-3 grid-rows-2 gap-1.5">
+													{Object.keys(axies[foundedAxieId].parts).map((part) => (
+														<div
+															key={part}
+															className="relative flex h-[100%] w-[100%] items-center justify-center rounded-[.8cqw]"
+														>
+															<figure className="flex aspect-square w-[100%] items-center justify-center rounded-[.8cqw] bg-[#FEF1C6]">
+																<img
+																	id={`pokiedex-axie-info-${part}`}
+																	src={`https://cdn.axieinfinity.com/marketplace-website/asset-icon/parts/${part}-${axies[foundedAxieId].parts[part].name}.png`}
+																	alt=""
+																	className="w-[70%]"
+																/>
+															</figure>
+														</div>
+													))}
 												</div>
 											</div>
-											<div className="mt-[2cqw] grid h-fit w-full grid-cols-3 grid-rows-2 gap-1.5">
-												<div className="relative flex h-[100%] w-[100%] items-center justify-center rounded-[.8cqw]">
-													<figure className="flex aspect-square w-[100%] items-center justify-center rounded-[.8cqw] bg-[#FEF1C6]">
-														<img
-															id={'pokiedex-axie-info-eye'}
-															src="https://cdn.axieinfinity.com/marketplace-website/asset-icon/parts/eyes-puppy.png"
-															alt=""
-															className="w-[70%]"
-														/>
-													</figure>
-												</div>
-
-												<div className="relative flex h-[100%] w-[100%] items-center justify-center rounded-[.8cqw]">
-													<figure className="flex aspect-square w-[100%] items-center justify-center rounded-[.8cqw] bg-[#FEF1C6]">
-														<img
-															id={'pokiedex-axie-info-ear'}
-															src="https://cdn.axieinfinity.com/marketplace-website/asset-icon/parts/eyes-puppy.png"
-															alt=""
-															className="w-[70%]"
-														/>
-													</figure>
-												</div>
-
-												<div className="relative flex h-[100%] w-[100%] items-center justify-center rounded-[.8cqw]">
-													<figure className="flex aspect-square w-[100%] items-center justify-center rounded-[.8cqw] bg-[#FEF1C6]">
-														<img
-															id={'pokiedex-axie-info-back'}
-															src="https://cdn.axieinfinity.com/marketplace-website/asset-icon/parts/eyes-puppy.png"
-															alt=""
-															className="w-[70%]"
-														/>
-													</figure>
-												</div>
-
-												<div className="w-[100%] h-[100%] relative rounded-[.8cqw] flex items-center justify-center">
-													<figure className=" rounded-[.8cqw] w-[100%] aspect-square flex items-center bg-[#FEF1C6] justify-center">
-														<img
-															id={'pokiedex-axie-info-mouth'}
-															src="https://cdn.axieinfinity.com/marketplace-website/asset-icon/parts/eyes-puppy.png"
-															alt=""
-															className="w-[70%]"
-														/>
-													</figure>
-												</div>
-
-												<div className="w-[100%] h-[100%] relative rounded-[.8cqw] flex items-center justify-center">
-													<figure className=" rounded-[.8cqw] w-[100%] aspect-square flex items-center bg-[#FEF1C6] justify-center">
-														<img
-															id={'pokiedex-axie-info-horn'}
-															src="https://cdn.axieinfinity.com/marketplace-website/asset-icon/parts/eyes-puppy.png"
-															alt=""
-															className="w-[70%]"
-														/>
-													</figure>
-												</div>
-
-												<div className="w-[100%] h-[100%] relative rounded-[.8cqw] flex items-center justify-center">
-													<figure className=" rounded-[.8cqw] w-[100%] aspect-square flex items-center bg-[#FEF1C6] justify-center">
-														<img
-															id={'pokiedex-axie-info-tail'}
-															src="https://cdn.axieinfinity.com/marketplace-website/asset-icon/parts/eyes-puppy.png"
-															alt=""
-															className="w-[70%]"
-														/>
-													</figure>
-												</div>
-											</div>
-										</div>
+										)}
 									</div>
 								</motion.div>
 							</div>

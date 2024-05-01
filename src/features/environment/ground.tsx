@@ -1,6 +1,6 @@
 import { useGLTF, useTexture } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { type CollisionPayload, CylinderCollider, RigidBody } from '@react-three/rapier'
+import { type CollisionPayload, CylinderCollider, RigidBody, useRapier } from '@react-three/rapier'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import type { GLTF } from 'three-stdlib'

@@ -20,6 +20,10 @@ export default function AxieNotation({ children, emote }: AxieNotationProps) {
 	const angry = useTexture('/emote-angry.png')
 	const angryMark = useTexture('/angry.png')
 
+	exclamation.colorSpace = THREE.SRGBColorSpace
+	happy.colorSpace = THREE.SRGBColorSpace
+	angry.colorSpace = THREE.SRGBColorSpace
+
 	const [textureAspect, setTextureAspect] = useState(exclamation.image.width / exclamation.image.height)
 
 	const prevEmote = useRef(emote)

@@ -464,12 +464,11 @@ const AxieAutoMove = ({
 			enabledRotations={[true, true, true]}
 			position={props.position}
 		>
-			<CapsuleCollider name={axieId} args={[capsuleHalfHeight, capsuleRadius]} />
-			<BallCollider name={axieId} args={[0.5]} position={[0, 0.3, 0]} />
-			<group ref={characterModelRef} name={axieId} position={[0, -0.6, 0]} userData={{ camExcludeCollision: true }}>
+			<CapsuleCollider name={`axie-${axieId}`} args={[capsuleHalfHeight, capsuleRadius]} />
+			<BallCollider args={[0.5]} position={[0, 0.3, 0]} />
+			<group ref={characterModelRef} position={[0, -0.6, 0]} userData={{ camExcludeCollision: true }}>
 				<mesh
 					renderOrder={3}
-					name={axieId}
 					position={[rayOriginOffset.x, rayOriginOffset.y, rayOriginOffset.z + slopeRayOriginOffset]}
 					ref={slopeRayOriginRef}
 					visible={showSlopeRayOrigin}

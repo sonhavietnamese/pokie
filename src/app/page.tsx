@@ -56,6 +56,7 @@ export default function Page() {
 								near: 0.1,
 								far: 200,
 							}}
+							// frameloop="demand"
 							eventSource={ref as MutableRefObject<HTMLElement>}
 						>
 							<View.Port />

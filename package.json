@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "biome format --write .",
-    "dev:multiplayer": "cd multiplayer && bun start",
+    "dev:multiplayer": "cd src/multiplayer-service && bun start",
     "db:generate": "drizzle-kit generate:pg",
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio",
