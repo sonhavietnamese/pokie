@@ -22,7 +22,9 @@ interface DialogueStore {
 	setBottomDialogues: (bottomDialogues: Dialogue | null) => void
 
 	dialogueType: DialogType | null
-	showDialogue: (dialogue: string, dialogueType: DialogType | null) => void
+	showDialogue: (dialogue: keyof typeof dialoguesData, dialogueType: DialogType | null) => void
+
+	clear: () => void
 }
 
 export const useDialogueStore = create<DialogueStore>()((set, get) => ({
@@ -54,4 +56,7 @@ export const useDialogueStore = create<DialogueStore>()((set, get) => ({
 				dialogueType,
 			}
 		}),
+
+	clear: () =>
+		set({ selectedDialogue: null, subDialogue: null, bottomDialogues: null, topDialogues: null, dialogueType: null }),
 }))

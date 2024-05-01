@@ -78,7 +78,6 @@
         }
       }
     },
-
     "hello_06": {
       "isSpeak": true,
       "id": "hello_06",
@@ -91,7 +90,8 @@
       "bubbles": ["Awesome, let's go!"],
       "next": [
         {
-          "action": "END"
+          "action": "CHANGE_STAGE",
+          "node": "home"
         }
       ]
     }
@@ -127,11 +127,12 @@
         }
       ],
       "bubbles": [
-        "You can get testnet RON from faucet. Click here to copy your address and open the faucet page."
+        "You can get testnet RON from faucet. Copy your address and click here to open the faucet page."
       ],
       "next": [
         {
-          "action": "OPEN_NEW_TAB"
+          "action": "OPEN_NEW_TAB",
+          "node": "https://faucet.roninchain.com/"
         }
       ]
     }

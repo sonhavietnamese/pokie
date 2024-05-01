@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button'
+import { type Stage, useStageStore } from '@/stores/stage'
 import { size } from 'lodash-es'
 import dynamic from 'next/dynamic'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useMavisIdStore } from '../mavis-id/store'
 import { useDialogueStore } from './store'
 import type { Choice, NextNode } from './type'
 
@@ -17,6 +19,7 @@ export default function DialogueSystem() {
 		bottomDialogues,
 		setSubDialogue,
 		setSelectedDialogue,
+		clear,
 	] = useDialogueStore((s) => [
 		s.selectedDialogue,
 		s.dialogueType,
@@ -25,13 +28,25 @@ export default function DialogueSystem() {
 		s.bottomDialogues,
 		s.setSubDialogue,
 		s.setSelectedDialogue,
+		s.clear,
 	])
+	const setOpenMavisId = useMavisIdStore((s) => s.setOpen)
+	const setStage = useStageStore((s) => s.setStage)
 
 	const dialogues = useMemo(
 		() => (dialogueType === 'bottom' ? bottomDialogues : topDialogues),
 		[dialogueType, bottomDialogues, topDialogues],
 	)
 	const [choices, setChoices] = useState(subDialogue ? subDialogue.choices : null)
+
+	useEffect(() => {
+		if (subDialogue?.bubbles) {
+			setChoices({})
+		}
+		if (subDialogue?.choices) {
+			setChoices(subDialogue.choices ?? {})
+		}
+	}, [subDialogue])
 
 	const onBubbleClick = () => {
 		if (size(choices) > 0 || !subDialogue) return
@@ -48,19 +63,28 @@ export default function DialogueSystem() {
 				if (!node) return
 				setSubDialogue(dialogues[node])
 
-				if (dialogues[node].bubbles) {
-					setChoices({})
-				}
-				if (dialogues[node].choices) {
-					setChoices(dialogues[node].choices ?? {})
-				}
+				return
+
+			case 'CONNECT_WALLET':
+				localStorage.removeItem('MAVIS.ID:PROFILE')
+				setOpenMavisId(true)
+
+				return
+
+			case 'OPEN_NEW_TAB':
+				window.open(node, '_blank')
+
+				return
+
+			case 'CHANGE_STAGE':
+				if (!node) return
+				setStage(node as Stage)
+				clear()
 
 				return
 
 			case 'END':
-				setSubDialogue(null)
-				setChoices(null)
-				setSelectedDialogue(null)
+				clear()
 
 				return
 

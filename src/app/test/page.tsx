@@ -15,10 +15,9 @@ const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
 const Avatar = dynamic(() => import('@/components/avatar'), { ssr: false })
 const Vignette = dynamic(() => import('@/components/vignette'), { ssr: false })
 const Onboarding = dynamic(() => import('@/scenes/onboarding'), { ssr: false })
-const OnboardingDialog = dynamic(() => import('@/features/onboarding/onboarding-dialog'), { ssr: false })
 const LogoutButton = dynamic(() => import('@/features/user/logout-button'), { ssr: false })
 const ToastManager = dynamic(() => import('@/features/toast/toast-manager'), { ssr: false })
-const RonManager = dynamic(() => import('@/features/ron'), { ssr: false })
+const RonManager = dynamic(() => import('@/features/ron-manager'), { ssr: false })
 const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
 
 export default function Page() {
@@ -56,8 +55,6 @@ export default function Page() {
 					</Canvas>
 				</KeyboardControls>
 				<AnimationManager />
-
-				{stage === 'onboarding' && selectedDialogue === 'onboarding' && <OnboardingDialog />}
 
 				{/* <Vignette /> */}
 

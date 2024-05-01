@@ -46,11 +46,10 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 
 			const blink = () => {
 				if (!eyeMaterialRef.current) return
-
 				eyeMaterialRef.current.map = textureEyeClose
+
 				setTimeout(() => {
 					if (!eyeMaterialRef.current) return
-
 					eyeMaterialRef.current.map = textureEyeOpen
 				}, 120)
 			}

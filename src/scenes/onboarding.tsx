@@ -1,21 +1,53 @@
-import Backdrop from '@/components/backdrop'
-import Sapidae from '@/components/sapidae/sapidae'
 import type { SapidaeAnimation } from '@/components/sapidae/type'
 import { useDialogueStore } from '@/features/dialogue/store'
 import { Environment, PerspectiveCamera } from '@react-three/drei'
-import React, { useMemo } from 'react'
+import { useWalletgo } from '@roninnetwork/walletgo'
+import { signIn } from 'next-auth/react'
+import dynamic from 'next/dynamic'
+import React, { useEffect, useMemo } from 'react'
+
+const Sapidae = dynamic(() => import('@/components/sapidae/sapidae'), { ssr: false })
+const Backdrop = dynamic(() => import('@/components/backdrop'), { ssr: false })
 
 export default function Onboarding() {
-	const [subDialogue] = useDialogueStore((s) => [s.subDialogue])
+	const [showDialogue, subDialogue, setSubDialogue, topDialogues] = useDialogueStore((s) => [
+		s.showDialogue,
+		s.subDialogue,
+		s.setSubDialogue,
+		s.topDialogues,
+	])
+	const { walletProvider, account } = useWalletgo()
+	const animation = useMemo<SapidaeAnimation>(() => {
+		if (!subDialogue?.before) return 'idle-00'
 
-	// const animation = useMemo<SapidaeAnimation>(() => {
-	// 	if (!subDialogue.before) return 'idle-00'
+		if (subDialogue.before[0].action === 'EMOTE')
+			return subDialogue.before[0].opts ? (subDialogue.before[0].opts[0] as SapidaeAnimation) : 'idle-00'
 
-	// 	if (subDialogue.before[0].action === 'EMOTE')
-	// 		return subDialogue.before[0].opts ? (subDialogue.before[0].opts[0] as SapidaeAnimation) : 'idle-00'
+		return 'idle-00'
+	}, [subDialogue])
 
-	// 	return 'idle-00'
-	// }, [subDialogue.before])
+	useEffect(() => {
+		showDialogue('onboarding', 'top')
+	}, [])
+
+	useEffect(() => {
+		const login = async () => {
+			try {
+				await signIn('credentials', {
+					wallet: account,
+					redirect: false,
+				})
+			} catch (error) {
+				console.log(error)
+				throw error
+			}
+		}
+
+		if (walletProvider) {
+			login()
+			setSubDialogue(topDialogues.hello_06)
+		}
+	}, [walletProvider])
 
 	return (
 		<>
@@ -34,7 +66,7 @@ export default function Onboarding() {
 				shadow-camera-bottom={-50}
 				shadow-camera-left={-50}
 			/>
-			<ambientLight intensity={2} />
+			<ambientLight intensity={2.5} />
 
 			<Environment
 				background
@@ -43,7 +75,7 @@ export default function Onboarding() {
 				path="/sky/"
 			/>
 
-			<Sapidae animation={'idle-00'} />
+			<Sapidae animation={animation} />
 			<Backdrop position={[0, 0, -2]} />
 		</>
 	)

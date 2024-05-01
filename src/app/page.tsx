@@ -1,6 +1,5 @@
 'use client'
 
-import AnimationManager from '@/features/axie/animation-manager'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -13,24 +12,24 @@ const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
 const Avatar = dynamic(() => import('@/components/avatar'), { ssr: false })
 const Vignette = dynamic(() => import('@/components/vignette'), { ssr: false })
 const Onboarding = dynamic(() => import('@/scenes/onboarding'), { ssr: false })
-const OnboardingDialog = dynamic(() => import('@/features/onboarding/onboarding-dialog'))
 const LogoutButton = dynamic(() => import('@/features/user/logout-button'), { ssr: false })
 const ToastManager = dynamic(() => import('@/features/toast/toast-manager'), { ssr: false })
-const RonManager = dynamic(() => import('@/features/ron'))
+const RonManager = dynamic(() => import('@/features/ron-manager'))
 const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
+const DialogueSystem = dynamic(() => import('@/features/dialogue/dialogue-system'), { ssr: false })
+const AnimationManager = dynamic(() => import('@/features/axie/animation-manager'), { ssr: false })
 
 export default function Page() {
 	const ref = useRef<HTMLDivElement>(null)
 	const stage = useStageStore((s) => s.stage)
-
-	console.log('stage', stage)
 
 	return (
 		<>
 			<main ref={ref} className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden">
 				<OnboardingManager />
 				<ToastManager />
-				{/* <RonManager /> */}
+				<DialogueSystem />
+				<RonManager />
 
 				<KeyboardControls map={KEYBOARD_MAP}>
 					<Canvas
@@ -56,21 +55,20 @@ export default function Page() {
 				</KeyboardControls>
 				<AnimationManager />
 
-				{/* {stage === 'onboarding' && selectedDialogue === 'onboarding' && <OnboardingDialog />} */}
-
-				{/* <Vignette /> */}
+				<Vignette />
 
 				<View index={1} className="absolute z-0 h-screen w-screen">
-					<Home />
-					{/* {stage === 'home' && <Home />} */}
-					{/* {stage === 'onboarding' && <Onboarding />} */}
+					{stage === 'home' && <Home />}
+					{stage === 'onboarding' && <Onboarding />}
 				</View>
 
 				{stage === 'home' && <Avatar />}
 
-				<LogoutButton />
+				{stage === 'home' && <LogoutButton />}
 
-				{/* <div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" /> */}
+				{stage === 'onboarding' && (
+					<div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" />
+				)}
 			</main>
 		</>
 	)

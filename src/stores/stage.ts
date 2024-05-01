@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type Stage = 'onboarding' | 'home' | 'profile' | 'settings'
+export type Stage = 'onboarding' | 'home' | 'profile' | 'settings'
 
 interface StageState {
 	stage: Stage | null
