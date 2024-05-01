@@ -1,5 +1,6 @@
 'use client'
 
+import MovementInstructions from '@/components/movement-instructions'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -31,7 +32,7 @@ export default function Page() {
 				<OnboardingManager />
 				<AnimationManager />
 
-				<Vignette />
+				{/* <Vignette /> */}
 				<ToastManager />
 				<DialogueSystem />
 				<RonManager />
@@ -56,7 +57,6 @@ export default function Page() {
 								near: 0.1,
 								far: 200,
 							}}
-							// frameloop="demand"
 							eventSource={ref as MutableRefObject<HTMLElement>}
 						>
 							<View.Port />
@@ -67,8 +67,13 @@ export default function Page() {
 							{stage === 'onboarding' && <Onboarding />}
 						</View>
 
-						{stage === 'home' && <Avatar />}
-						{stage === 'home' && <LogoutButton />}
+						{stage === 'home' && (
+							<>
+								<Avatar />
+								<LogoutButton />
+								<MovementInstructions />
+							</>
+						)}
 
 						{stage === 'onboarding' && (
 							<div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" />
