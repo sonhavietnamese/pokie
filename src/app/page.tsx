@@ -22,6 +22,7 @@ const DialogueSystem = dynamic(() => import('@/features/dialogue/dialogue-system
 const AnimationManager = dynamic(() => import('@/features/axie/animation-manager'), { ssr: false })
 const ShortcutManager = dynamic(() => import('@/features/shortcut/shortcut-manager'), { ssr: false })
 const Pokiedex = dynamic(() => import('@/features/pokiedex/pokiedex'), { ssr: false })
+const TipManager = dynamic(() => import('@/features/tip/tip-manager'), { ssr: false })
 
 export default function Page() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -37,8 +38,9 @@ export default function Page() {
 				<ToastManager />
 				<DialogueSystem />
 				<RonManager />
+				<TipManager />
 
-				<Aim />
+				{/* <Aim /> */}
 
 				<KeyboardControls map={KEYBOARD_MAP}>
 					<ShortcutManager />

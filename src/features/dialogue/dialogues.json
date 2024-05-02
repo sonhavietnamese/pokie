@@ -211,7 +211,6 @@
         }
       ]
     },
-
     "hello_06": {
       "isSpeak": true,
       "id": "hello_06",
@@ -222,6 +221,78 @@
         }
       ],
       "bubbles": ["Awesome, let's go!"],
+      "next": [
+        {
+          "action": "END"
+        }
+      ]
+    }
+  },
+  "first_time_chest": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "id": "first_time_chest-01",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["wave-01"]
+        }
+      ],
+      "bubbles": ["This is a chest, it appears randomly around here."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "id": "first_time_chest-02",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "You may randomly receive some gifts, tokens, clothes, or even Axies"
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "03"
+        }
+      ]
+    },
+    "03": {
+      "isSpeak": true,
+      "id": "first_time_chest-03",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["...sometime nothing."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "04"
+        }
+      ]
+    },
+    "04": {
+      "isSpeak": true,
+      "id": "first_time_chest-04",
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["Press F to open it."],
       "next": [
         {
           "action": "END"

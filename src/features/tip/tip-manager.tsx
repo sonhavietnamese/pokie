@@ -24,7 +24,7 @@ export default function TipManager() {
 	}, [tips])
 
 	return (
-		<section className="absolute top-10 left-6">
+		<section className="absolute top-[30%] left-6 z-[5]">
 			<AnimatePresence mode="wait">
 				{tips && (
 					<Tip key={tips.id}>

@@ -1,5 +1,6 @@
 'use client'
 
+import { Chest } from '@/components/chest/chest'
 import { Ground } from '@/features/environment/ground'
 import { Sapidae } from '@/features/movement/character'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
@@ -51,6 +52,8 @@ export default function Home() {
 					// updateLoop="independent"
 				>
 					<Bano position={[1, 1.8, 0]} />
+
+					<Chest position={[3, 2, 3]} />
 
 					<PokiedexRay />
 

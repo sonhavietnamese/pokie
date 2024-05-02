@@ -10,7 +10,7 @@
 },
 "badge-01-l.png":
 {
-	"frame": {"x":642,"y":91,"w":52,"h":61},
+	"frame": {"x":665,"y":91,"w":52,"h":61},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":61},
@@ -18,7 +18,7 @@
 },
 "badge-01-m.png":
 {
-	"frame": {"x":694,"y":91,"w":4,"h":61},
+	"frame": {"x":717,"y":91,"w":4,"h":61},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":61},
@@ -26,7 +26,7 @@
 },
 "badge-01-r.png":
 {
-	"frame": {"x":698,"y":91,"w":52,"h":61},
+	"frame": {"x":721,"y":91,"w":52,"h":61},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":61},
@@ -130,7 +130,7 @@
 },
 "btn-logout-01.png":
 {
-	"frame": {"x":582,"y":91,"w":60,"h":60},
+	"frame": {"x":605,"y":91,"w":60,"h":60},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":60},
@@ -512,6 +512,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 	"sourceSize": {"w":100,"h":100}
 },
+"icon-exclamation-01.png":
+{
+	"frame": {"x":582,"y":91,"w":23,"h":56},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":23,"h":56},
+	"sourceSize": {"w":23,"h":56}
+},
 "icon-item-bug.png":
 {
 	"frame": {"x":487,"y":155,"w":78,"h":78},
@@ -522,7 +530,7 @@
 },
 "icon-item-feather.png":
 {
-	"frame": {"x":750,"y":91,"w":64,"h":64},
+	"frame": {"x":773,"y":91,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -530,7 +538,7 @@
 },
 "icon-item-fish.png":
 {
-	"frame": {"x":814,"y":91,"w":64,"h":64},
+	"frame": {"x":837,"y":91,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -538,7 +546,7 @@
 },
 "icon-item-milk.png":
 {
-	"frame": {"x":878,"y":91,"w":64,"h":64},
+	"frame": {"x":901,"y":91,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -663,6 +671,6 @@
 	"format": "RGBA8888",
 	"size": {"w":993,"h":1509},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:d92323a5bd3df0469c61b2152bac2f18:9937e60210e9fb556d793660bd92d585:1d5e26a038e06935554d924ee8932f19$"
+	"smartupdate": "$TexturePacker:SmartUpdate:26ff9b422d2c7d0c5fa3c780b68c0043:f2140b833c6b9a514193f1e462aabae6:1d5e26a038e06935554d924ee8932f19$"
 }
 }

@@ -2,7 +2,7 @@
 
 import { cn } from '@/libs/utils'
 
-import { SPRITESHEET_ELEMENT, SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { Sprite } from './sprite'
@@ -12,11 +12,11 @@ type TipProps = {
 }
 
 export default function Tip({ children }: TipProps) {
-	const l = SPRITESHEET_ELEMENT.frames['badge-02-l.png'].frame
-	const m = SPRITESHEET_ELEMENT.frames['badge-02-m.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['badge-02-r.png'].frame
+	const l = SPRITESHEET_DATA.frames['badge-02-l.png'].frame
+	const m = SPRITESHEET_DATA.frames['badge-02-m.png'].frame
+	const r = SPRITESHEET_DATA.frames['badge-02-r.png'].frame
 
-	const mIcon = SPRITESHEET_ICON.frames['icon-exclamation.png'].frame
+	const mIcon = SPRITESHEET_DATA.frames['icon-exclamation-01.png'].frame
 
 	return (
 		<motion.div

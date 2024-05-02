@@ -4,6 +4,9 @@ import { persist } from 'zustand/middleware'
 interface OnboardingState {
 	isBoarded: boolean
 	setIsBoarded: (isBoarded: boolean) => void
+
+	isFirstTimeChest: boolean
+	setIsFirstTimeChest: (isFirstTimeChest: boolean) => void
 }
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -11,10 +14,13 @@ export const useOnboardingStore = create<OnboardingState>()(
 		(set) => ({
 			isBoarded: false,
 			setIsBoarded: (isBoarded: boolean) => set(() => ({ isBoarded })),
+
+			isFirstTimeChest: true,
+			setIsFirstTimeChest: (isFirstTimeChest: boolean) => set(() => ({ isFirstTimeChest })),
 		}),
 		{
 			name: 'poxie-storage',
-			partialize: (state) => ({ isBoarded: state.isBoarded }),
+			partialize: (state) => ({ isFirstTimeChest: state.isFirstTimeChest }),
 		},
 	),
 )

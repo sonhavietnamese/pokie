@@ -1,9 +1,11 @@
 import { Button } from '@/components/ui/button'
+import { useCharacterStore } from '@/stores/character'
 import { type Stage, useStageStore } from '@/stores/stage'
 import { size } from 'lodash-es'
 import dynamic from 'next/dynamic'
 import { useEffect, useMemo, useState } from 'react'
 import { useMavisIdStore } from '../mavis-id/store'
+import { useOnboardingStore } from '../onboarding/onboarding-store'
 import { useDialogueStore } from './store'
 import type { Choice, NextNode } from './type'
 
@@ -38,6 +40,8 @@ export default function DialogueSystem() {
 		[dialogueType, bottomDialogues, topDialogues],
 	)
 	const [choices, setChoices] = useState(subDialogue ? subDialogue.choices : null)
+	const [setCanControl] = useCharacterStore((s) => [s.setCanControl])
+	const [setIsFirstTimeChest] = useOnboardingStore((s) => [s.setIsFirstTimeChest])
 
 	useEffect(() => {
 		if (subDialogue?.bubbles) {
@@ -47,6 +51,10 @@ export default function DialogueSystem() {
 			setChoices(subDialogue.choices ?? {})
 		}
 	}, [subDialogue])
+
+	useEffect(() => {
+		setCanControl(Boolean(!selectedDialogue))
+	}, [selectedDialogue])
 
 	const onBubbleClick = () => {
 		if (size(choices) > 0 || !subDialogue) return
@@ -84,6 +92,9 @@ export default function DialogueSystem() {
 				return
 
 			case 'END':
+				if (selectedDialogue === 'first_time_chest') {
+					setIsFirstTimeChest(false)
+				}
 				clear()
 
 				return
