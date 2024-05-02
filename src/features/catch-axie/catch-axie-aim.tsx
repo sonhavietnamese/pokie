@@ -6,6 +6,7 @@ import { cn } from '@/libs/utils'
 import { AnimatePresence, motion, useAnimate } from 'framer-motion'
 import { useEffect } from 'react'
 import { useOnboardingStore } from '../onboarding/onboarding-store'
+import { useToastStore } from '../toast/store'
 import { useCatchAxieStore } from './catch-axie-store'
 
 const BALLS_COLORS: Record<string, string> = {
@@ -20,14 +21,14 @@ const BALLS_COLORS: Record<string, string> = {
 	bird: '#A2E3D8',
 }
 
-const offset = 5
-
 export default function CatchAxieAim() {
 	const selectedBall = 'aquatic'
 
 	const [scope, animate] = useAnimate<HTMLDivElement>()
 	const [showDialogue, selectedDialogue, clear] = useDialogueStore((s) => [s.showDialogue, s.selectedDialogue, s.clear])
-	const [isOpen] = useCatchAxieStore((s) => [s.isOpen])
+	const [isOpen, setIsThrew, setOpenUI] = useCatchAxieStore((s) => [s.isOpen, s.setIsThrew, s.setOpenUI])
+
+	const showToast = useToastStore((s) => s.showToast)
 
 	const isFirstTimeCatchAxie = useOnboardingStore((s) => s.isFirstTimeCatchAxie)
 
@@ -40,12 +41,17 @@ export default function CatchAxieAim() {
 
 		animate(scope.current, { width: 1200 }, { duration: 1.7, ease: 'linear' }).pause()
 
-		if (width - 2 * 2 >= 350 - 30 * 2 - offset && width <= 350 + offset) {
-			console.log('hit')
+		if (width - 2 * 2 >= 350 - 30 * 2 && width <= 350) {
+			setIsThrew(true)
 		} else {
-			console.log('missed')
-			animate(scope.current, { width: 0 }, { duration: 0.2, ease: 'linear' }).play()
+			setIsThrew(false)
+			showToast('Missed!')
 		}
+
+		const timeout = setTimeout(() => {
+			setOpenUI(false)
+			clearTimeout(timeout)
+		}, 200)
 	}
 
 	useEffect(() => {

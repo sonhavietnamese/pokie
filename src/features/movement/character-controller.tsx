@@ -1,3 +1,4 @@
+import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { getMovingDirection } from '@/libs/utils'
 import { useCharacterStore } from '@/stores/character'
@@ -11,7 +12,7 @@ import type { Props, userDataType } from './type'
 // import { useMultiplayerStore } from '@/stores/multiplayer'
 import { useCharacterControl } from './use-character-control'
 // import { useBackpackStore } from '@/components/backpack/store'
-// import { useCatchAxieStore } from '@/components/catch-axie/store'
+
 // import { usePokiedex } from '@/components/pokiedex'
 import { useFollowCamera } from './use-follow-camera'
 
@@ -112,7 +113,7 @@ const CharacterController = ({
 	const bodyContactForce = useMemo(() => new THREE.Vector3(), [])
 
 	// const usingItem = useBackpackStore((s) => s.usingItem)
-	// const isNearAxie = useCatchAxieStore((s) => s.isEnter)
+	const isCatchAxieOpen = useCatchAxieStore((s) => s.isOpen)
 
 	// Animation change functions
 	const idleAnimation = useCharacterControl((state) => state.idle)
@@ -497,8 +498,10 @@ const CharacterController = ({
 		if (characterRef.current) currentVel.copy(characterRef.current.linvel() as THREE.Vector3)
 
 		// Rotate character Indicator
-		modelQuat.setFromEuler(modelEuler)
-		characterModelIndicator.quaternion.rotateTowards(modelQuat, delta * turnSpeed)
+		if (canControl) {
+			modelQuat.setFromEuler(modelEuler)
+			characterModelIndicator.quaternion.rotateTowards(modelQuat, delta * turnSpeed)
+		}
 
 		/**
 		 *  Camera movement
@@ -512,7 +515,7 @@ const CharacterController = ({
 		// 	camTargetPos = { x: 0, y: 0, z: 0 }
 		// }
 
-		if (isPokiedexOpen) {
+		if (isPokiedexOpen || isCatchAxieOpen) {
 			camTargetPos = { x: 0, y: 1.7, z: 0 }
 		} else {
 			camTargetPos = { x: 0, y: 0, z: 0 }
@@ -711,7 +714,7 @@ const CharacterController = ({
 			// isUnderWater ? swimAnimation() : idleAnimation()
 			// SOUNDS.RUN_FOOTSTEP.stop()
 			// SOUNDS.WALK_FOOTSTEP.stop()
-		} else if (forward || backward || leftward || rightward) {
+		} else if ((forward || backward || leftward || rightward) && canControl) {
 			if (run) {
 				runAnimation()
 				// isUnderWater ? swimAnimation() : runAnimation()

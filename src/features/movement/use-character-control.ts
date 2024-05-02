@@ -37,6 +37,9 @@ export const useCharacterControl = create(
 					if (state.curAnimation === state.animationSet.jumpIdle) {
 						return { curAnimation: state.animationSet.jumpLand }
 					}
+					if (state.curAnimation === state.animationSet.throw) {
+						return { curAnimation: state.animationSet.throw }
+					}
 					if (
 						state.curAnimation !== state.animationSet.action1 &&
 						state.curAnimation !== state.animationSet.swing &&
@@ -60,6 +63,9 @@ export const useCharacterControl = create(
 					if (state.curAnimation !== state.animationSet.swing) {
 						return { curAnimation: state.animationSet.walk }
 					}
+					if (state.curAnimation === state.animationSet.throw) {
+						return { curAnimation: state.animationSet.throw }
+					}
 
 					return {}
 				})
@@ -69,6 +75,9 @@ export const useCharacterControl = create(
 				set((state) => {
 					if (state.curAnimation !== state.animationSet.swing) {
 						return { curAnimation: state.animationSet.run }
+					}
+					if (state.curAnimation === state.animationSet.throw) {
+						return { curAnimation: state.animationSet.throw }
 					}
 
 					return {}
@@ -164,6 +173,19 @@ export const useCharacterControl = create(
 					}
 					if (state.curAnimation === state.animationSet.walk || state.curAnimation === state.animationSet.run) {
 						return { curAnimation: state.animationSet.pet }
+					}
+
+					return {}
+				})
+			},
+
+			throw: () => {
+				set((state) => {
+					if (state.curAnimation === state.animationSet.idle) {
+						return { curAnimation: state.animationSet.throw }
+					}
+					if (state.curAnimation === state.animationSet.walk || state.curAnimation === state.animationSet.run) {
+						return { curAnimation: state.animationSet.throw }
 					}
 
 					return {}

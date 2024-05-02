@@ -1,6 +1,8 @@
 'use client'
 
 import { Chest } from '@/components/chest/chest'
+import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
+import ShootBall from '@/features/catch-axie/shoot-ball'
 import { Ground } from '@/features/environment/ground'
 import { Sapidae } from '@/features/movement/character'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
@@ -17,6 +19,7 @@ const CharacterController = dynamic(() => import('@/features/movement/character-
 
 export default function Home() {
 	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
+	const isCatchAxieOpen = useCatchAxieStore((s) => s.isOpen)
 
 	return (
 		<>
@@ -55,6 +58,8 @@ export default function Home() {
 
 					<Chest position={[3, 2, 3]} />
 
+					<ShootBall />
+
 					<PokiedexRay />
 
 					<Ground />
@@ -65,7 +70,7 @@ export default function Home() {
 					<CharacterController
 						followLight
 						camMaxDis={-10}
-						camInitDis={isPokiedexOpen ? -2 : -8}
+						camInitDis={isPokiedexOpen || isCatchAxieOpen ? -2 : -8}
 						camInitDir={{ x: 0, y: Math.PI, z: 0 }}
 						springK={2}
 						dampingC={0.2}

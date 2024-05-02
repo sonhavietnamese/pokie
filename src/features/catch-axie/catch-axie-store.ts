@@ -20,9 +20,6 @@ type CatchAxieState = {
 
 	caughtAxie: CatchAxie | null
 	setCaughtAxie: (caughtAxie: CatchAxie | null) => void
-
-	isEnter: boolean
-	setIsEnter: (isEnter: boolean) => void
 }
 
 export const useCatchAxieStore = create<CatchAxieState>()((set) => ({
@@ -40,7 +37,4 @@ export const useCatchAxieStore = create<CatchAxieState>()((set) => ({
 
 	caughtAxie: null,
 	setCaughtAxie: (caughtAxie: CatchAxie | null) => set({ caughtAxie }),
-
-	isEnter: false,
-	setIsEnter: (isEnter: boolean) => set({ isEnter }),
 }))
