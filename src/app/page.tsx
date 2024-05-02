@@ -1,7 +1,5 @@
 'use client'
 
-import MovementInstructions from '@/components/movement-instructions'
-import Aim from '@/features/catch-axie/aim'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -12,17 +10,19 @@ import * as THREE from 'three'
 
 const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
 const Avatar = dynamic(() => import('@/components/avatar'), { ssr: false })
+const Pokiedex = dynamic(() => import('@/features/pokiedex/pokiedex'), { ssr: false })
 const Vignette = dynamic(() => import('@/components/vignette'), { ssr: false })
+const RonManager = dynamic(() => import('@/features/ron-manager'))
+const TipManager = dynamic(() => import('@/features/tip/tip-manager'), { ssr: false })
 const Onboarding = dynamic(() => import('@/scenes/onboarding'), { ssr: false })
 const LogoutButton = dynamic(() => import('@/features/user/logout-button'), { ssr: false })
 const ToastManager = dynamic(() => import('@/features/toast/toast-manager'), { ssr: false })
-const RonManager = dynamic(() => import('@/features/ron-manager'))
-const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
+const CatchAxieAim = dynamic(() => import('@/features/catch-axie/catch-axie-aim'), { ssr: false })
 const DialogueSystem = dynamic(() => import('@/features/dialogue/dialogue-system'), { ssr: false })
-const AnimationManager = dynamic(() => import('@/features/axie/animation-manager'), { ssr: false })
 const ShortcutManager = dynamic(() => import('@/features/shortcut/shortcut-manager'), { ssr: false })
-const Pokiedex = dynamic(() => import('@/features/pokiedex/pokiedex'), { ssr: false })
-const TipManager = dynamic(() => import('@/features/tip/tip-manager'), { ssr: false })
+const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
+const AnimationManager = dynamic(() => import('@/features/axie/animation-manager'), { ssr: false })
+const MovementInstructions = dynamic(() => import('@/components/movement-instructions'), { ssr: false })
 
 export default function Page() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -39,8 +39,7 @@ export default function Page() {
 				<DialogueSystem />
 				<RonManager />
 				<TipManager />
-
-				{/* <Aim /> */}
+				<CatchAxieAim />
 
 				<KeyboardControls map={KEYBOARD_MAP}>
 					<ShortcutManager />

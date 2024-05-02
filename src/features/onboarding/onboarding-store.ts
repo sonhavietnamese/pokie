@@ -7,6 +7,9 @@ interface OnboardingState {
 
 	isFirstTimeChest: boolean
 	setIsFirstTimeChest: (isFirstTimeChest: boolean) => void
+
+	isFirstTimeCatchAxie: boolean
+	setIsFirstTimeCatchAxie: (isFirstTimeCatchAxie: boolean) => void
 }
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -17,10 +20,16 @@ export const useOnboardingStore = create<OnboardingState>()(
 
 			isFirstTimeChest: true,
 			setIsFirstTimeChest: (isFirstTimeChest: boolean) => set(() => ({ isFirstTimeChest })),
+
+			isFirstTimeCatchAxie: true,
+			setIsFirstTimeCatchAxie: (isFirstTimeCatchAxie: boolean) => set(() => ({ isFirstTimeCatchAxie })),
 		}),
 		{
 			name: 'poxie-storage',
-			partialize: (state) => ({ isFirstTimeChest: state.isFirstTimeChest }),
+			partialize: (state) => ({
+				isFirstTimeChest: state.isFirstTimeChest,
+				isFirstTimeCatchAxie: state.isFirstTimeCatchAxie,
+			}),
 		},
 	),
 )

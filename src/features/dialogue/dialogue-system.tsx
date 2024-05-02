@@ -41,7 +41,10 @@ export default function DialogueSystem() {
 	)
 	const [choices, setChoices] = useState(subDialogue ? subDialogue.choices : null)
 	const [setCanControl] = useCharacterStore((s) => [s.setCanControl])
-	const [setIsFirstTimeChest] = useOnboardingStore((s) => [s.setIsFirstTimeChest])
+	const [setIsFirstTimeChest, setIsFirstTimeCatchAxie] = useOnboardingStore((s) => [
+		s.setIsFirstTimeChest,
+		s.setIsFirstTimeCatchAxie,
+	])
 
 	useEffect(() => {
 		if (subDialogue?.bubbles) {
@@ -94,6 +97,9 @@ export default function DialogueSystem() {
 			case 'END':
 				if (selectedDialogue === 'first_time_chest') {
 					setIsFirstTimeChest(false)
+				}
+				if (selectedDialogue === 'first_time_catch_axie') {
+					setIsFirstTimeCatchAxie(false)
 				}
 				clear()
 

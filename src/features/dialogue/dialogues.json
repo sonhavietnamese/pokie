@@ -299,5 +299,75 @@
         }
       ]
     }
+  },
+  "first_time_catch_axie": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["wave-01"]
+        }
+      ],
+      "bubbles": ["To catch an Axie, you need to have a PokieBall."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "Select the PokieBall that matches the Axie's class to increase the chance of catching the Axie. Use Pokidex to inspect the Axie's class."
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "03"
+        }
+      ]
+    },
+    "03": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "Remember to face the Axie, hold the button to aim, and release when the circle matches the red boundary."
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "04"
+        }
+      ]
+    },
+    "04": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["Goodluck!"],
+      "next": [
+        {
+          "action": "END"
+        }
+      ]
+    }
   }
 }
