@@ -50,6 +50,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-animated": "^1.0.1",
     "three": "^0.163.0",
+    "three-noise": "^1.1.2",
     "tunnel-rat": "^0.1.2",
     "viem": "^2.9.25",
     "zod": "^3.22.5",

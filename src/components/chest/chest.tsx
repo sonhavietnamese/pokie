@@ -28,7 +28,7 @@ type GLTFResult = GLTF & {
 	}
 }
 
-export function Chest(props: RigidBodyProps) {
+export default function Chest(props: RigidBodyProps) {
 	const lidRef = useRef<THREE.Mesh>(null)
 	// const { setInteractionTarget, setIsInteracting } = useInteraction()
 	// const { setBalance } = usePokieCoinBalance()

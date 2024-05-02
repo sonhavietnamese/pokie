@@ -42,6 +42,7 @@ export default function ShootBall() {
 
 	const clickToCreateBox = () => {
 		const character = scene.getObjectByName('character')
+
 		character?.getWorldPosition(position)
 
 		const newMesh = (
@@ -50,6 +51,7 @@ export default function ShootBall() {
 				<meshStandardMaterial color={'red'} />
 			</mesh>
 		)
+
 		setCubeMesh((prevMeshes) => [...prevMeshes, newMesh])
 		setIsThrew(false)
 		setCanControl(true)
@@ -57,6 +59,7 @@ export default function ShootBall() {
 
 	useEffect(() => {
 		const character = scene.getObjectByName('character')
+
 		character?.getWorldDirection(direction)
 
 		if (cubeMesh.length > 0) {

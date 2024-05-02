@@ -1,8 +1,6 @@
 'use client'
 
-import { Chest } from '@/components/chest/chest'
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
-import ShootBall from '@/features/catch-axie/shoot-ball'
 import { Ground } from '@/features/environment/ground'
 import { Sapidae } from '@/features/movement/character'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
@@ -16,6 +14,9 @@ const AxieAutoMove = dynamic(() => import('@/features/axie/axie-auto-move'))
 const Bano = dynamic(() => import('@/app/test/npc/bano'))
 const PokiedexRay = dynamic(() => import('@/features/pokiedex/pokiedex-ray'))
 const CharacterController = dynamic(() => import('@/features/movement/character-controller'))
+const Chest = dynamic(() => import('@/components/chest/chest'))
+const ShootBall = dynamic(() => import('@/features/catch-axie/shoot-ball'))
+const Butterflies = dynamic(() => import('@/features/environment/butterfly/butterflies'))
 
 export default function Home() {
 	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
@@ -54,6 +55,8 @@ export default function Home() {
 					timeStep="vary"
 					// updateLoop="independent"
 				>
+					<Butterflies />
+
 					<Bano position={[1, 1.8, 0]} />
 
 					<Chest position={[3, 2, 3]} />
