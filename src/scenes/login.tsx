@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import useEnergy from '@/features/energy-system/use-energy'
 import { useMavisIdStore } from '@/features/mavis-id/store'
-import { useNotificationStore } from '@/features/notification/store'
+import { useNotificationStore } from '@/features/notification/notification-store'
 import { useTipStore } from '@/features/tip/store'
 import { useToastStore } from '@/features/toast/store'
 import { useUserStore } from '@/stores/user'

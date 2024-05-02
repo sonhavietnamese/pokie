@@ -1,5 +1,6 @@
 'use client'
 
+import QuestManager from '@/features/quest/quest-manager'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -78,6 +79,8 @@ export default function Page() {
 								<LogoutButton />
 								<MovementInstructions />
 								<CustomAvatarSelectSkin />
+
+								<QuestManager />
 							</>
 						)}
 

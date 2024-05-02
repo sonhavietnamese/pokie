@@ -3,7 +3,6 @@
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 import { Ground } from '@/features/environment/ground'
-import { Sapidae } from '@/features/movement/character'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { Environment } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
@@ -18,6 +17,8 @@ const CharacterController = dynamic(() => import('@/features/movement/character-
 const Chest = dynamic(() => import('@/components/chest/chest'))
 const ShootBall = dynamic(() => import('@/features/catch-axie/shoot-ball'))
 const Butterflies = dynamic(() => import('@/features/environment/butterfly/butterflies'))
+const GuideLineManager = dynamic(() => import('@/components/guide-line/guide-line-manager'))
+const Sapidae = dynamic(() => import('@/features/movement/character'))
 
 export default function Home() {
 	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
@@ -51,16 +52,13 @@ export default function Home() {
 				path="/sky/"
 			/>
 
-			<Suspense>
-				<Physics
-					debug={true}
-					timeStep="vary"
-					// updateLoop="independent"
-				>
-					{/* <Butterflies />
+			<GuideLineManager />
 
+			<Suspense>
+				<Physics debug={true} timeStep="vary">
 					<Bano position={[1, 1.8, 0]} />
 
+					{/* <Butterflies />
 					<Chest position={[3, 2, 3]} />
 
 					<ShootBall /> */}

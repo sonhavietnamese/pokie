@@ -3,7 +3,7 @@
 import { Notification } from '@/components/ui/notification'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import { useNotificationStore } from './store'
+import { useNotificationStore } from './notification-store'
 
 export default function NotificationManager() {
 	const notifications = useNotificationStore((state) => state.notifications)
