@@ -17,23 +17,38 @@ const config: Config = {
 				vignette:
 					'radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 40%, rgba(59, 55, 119, .1) 70%, rgba(59, 55, 119, .4) 100%)',
 			},
-		},
-		animation: {
-			shake: 'shake 1s linear infinite',
-		},
-		keyframes: {
-			shake: {
-				'0%': {
-					transform: 'translateY(0rem)',
+			animation: {
+				shake: 'shake 1s linear infinite',
+				'shake-horizontal': 'shake-horizontal 1s linear infinite',
+			},
+			keyframes: {
+				shake: {
+					'0%': {
+						transform: 'translateY(0rem)',
+					},
+					'25%': {
+						transform: 'translateY(-1px)',
+					},
+					'75%': {
+						transform: 'translateY(1px)',
+					},
+					'100%': {
+						transform: 'translateY(0rem)',
+					},
 				},
-				'25%': {
-					transform: 'translateY(-1px)',
-				},
-				'75%': {
-					transform: 'translateY(1px)',
-				},
-				'100%': {
-					transform: 'translateY(0rem)',
+				'shake-horizontal': {
+					'0%': {
+						transform: 'translateX(0rem)',
+					},
+					'25%': {
+						transform: 'translateX(-3px)',
+					},
+					'75%': {
+						transform: 'translateX(3px)',
+					},
+					'100%': {
+						transform: 'translateX(0rem)',
+					},
 				},
 			},
 		},

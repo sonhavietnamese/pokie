@@ -29,7 +29,7 @@ const AxieAutoMove = ({
 	capsuleRadius = 0.3,
 	floatHeight = 0.1,
 	characterInitDir = 0,
-
+	movingRange = [-10, 10],
 	maxVelLimit = 2.5,
 	turnVelMultiplier = 0.2,
 	turnSpeed = 15,
@@ -251,7 +251,7 @@ const AxieAutoMove = ({
 		} else {
 			if (!isPointMoving) {
 				// const next = { x: 10, z: 10 }
-				const next = { x: random(-5, 5), z: random(-5, 5) }
+				const next = { x: random(movingRange[0], movingRange[1]), z: random(movingRange[0], movingRange[1]) }
 
 				nextPosition.current.set(next.x, 0, next.z)
 			}
@@ -489,7 +489,7 @@ export default AxieAutoMove
 
 type Props = RigidBodyProps & {
 	followCharacter?: boolean
-
+	movingRange?: [number, number]
 	capsuleHalfHeight?: number
 	capsuleRadius?: number
 	floatHeight?: number

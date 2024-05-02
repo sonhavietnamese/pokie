@@ -2,8 +2,6 @@
 
 import { Ground } from '@/features/environment/ground'
 import { Sapidae } from '@/features/movement/character'
-import CharacterController from '@/features/movement/character-controller'
-import PokiedexRay from '@/features/pokiedex/pokiedex-ray'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { Environment } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
@@ -13,6 +11,8 @@ import { Suspense } from 'react'
 
 const AxieAutoMove = dynamic(() => import('@/features/axie/axie-auto-move'))
 const Bano = dynamic(() => import('@/app/test/npc/bano'))
+const PokiedexRay = dynamic(() => import('@/features/pokiedex/pokiedex-ray'))
+const CharacterController = dynamic(() => import('@/features/movement/character-controller'))
 
 export default function Home() {
 	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)

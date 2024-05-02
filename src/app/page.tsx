@@ -1,6 +1,7 @@
 'use client'
 
 import MovementInstructions from '@/components/movement-instructions'
+import Aim from '@/features/catch-axie/aim'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -36,6 +37,8 @@ export default function Page() {
 				<ToastManager />
 				<DialogueSystem />
 				<RonManager />
+
+				<Aim />
 
 				<KeyboardControls map={KEYBOARD_MAP}>
 					<ShortcutManager />

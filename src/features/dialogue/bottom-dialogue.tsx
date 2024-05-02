@@ -18,8 +18,8 @@ export default function BottomDialogue({ content, onBubbleClick }: BottomDialogu
 
 	return (
 		<>
-			<div className="-bottom-24 fixed z-[4] flex w-screen items-center justify-center">
-				<View index={3} className="z-[5] h-[400px] w-[250px]">
+			<div className="-bottom-24 fixed z-[10] flex w-screen items-center justify-center">
+				<View index={3} className="z-[10] h-[400px] w-[250px]">
 					<OrthographicCamera makeDefault position={[0, 0, 5]} zoom={90} />
 					<ambientLight intensity={4} />
 					<animated.group position={[0, -2.3, 0]}>
@@ -27,7 +27,7 @@ export default function BottomDialogue({ content, onBubbleClick }: BottomDialogu
 					</animated.group>
 				</View>
 
-				<div className="z-[4] w-[400px]">
+				<div className="z-[10] w-[400px]">
 					<AnimatePresence mode="wait">
 						<BottomBubble key={content} message={content} onMouseUp={onBubbleClick} />
 					</AnimatePresence>

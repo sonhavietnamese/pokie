@@ -21,7 +21,7 @@ export default function RonManager() {
 				if (Number(balance) / RON_DECIMALS < 1e-2) {
 					selectedDialogue !== 'ron_insufficient' && showDialogue('ron_insufficient', 'bottom')
 				} else {
-					clear()
+					selectedDialogue === 'ron_insufficient' && clear()
 				}
 			} catch (error) {
 				showToast("Can't fetch RON balance.")
