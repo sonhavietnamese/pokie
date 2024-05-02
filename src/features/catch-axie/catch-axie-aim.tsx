@@ -65,7 +65,7 @@ export default function CatchAxieAim() {
 
 	return (
 		<>
-			<AnimatePresence mode="wait">
+			<AnimatePresence>
 				{isOpen && (
 					<div className="absolute z-[3] flex h-screen w-screen flex-col items-center justify-center bg-black/10">
 						<Vignette />

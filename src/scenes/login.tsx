@@ -44,7 +44,6 @@ export default function Login() {
 		if (walletProvider) login()
 	}, [walletProvider])
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (!user && data?.user) {
 			setUser(data.user)

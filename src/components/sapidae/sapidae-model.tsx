@@ -40,7 +40,6 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 		const textureEyeClose = skins.EYE_CLOSE
 		const textureEyeOpen = skins.EYE_OPEN
 
-		// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 		useEffect(() => {
 			if (!eyeMaterialRef.current) return
 

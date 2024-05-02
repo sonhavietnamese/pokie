@@ -13,6 +13,7 @@ import type { Props, userDataType } from './type'
 import { useCharacterControl } from './use-character-control'
 // import { useBackpackStore } from '@/components/backpack/store'
 
+import { useCustomAvatarStore } from '../custom-avatar/custom-avatar-store'
 // import { usePokiedex } from '@/components/pokiedex'
 import { useFollowCamera } from './use-follow-camera'
 
@@ -114,6 +115,7 @@ const CharacterController = ({
 
 	// const usingItem = useBackpackStore((s) => s.usingItem)
 	const isCatchAxieOpen = useCatchAxieStore((s) => s.isOpen)
+	const isOpenCustomAvatarUI = useCustomAvatarStore((s) => s.isOpenUI)
 
 	// Animation change functions
 	const idleAnimation = useCharacterControl((state) => state.idle)
@@ -151,7 +153,6 @@ const CharacterController = ({
 	// const isAiming = useRef(false)
 	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
 	// const isCatchAxieUIOpen = useCatchAxieStore((s) => s.isOpenUI)
-	// const isOpenCustomAvatarUI = useCustomAvatarStore((s) => s.isOpenUI)
 
 	// const { setSpawnPosition, isSpawn } = useSpawnMonsterStore()
 
@@ -485,38 +486,38 @@ const CharacterController = ({
 
 		const { forward, backward, leftward, rightward, run } = getKeys()
 
-		// Getting moving directions (IIFE)
-		modelEuler.y = ((movingDirection) => (movingDirection === null ? modelEuler.y : movingDirection))(
-			getMovingDirection(forward, backward, leftward, rightward, pivot),
-		)
-
-		// Move character to the moving direction
-		if ((forward || backward || leftward || rightward) && canControl)
-			moveCharacter(delta, run, slopeAngle, movingObjectVelocity)
-
-		// Character current velocity
-		if (characterRef.current) currentVel.copy(characterRef.current.linvel() as THREE.Vector3)
-
-		// Rotate character Indicator
 		if (canControl) {
+			modelEuler.y = ((movingDirection) => (movingDirection === null ? modelEuler.y : movingDirection))(
+				getMovingDirection(forward, backward, leftward, rightward, pivot),
+			)
+
+			// Move character to the moving direction
+			if ((forward || backward || leftward || rightward) && canControl)
+				moveCharacter(delta, run, slopeAngle, movingObjectVelocity)
+
+			// Character current velocity
+
+			modelQuat.setFromEuler(modelEuler)
+			characterModelIndicator.quaternion.rotateTowards(modelQuat, delta * turnSpeed)
+		} else {
+			modelEuler.y = ((movingDirection) => (movingDirection === null ? modelEuler.y : movingDirection))(
+				getMovingDirection(false, true, false, false, pivot),
+			)
+
 			modelQuat.setFromEuler(modelEuler)
 			characterModelIndicator.quaternion.rotateTowards(modelQuat, delta * turnSpeed)
 		}
+
+		if (characterRef.current) currentVel.copy(characterRef.current.linvel() as THREE.Vector3)
 
 		/**
 		 *  Camera movement
 		 */
 
-		// if (isPokiedexOpen || isCatchAxieUIOpen) {
-		// 	camTargetPos = { x: 0, y: 1.7, z: 0 }
-		// } else if (isOpenCustomAvatarUI) {
-		// 	camTargetPos = { x: 0, y: -0, z: 0 }
-		// } else {
-		// 	camTargetPos = { x: 0, y: 0, z: 0 }
-		// }
-
 		if (isPokiedexOpen || isCatchAxieOpen) {
 			camTargetPos = { x: 0, y: 1.7, z: 0 }
+		} else if (isOpenCustomAvatarUI) {
+			camTargetPos = { x: 0, y: -0.05, z: 0 }
 		} else {
 			camTargetPos = { x: 0, y: 0, z: 0 }
 		}

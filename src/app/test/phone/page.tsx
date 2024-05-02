@@ -12,7 +12,7 @@ export default function Page() {
 		<main className="relative h-screen w-screen">
 			<Button onClick={() => setIsOpen(true)}>Phone</Button>
 
-			<AnimatePresence mode="wait">
+			<AnimatePresence>
 				{isOpen && (
 					<div className="absolute inset-0 z-[3]">
 						<div className="h-screen w-screen bg-[#d942426e]" />

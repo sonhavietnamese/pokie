@@ -13,7 +13,7 @@ export default function TopDialogue({ content, onBubbleClick }: TopDialogueProps
 	return (
 		<>
 			<div className="absolute top-20 z-[3] max-w-[700px]">
-				<AnimatePresence mode="wait">
+				<AnimatePresence>
 					<TopBubble message={content} author="bino" onMouseUp={onBubbleClick} key={content} />
 				</AnimatePresence>
 			</div>

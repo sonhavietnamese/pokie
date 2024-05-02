@@ -23,6 +23,7 @@ const ShortcutManager = dynamic(() => import('@/features/shortcut/shortcut-manag
 const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
 const AnimationManager = dynamic(() => import('@/features/axie/animation-manager'), { ssr: false })
 const MovementInstructions = dynamic(() => import('@/components/movement-instructions'), { ssr: false })
+const CustomAvatarSelectSkin = dynamic(() => import('@/features/custom-avatar/select-skin'), { ssr: false })
 
 export default function Page() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -76,6 +77,7 @@ export default function Page() {
 								<Avatar />
 								<LogoutButton />
 								<MovementInstructions />
+								<CustomAvatarSelectSkin />
 							</>
 						)}
 

@@ -25,7 +25,7 @@ export default function NotificationManager() {
 
 	return (
 		<section className="absolute top-10">
-			<AnimatePresence mode="wait">
+			<AnimatePresence>
 				{notifications && (
 					<Notification key={notifications.id}>
 						<span>{notifications.content}</span>

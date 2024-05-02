@@ -9,23 +9,17 @@ export const KEYBOARD_MAP = [
 	{ name: 'rightward', keys: ['ArrowRight', 'KeyD'] },
 	{ name: 'jump', keys: ['Space'] },
 	{ name: 'run', keys: ['Shift'] },
-	{ name: 'action1', keys: ['1'] },
-	{ name: 'action2', keys: ['2'] },
-	{ name: 'action4', keys: ['3'] },
 
 	{ name: 'action', keys: ['KeyF'] },
 
-	{ name: 'spawn', keys: ['KeyQ'] },
 	{ name: 'open-ui', keys: ['Space'] },
 
 	{ name: 'exit', keys: ['Escape'] },
 
 	{ name: 'backpack', keys: ['KeyB'] },
-
-	{ name: 'ride-animal', keys: ['KeyR'] },
 	{ name: 'catch-axie', keys: ['KeyC'] },
 	{ name: 'pokiedex', keys: ['KeyE'] },
-
+	{ name: 'custom-avatar', keys: ['KeyZ'] },
 	{ name: 'pet-axie', keys: ['KeyP'] },
 ]
 

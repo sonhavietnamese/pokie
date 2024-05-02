@@ -13,9 +13,9 @@ export default function LogoutButton() {
 	}
 
 	// Move to stage manager later
-	useEffect(() => {
-		if (!walletProvider) logout()
-	}, [walletProvider])
+	// useEffect(() => {
+	// 	if (!walletProvider) logout()
+	// }, [walletProvider])
 
 	return (
 		<div role="button" className="absolute right-10 bottom-10 z-[2] h-10 w-10" onMouseUp={logout}>

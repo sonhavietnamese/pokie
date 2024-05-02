@@ -35,7 +35,7 @@ export default function MovementInstructions() {
 	}, [])
 
 	return (
-		<AnimatePresence mode="wait">
+		<AnimatePresence>
 			{isOpened && (
 				<motion.div
 					initial="hidden"
