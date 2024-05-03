@@ -1,4 +1,5 @@
 import type { Stuff } from '@/features/backpack/type'
+import type { App } from '@/features/phone/type'
 
 export const VERSION = '0.0.1'
 
@@ -93,3 +94,30 @@ export const STUFFS_DATA: Record<(typeof STUFFS)[number], Stuff> = {
 		description: '',
 	},
 }
+
+export const APPS: App[] = [
+	{
+		id: 'badges',
+		name: 'Badges',
+		url: 'https://sentre.io/#/home',
+		type: 'internal',
+	},
+	{
+		id: 'classic',
+		name: 'Classic',
+		url: 'https://hub.skymavis.com/games/classic',
+		type: 'external',
+	},
+	{
+		id: 'marketplace',
+		name: 'Marketplace',
+		url: 'https://app.axieinfinity.com/marketplace/axies',
+		type: 'external',
+	},
+	{
+		id: 'project-t',
+		name: 'Project T',
+		url: 'https://play.axieinfinity.com/project-t',
+		type: 'external',
+	},
+]
