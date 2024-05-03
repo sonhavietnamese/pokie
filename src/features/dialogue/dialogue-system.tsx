@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button'
+import { useMavisIdStore } from '@/features/mavis-id/store'
+import { useOnboardingStore } from '@/features/onboarding/onboarding-store'
 import { useCharacterStore } from '@/stores/character'
 import { type Stage, useStageStore } from '@/stores/stage'
 import { size } from 'lodash-es'
 import dynamic from 'next/dynamic'
 import { useEffect, useMemo, useState } from 'react'
-import { useMavisIdStore } from '../mavis-id/store'
-import { useOnboardingStore } from '../onboarding/onboarding-store'
 import { useDialogueStore } from './store'
 import type { Choice, NextNode } from './type'
 

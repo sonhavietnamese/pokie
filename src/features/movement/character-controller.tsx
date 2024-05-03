@@ -13,7 +13,7 @@ import type { Props, userDataType } from './type'
 import { useCharacterControl } from './use-character-control'
 // import { useBackpackStore } from '@/components/backpack/store'
 
-import { useCustomAvatarStore } from '../custom-avatar/custom-avatar-store'
+import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 // import { usePokiedex } from '@/components/pokiedex'
 import { useFollowCamera } from './use-follow-camera'
 

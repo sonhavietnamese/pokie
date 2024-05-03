@@ -1,4 +1,4 @@
-import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { cn } from '@/libs/utils'
 import { type Variants, motion } from 'framer-motion'
 import React, { type HTMLAttributes, type ReactNode } from 'react'
@@ -20,9 +20,9 @@ type NotificationProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(({ children, className, ...props }, ref) => {
-	const l = SPRITESHEET_ELEMENT.frames['notification-01-l.png'].frame
-	const m = SPRITESHEET_ELEMENT.frames['notification-01-m.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['notification-01-r.png'].frame
+	const l = SPRITESHEET_DATA.frames['notification-01-l.png'].frame
+	const m = SPRITESHEET_DATA.frames['notification-01-m.png'].frame
+	const r = SPRITESHEET_DATA.frames['notification-01-r.png'].frame
 
 	return (
 		<motion.div

@@ -1,4 +1,4 @@
-import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { cn } from '@/libs/utils'
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 import { Sprite } from './sprite'
@@ -8,9 +8,9 @@ type BadgeProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 const Badge = forwardRef<HTMLDivElement, BadgeProps>(({ children, className, ...props }) => {
-	const l = SPRITESHEET_ELEMENT.frames['badge-01-l.png'].frame
-	const m = SPRITESHEET_ELEMENT.frames['badge-01-m.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['badge-01-r.png'].frame
+	const l = SPRITESHEET_DATA.frames['badge-01-l.png'].frame
+	const m = SPRITESHEET_DATA.frames['badge-01-m.png'].frame
+	const r = SPRITESHEET_DATA.frames['badge-01-r.png'].frame
 
 	return (
 		<div className={cn('relative flex h-[50px] w-[100px]', className)} {...props}>

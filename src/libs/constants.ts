@@ -22,6 +22,7 @@ export const KEYBOARD_MAP = [
 	{ name: 'pokiedex', keys: ['KeyE'] },
 	{ name: 'custom-avatar', keys: ['KeyZ'] },
 	{ name: 'pet-axie', keys: ['KeyP'] },
+	{ name: 'phone', keys: ['KeyP'] },
 ]
 
 export const POKIEPROPS_ADDRESS = '0x45aDeB20ea700E785813f8Ce3F04cB779C77785C'

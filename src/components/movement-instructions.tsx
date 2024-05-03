@@ -42,14 +42,14 @@ export default function MovementInstructions() {
 					animate={isOpened ? 'visible' : 'hidden'}
 					variants={containerVariants}
 					exit="hidden"
-					className="absolute bottom-6 z-[2] flex w-full flex-col px-10"
+					className="absolute bottom-6 z-[2] flex w-full flex-col px-8"
 				>
 					<Sprite
 						data={{
 							part: '1',
-							m: SPRITESHEET_DATA.frames['guide-movement.png'].frame,
+							m: SPRITESHEET_DATA.frames['guide-movement-01.png'].frame,
 						}}
-						className="w-[300px]"
+						className="w-[200px]"
 					/>
 				</motion.div>
 			)}

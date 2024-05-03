@@ -1,20 +1,23 @@
+import { useBackpackStore } from '@/features/backpack/store'
+import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
+import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
+import { usePhoneStore } from '@/features/phone/phone-store'
+import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { useKeyboardControls } from '@react-three/drei'
 import { useEffect } from 'react'
-import { useBackpackStore } from '../backpack/store'
-import { useCatchAxieStore } from '../catch-axie/catch-axie-store'
-import { useCustomAvatarStore } from '../custom-avatar/custom-avatar-store'
-import { usePokiedexStore } from '../pokiedex/pokiedex-store'
 
 export default function ShortcutManager() {
 	// TODO: change name of setter function for consistency
 	const [isBackpackOpen, setOpenBackpack] = useBackpackStore((s) => [s.isOpen, s.setOpen])
 	const [isPokiedexOpen, setOpenPokiedex] = usePokiedexStore((s) => [s.isOpen, s.setIsOpen])
 	const [isCatchAxieOpen, setOpenCatchAxie] = useCatchAxieStore((s) => [s.isOpen, s.setOpenUI])
+	const [isPhoneOpen, setOpenPhone] = usePhoneStore((s) => [s.isOpen, s.setIsOpen])
 	const [isCustomAvatarOpen, setOpenCustomAvatar] = useCustomAvatarStore((s) => [s.isOpenUI, s.setOpenUI])
 	const isBackpackPressed = useKeyboardControls((s) => s.backpack)
 	const isPokiedexPressed = useKeyboardControls((s) => s.pokiedex)
 	const isCatchAxiePressed = useKeyboardControls((s) => s['catch-axie'])
 	const isCustomAvatarPressed = useKeyboardControls((s) => s['custom-avatar'])
+	const isPhonePressed = useKeyboardControls((s) => s.phone)
 	const isExitPressed = useKeyboardControls((s) => s.exit)
 
 	useEffect(() => {
@@ -33,7 +36,11 @@ export default function ShortcutManager() {
 		if (isCustomAvatarPressed) {
 			setOpenCustomAvatar(!isCustomAvatarOpen)
 		}
-	}, [isBackpackPressed, isPokiedexPressed, isCatchAxiePressed, isCustomAvatarPressed])
+
+		if (isPhonePressed) {
+			setOpenPhone(!isPhoneOpen)
+		}
+	}, [isBackpackPressed, isPokiedexPressed, isCatchAxiePressed, isCustomAvatarPressed, isPhonePressed])
 
 	useEffect(() => {
 		if (isExitPressed) {
@@ -41,6 +48,7 @@ export default function ShortcutManager() {
 			setOpenPokiedex(false)
 			setOpenCatchAxie(false)
 			setOpenCustomAvatar(false)
+			setOpenPhone(false)
 		}
 	}, [isExitPressed])
 

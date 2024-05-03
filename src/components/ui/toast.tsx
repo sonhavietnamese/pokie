@@ -2,7 +2,7 @@
 
 import { cn } from '@/libs/utils'
 
-import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { type HTMLMotionProps, type Variants, motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { Sprite } from './sprite'
@@ -23,8 +23,8 @@ const toastVariants: Variants = {
 }
 
 export function Toast({ className, children, ...props }: ToastProps) {
-	const l = SPRITESHEET_ELEMENT.frames['toast-01-l.png'].frame
-	const r = SPRITESHEET_ELEMENT.frames['toast-01-r.png'].frame
+	const l = SPRITESHEET_DATA.frames['toast-01-l.png'].frame
+	const r = SPRITESHEET_DATA.frames['toast-01-r.png'].frame
 
 	return (
 		<motion.div

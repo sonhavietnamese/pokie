@@ -91,16 +91,16 @@ export default function PhoneCase() {
 							ease: 'circInOut',
 							duration: 0.5,
 						},
+					).then(() => {
+						setHand(1)
+					})
+
+					await new Promise<void>((resolve) =>
+						setTimeout(() => {
+							setHand(0)
+							resolve()
+						}, 200),
 					)
-						.then(() => {
-							setHand(1)
-						})
-						.then(() => {
-							const timeout = setTimeout(() => {
-								setHand(0)
-								clearTimeout(timeout)
-							}, 300)
-						})
 
 					await animate(
 						scope.current,
@@ -147,7 +147,7 @@ export default function PhoneCase() {
 							initial="hidden"
 							animate={isOpen ? 'visible' : 'hidden'}
 							exit={'hidden'}
-							className="relative aspect-[9/15] h-[85%] origin-[bottom_left]"
+							className="relative aspect-[9/13] h-[85%] origin-[bottom_left]"
 						>
 							<Sprite
 								data={{

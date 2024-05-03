@@ -1,4 +1,4 @@
-import { SPRITESHEET_ELEMENT } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { cn } from '@/libs/utils'
 import React, { type HTMLAttributes, type ReactNode } from 'react'
 import { Sprite } from './sprite'
@@ -12,9 +12,9 @@ type ButtonProps = {
 
 const Button = React.forwardRef<HTMLDivElement, ButtonProps>(
 	({ children, className, color = 'blue', ...props }, ref) => {
-		const l = SPRITESHEET_ELEMENT.frames[`btn-${color}-l.png`].frame
-		const m = SPRITESHEET_ELEMENT.frames[`btn-${color}-m.png`].frame
-		const r = SPRITESHEET_ELEMENT.frames[`btn-${color}-r.png`].frame
+		const l = SPRITESHEET_DATA.frames[`btn-${color}-l.png`].frame
+		const m = SPRITESHEET_DATA.frames[`btn-${color}-m.png`].frame
+		const r = SPRITESHEET_DATA.frames[`btn-${color}-r.png`].frame
 
 		return (
 			<div role="button" className={cn('relative flex items-center justify-center p-3 px-5', className)} {...props}>

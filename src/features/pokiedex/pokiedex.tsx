@@ -1,9 +1,9 @@
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
+import { useAxieStore } from '@/features/axie/axie-store'
 import { AnimatePresence, type Variants, animate, motion } from 'framer-motion'
 import { capitalize } from 'lodash-es'
-import { useEffect } from 'react'
-import { useAxieStore } from '../axie/axie-store'
+import { useLayoutEffect } from 'react'
 import { usePokiedexStore } from './pokiedex-store'
 
 const pokiedexVariants: Variants = {
@@ -65,9 +65,7 @@ export default function Pokiedex({ children }: Props) {
 	])
 	const axies = useAxieStore((s) => s.axies)
 
-	console.log(foundedAxieId && axies[foundedAxieId])
-
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (isOpen) open()
 		else close()
 	}, [isOpen])

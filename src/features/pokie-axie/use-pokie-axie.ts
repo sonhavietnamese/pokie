@@ -1,6 +1,6 @@
+import type { SearchAxieResponse } from '@/features/axie/type'
 import { AXIE_ADDRESS, POKIEAXIE_ADDRESS } from '@/libs/constants'
 import useSWR, { type Fetcher } from 'swr'
-import type { SearchAxieResponse } from '../axie/type'
 
 const fetcher: Fetcher<SearchAxieResponse, string> = (url: string) =>
 	fetch(url, {

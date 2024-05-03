@@ -8,6 +8,7 @@ export default function GuideLine() {
 	const arrowMaterialRef = useRef<THREE.MeshBasicMaterial>(null)
 	const meshRef = useRef<THREE.Mesh>(null)
 	const texture = useTexture('/textures/icon-arrow-01.png')
+
 	texture.wrapS = texture.wrapT = THREE.RepeatWrapping
 
 	const distance = useRef(0)

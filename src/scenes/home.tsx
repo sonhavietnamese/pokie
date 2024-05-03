@@ -3,10 +3,12 @@
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 import { Ground } from '@/features/environment/ground'
+import { usePhoneStore } from '@/features/phone/phone-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { Environment } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
 import dynamic from 'next/dynamic'
+import { useSearchParams } from 'next/navigation'
 import { Perf } from 'r3f-perf'
 import { Suspense } from 'react'
 
@@ -24,10 +26,14 @@ export default function Home() {
 	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
 	const isCatchAxieOpen = useCatchAxieStore((s) => s.isOpen)
 	const isCustomAvatarOpen = useCustomAvatarStore((s) => s.isOpenUI)
+	const isPhoneOpen = usePhoneStore((s) => s.isOpen)
+
+	const searchParams = useSearchParams()
+	const debug = searchParams.get('debug')
 
 	return (
 		<>
-			<Perf />
+			{Boolean(debug) && <Perf />}
 
 			<directionalLight
 				castShadow
@@ -55,8 +61,11 @@ export default function Home() {
 			<GuideLineManager />
 
 			<Suspense>
-				<Physics debug={true} timeStep="vary">
+				<Physics debug={Boolean(debug)} timeStep="vary">
 					<Bano position={[1, 1.8, 0]} />
+
+					<Butterflies />
+					<ShootBall />
 
 					{/* <Butterflies />
 					<Chest position={[3, 2, 3]} />
@@ -67,13 +76,13 @@ export default function Home() {
 
 					<Ground />
 
-					{/* <AxieAutoMove position={[-1, 3, 0]} axieId="123" />
-					<AxieAutoMove position={[2, 3, 0]} axieId="11429880" /> */}
+					<AxieAutoMove position={[-1, 3, 0]} axieId="123" />
+					<AxieAutoMove position={[2, 3, 0]} axieId="11429880" />
 
 					<CharacterController
 						followLight
 						camMaxDis={-10}
-						camInitDis={isCustomAvatarOpen ? -5 : isPokiedexOpen || isCatchAxieOpen ? -2 : -10}
+						camInitDis={isCustomAvatarOpen || isPhoneOpen ? -5 : isPokiedexOpen || isCatchAxieOpen ? -2 : -10}
 						camInitDir={{ x: 0, y: Math.PI, z: 0 }}
 						springK={2}
 						dampingC={0.2}

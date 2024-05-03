@@ -1,6 +1,6 @@
 import { Sprite } from '@/components/ui/sprite'
-import { SPRITESHEET_DATA, SPRITESHEET_ICON } from '@/configs/spritesheet'
-import React, { useEffect } from 'react'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
+import { useEffect } from 'react'
 import { usePokieCoinBalanceStore } from './store'
 import usePokieCoin from './use-pokie-coin'
 
@@ -9,7 +9,7 @@ export default function PokieCoinBalance() {
 	const m = SPRITESHEET_DATA.frames['badge-02-m.png'].frame
 	const r = SPRITESHEET_DATA.frames['badge-02-r.png'].frame
 
-	const mIcon = SPRITESHEET_ICON.frames['icon-pokie-coin.png'].frame
+	const mIcon = SPRITESHEET_DATA.frames['icon-pokie-coin.png'].frame
 
 	const balance = usePokieCoinBalanceStore((s) => s.balance)
 

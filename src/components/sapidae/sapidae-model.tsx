@@ -65,21 +65,15 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 				<group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.009}>
 					<primitive object={nodes.mixamorigHips} />
 
-					<Detailed distances={[0, 20]} position={[0, 2, 0]}>
-						<skinnedMesh
-							name="Sapidae_male_arms2_new001"
-							geometry={nodes.Sapidae_male_arms2_new003.geometry}
-							skeleton={nodes.Sapidae_male_arms2_new003.skeleton}
-						>
-							<meshStandardMaterial ref={eyeMaterialRef} map={textureEyeOpen} roughness={1} />
-						</skinnedMesh>
-						<mesh scale={80} rotation={[Math.PI / 2, 0, 0]} position={[0, 2.5, 0]}>
-							<planeGeometry args={[1, 3, 1]} />
-							<meshStandardMaterial color={'red'} />
-						</mesh>
-					</Detailed>
+					<skinnedMesh
+						name="Sapidae_male_arms2_new001"
+						geometry={nodes.Sapidae_male_arms2_new003.geometry}
+						skeleton={nodes.Sapidae_male_arms2_new003.skeleton}
+					>
+						<meshStandardMaterial ref={eyeMaterialRef} map={textureEyeOpen} roughness={1} />
+					</skinnedMesh>
 
-					<Detailed distances={[0, 20]}>
+					<Detailed distances={[0, 30]}>
 						<skinnedMesh
 							name="Sapidae_male_arms2_new001"
 							geometry={nodes.Sapidae_male_arms2_new001.geometry}
