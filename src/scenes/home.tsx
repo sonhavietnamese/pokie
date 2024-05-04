@@ -3,8 +3,10 @@
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 import { Ground } from '@/features/environment/ground'
+import GuideLineDisableButton from '@/features/guide-line/guide-line-disable-button'
 import { usePhoneStore } from '@/features/phone/phone-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
+import { NPCS } from '@/libs/constants'
 import { Environment } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
 import dynamic from 'next/dynamic'
@@ -13,13 +15,13 @@ import { Perf } from 'r3f-perf'
 import { Suspense } from 'react'
 
 const AxieAutoMove = dynamic(() => import('@/features/axie/axie-auto-move'))
-const Bano = dynamic(() => import('@/app/test/npc/bano'))
+const Bano = dynamic(() => import('@/features/npc/bano'))
 const PokiedexRay = dynamic(() => import('@/features/pokiedex/pokiedex-ray'))
 const CharacterController = dynamic(() => import('@/features/movement/character-controller'))
 const Chest = dynamic(() => import('@/components/chest/chest'))
 const ShootBall = dynamic(() => import('@/features/catch-axie/shoot-ball'))
 const Butterflies = dynamic(() => import('@/features/environment/butterfly/butterflies'))
-const GuideLineManager = dynamic(() => import('@/components/guide-line/guide-line-manager'))
+const GuideLineManager = dynamic(() => import('@/features/guide-line/guide-line-manager'))
 const Sapidae = dynamic(() => import('@/features/movement/character'))
 
 export default function Home() {
@@ -62,7 +64,7 @@ export default function Home() {
 
 			<Suspense>
 				<Physics debug={Boolean(debug)} timeStep="vary">
-					<Bano position={[1, 1.8, 0]} />
+					<Bano position={NPCS.bano.position as [number, number, number]} />
 
 					<Butterflies />
 					<ShootBall />
@@ -70,7 +72,7 @@ export default function Home() {
 					{/* <Butterflies />
 					<Chest position={[3, 2, 3]} />
 
-					<ShootBall /> */}
+					  */}
 
 					<PokiedexRay />
 

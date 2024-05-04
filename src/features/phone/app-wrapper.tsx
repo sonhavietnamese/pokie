@@ -17,7 +17,7 @@ export default function AppWrapper({ children }: AppWrapperProps) {
 
 	return (
 		<section className="relative h-full w-full">
-			<button type="button" className="absolute top-4 left-4" onMouseUp={back}>
+			<button type="button" className="absolute top-4 left-4 z-[3]" onMouseUp={back}>
 				<Sprite
 					data={{
 						part: '1',

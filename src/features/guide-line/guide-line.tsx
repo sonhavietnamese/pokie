@@ -2,29 +2,30 @@ import { useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import * as THREE from 'three'
+import { useGuideLineStore } from './guide-line-store'
 
 export default function GuideLine() {
 	const ref = useRef<THREE.Group>(null)
 	const arrowMaterialRef = useRef<THREE.MeshBasicMaterial>(null)
 	const meshRef = useRef<THREE.Mesh>(null)
 	const texture = useTexture('/textures/icon-arrow-01.png')
+	const targetPosition = useGuideLineStore((s) => s.target)
 
 	texture.wrapS = texture.wrapT = THREE.RepeatWrapping
 
 	const distance = useRef(0)
 	const midPoint = useRef(new THREE.Vector3())
-	const targetPosition = useRef(new THREE.Vector3())
 	const characterPosition = useRef(new THREE.Vector3())
 
 	useFrame((state, delta) => {
-		if (!meshRef.current || !arrowMaterialRef.current || !ref.current) return
+		if (!meshRef.current || !arrowMaterialRef.current || !ref.current || !targetPosition) return
 
 		state.scene.getObjectByName('character')?.getWorldPosition(characterPosition.current)
-		midPoint.current.copy(targetPosition.current).add(characterPosition.current).divideScalar(2)
+		midPoint.current.copy(targetPosition).add(characterPosition.current).divideScalar(2)
 		ref.current?.position.copy(midPoint.current.setY(characterPosition.current.y - 0.3))
-		ref.current.lookAt(targetPosition.current.setY(characterPosition.current.y - 0.3))
+		ref.current.lookAt(targetPosition.setY(characterPosition.current.y - 0.3))
 
-		distance.current = targetPosition.current.distanceTo(characterPosition.current)
+		distance.current = targetPosition.distanceTo(characterPosition.current)
 
 		meshRef.current.scale.set(distance.current, 1, 0.3)
 		texture.repeat.x = distance.current * 3.5

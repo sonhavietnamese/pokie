@@ -166,7 +166,7 @@ export default function PhoneCase() {
 							<div className="absolute inset-0 z-[3] h-full w-full p-10 pt-16">
 								<motion.div
 									initial="hidden"
-									className="relative grid h-full w-full auto-rows-min grid-cols-4 gap-3 overflow-hidden rounded-xl bg-[#FFF6D5] p-5"
+									className="relative grid h-full w-full auto-rows-min grid-cols-4 gap-3 overflow-hidden rounded-2xl bg-[#FFF6D5] p-5"
 									animate={controls}
 									variants={{}}
 								>

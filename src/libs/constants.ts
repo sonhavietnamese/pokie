@@ -1,4 +1,5 @@
 import type { Stuff } from '@/features/backpack/type'
+import type { Npc } from '@/features/npc/type'
 import type { App } from '@/features/phone/type'
 
 export const VERSION = '0.0.1'
@@ -122,3 +123,18 @@ export const APPS: App[] = [
 		type: 'external',
 	},
 ]
+
+export const NPCS = {
+	bano: {
+		name: 'Bano',
+		id: 'bano',
+		position: [2, 1.67, 0],
+		rotation: [0, 0, 0],
+	},
+	bino: {
+		name: 'Bano',
+		id: 'bano',
+		position: [2, 3, 0],
+		rotation: [0, 0, 0],
+	},
+} as const

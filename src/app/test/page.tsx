@@ -2,6 +2,7 @@
 
 import AnimationManager from '@/features/axie/animation-manager'
 import { useDialogueStore } from '@/features/dialogue/store'
+import QuestManager from '@/features/quest/quest-manager'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -28,11 +29,12 @@ export default function Page() {
 	return (
 		<>
 			<main ref={ref} className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden">
+				<QuestManager />
 				<OnboardingManager />
 				<ToastManager />
 				{/* <RonManager /> */}
 
-				<KeyboardControls map={KEYBOARD_MAP}>
+				{/* <KeyboardControls map={KEYBOARD_MAP}>
 					<Canvas
 						className="absolute z-0 h-screen w-screen"
 						dpr={0.75}
@@ -58,7 +60,7 @@ export default function Page() {
 
 				{/* <Vignette /> */}
 
-				<View index={1} className="absolute z-0 h-screen w-screen">
+				{/* <View index={1} className="absolute z-0 h-screen w-screen">
 					<Perf />
 					{stage === 'home' && <Home />}
 					{stage === 'onboarding' && <Onboarding />}
@@ -66,9 +68,7 @@ export default function Page() {
 
 				{stage === 'home' && <Avatar />}
 
-				<LogoutButton />
-
-				{/* <div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" /> */}
+				<LogoutButton />  */}
 			</main>
 		</>
 	)

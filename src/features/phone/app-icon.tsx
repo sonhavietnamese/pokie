@@ -33,7 +33,7 @@ export default function AppIcon({ index, app, ...props }: AppIconProps) {
 	return (
 		<motion.div
 			key={app.id}
-			className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl bg-pink-400 hover:outline hover:outline-[#FFA200] hover:outline-[4px]"
+			className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-[20px] hover:outline hover:outline-[#FFA200] hover:outline-[4px]"
 			layoutId={app.id.toString()}
 			variants={itemVariants}
 			custom={delays[index] + 0.5}

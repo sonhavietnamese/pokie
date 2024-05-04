@@ -124,3 +124,55 @@ footer::before {
   align-items: center;
   gap: 5px;
 }
+
+.shine-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine {
+  display: block;
+}
+
+.shine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(rgba(255, 255, 255, 0)),
+    color-stop(50%, rgba(255, 255, 255, 0.8)),
+    to(rgba(255, 255, 255, 0))
+  );
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transform: skew(30deg);
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  50% {
+    left: 50%;
+    opacity: 0.8;
+  }
+  100% {
+    left: 200%;
+    opacity: 0;
+  }
+}

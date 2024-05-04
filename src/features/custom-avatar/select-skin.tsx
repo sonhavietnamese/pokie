@@ -30,14 +30,14 @@ export default function CustomAvatarSelectSkin() {
 								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 								key={i}
 								className={cn(
-									'group relative flex w-[80px] scale-90 justify-center rounded-2xl border-[4px] p-2 transition-transform hover:scale-100',
+									'group relative flex aspect-square w-[80px] scale-90 justify-center rounded-2xl border-[4px] p-2 transition-transform hover:scale-100',
 									i % 2 === 0 ? 'border-white/50 bg-[#FFF0C7]/50' : 'border-white bg-[#FFF0C7]',
 								)}
 							>
 								<Sprite
 									data={{
 										part: '1',
-										m: SPRITESHEET_DATA.frames['icon-ball-aquatic.png'].frame,
+										m: SPRITESHEET_DATA.frames['icon-skin-default.png'].frame,
 									}}
 									className="w-full"
 								/>

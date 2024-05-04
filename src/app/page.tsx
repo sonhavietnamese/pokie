@@ -1,5 +1,6 @@
 'use client'
 
+import GuideLineDisableButton from '@/features/guide-line/guide-line-disable-button'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -86,13 +87,15 @@ export default function Page() {
 									<MovementInstructions />
 									<CustomAvatarSelectSkin />
 
+									<GuideLineDisableButton />
+
+									<QuestManager />
+
 									<RonManager />
 									<TipManager />
 									<CatchAxieAim />
 
 									<PhoneCase />
-
-									{/* <QuestManager /> */}
 								</Suspense>
 							)}
 
