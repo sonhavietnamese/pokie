@@ -236,7 +236,7 @@
       "before": [
         {
           "action": "EMOTE",
-          "opts": ["wave-01"]
+          "opts": ["talk-01"]
         }
       ],
       "bubbles": ["This is a chest, it appears randomly around here."],
@@ -253,7 +253,7 @@
       "before": [
         {
           "action": "EMOTE",
-          "opts": ["idle-00"]
+          "opts": ["talk-01"]
         }
       ],
       "bubbles": [
@@ -272,7 +272,7 @@
       "before": [
         {
           "action": "EMOTE",
-          "opts": ["idle-00"]
+          "opts": ["gesture-01"]
         }
       ],
       "bubbles": ["...sometime nothing."],
@@ -307,7 +307,7 @@
       "before": [
         {
           "action": "EMOTE",
-          "opts": ["wave-01"]
+          "opts": ["throw-00"]
         }
       ],
       "bubbles": ["To catch an Axie, you need to have a PokieBall."],
@@ -359,10 +359,82 @@
       "before": [
         {
           "action": "EMOTE",
-          "opts": ["idle-00"]
+          "opts": ["gesture-01"]
         }
       ],
       "bubbles": ["Goodluck!"],
+      "next": [
+        {
+          "action": "END"
+        }
+      ]
+    }
+  },
+  "first_time_meet_axie": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["gesture-02"]
+        }
+      ],
+      "bubbles": ["Awesome, meet Axie! It's cute, don't get me wrong."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["throw-00"]
+        }
+      ],
+      "bubbles": [
+        "This is your chance to own one. You can catch it by using a PokieBall."
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "03"
+        }
+      ]
+    },
+    "03": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "Moreover, you can pet it to increase the chance of catching it."
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "04"
+        }
+      ]
+    },
+    "04": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["run"]
+        }
+      ],
+      "bubbles": [
+        "If axie is happy, you'll be fine, if not, run! Axie can bite you."
+      ],
       "next": [
         {
           "action": "END"

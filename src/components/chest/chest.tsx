@@ -118,13 +118,7 @@ export default function Chest(props: RigidBodyProps) {
 					<meshStandardMaterial map={materials['texture.005'].map} roughness={1} />
 				</mesh>
 
-				<mesh
-					castShadow
-					ref={lidRef}
-					geometry={nodes.chest_gold_lid.geometry}
-					rotation={[0, 0, 0]}
-					position={[0, 0.5, -0.565]}
-				>
+				<mesh ref={lidRef} geometry={nodes.chest_gold_lid.geometry} rotation={[0, 0, 0]} position={[0, 0.5, -0.565]}>
 					<meshStandardMaterial map={materials['texture.005'].map} roughness={1} />
 				</mesh>
 			</group>

@@ -1,21 +1,26 @@
 import { AxieMixer } from '@/components/axie-mixer'
 import type { AxieAnimation } from '@/components/axie-mixer/types'
+import { useOnboardingStore } from '@/features/onboarding/onboarding-store'
+import { useTipStore } from '@/features/tip/store'
 import { getMovingDirection } from '@/libs/utils'
 import type { RayColliderToi, Vector } from '@dimforge/rapier3d-compat'
 import { useFrame, useThree } from '@react-three/fiber'
 import {
 	BallCollider,
 	CapsuleCollider,
+	type CollisionPayload,
 	type RapierRigidBody,
 	RigidBody,
 	type RigidBodyProps,
 	quat,
 	useRapier,
 } from '@react-three/rapier'
-import { random } from 'lodash-es'
+import { random, sample } from 'lodash-es'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { useDialogueStore } from '../dialogue/store'
 import AxieNotation from './axie-notation'
+import type { AxieEmote } from './type'
 
 const vectorY = new THREE.Vector3(0, 1, 0)
 const vectorZ = new THREE.Vector3(0, 0, 1)
@@ -68,7 +73,13 @@ const AxieAutoMove = ({
 	const characterRef = useRef<RapierRigidBody>(null)
 	const characterModelRef = useRef<THREE.Group>(null)
 	const characterModelIndicator = useRef(new THREE.Object3D())
+	const colliderRef = useRef<RapierRigidBody>(null)
 
+	const showTip = useTipStore((s) => s.showTip)
+	const isFirstTimeMeetAxie = useOnboardingStore((s) => s.isFirstTimeMeetAxie)
+	const showDialog = useDialogueStore((s) => s.showDialogue)
+
+	//#region PHYSICS
 	const modelFacingVec = useRef(new THREE.Vector3())
 	const bodyFacingVec = useRef(new THREE.Vector3())
 	const bodyBalanceVec = useRef(new THREE.Vector3())
@@ -87,9 +98,15 @@ const AxieAutoMove = ({
 	const wantToMoveVel = useRef(new THREE.Vector3())
 	const rejectVel = useRef(new THREE.Vector3())
 
+	const { rapier, world } = useRapier()
+	//#endregion
+
 	const scene = useThree((s) => s.scene)
 	const [animation, setAnimation] = useState<AxieAnimation>('idle')
-	const { rapier, world } = useRapier()
+	const [emote, setEmote] = useState<AxieEmote>('normal')
+
+	const canMove = useRef(true)
+	const isFollowingCharacter = useRef(followCharacter)
 
 	let isOnMovingObject = false
 	let floatingForce = null
@@ -242,7 +259,7 @@ const AxieAutoMove = ({
 	}
 
 	const pointToMove = (slopeAngle: number, movingObjectVelocity: THREE.Vector3) => {
-		if (followCharacter) {
+		if (isFollowingCharacter.current) {
 			const character = scene.getObjectByName('character')
 
 			if (character) {
@@ -270,8 +287,8 @@ const AxieAutoMove = ({
 		modelEuler.current.y = (crossVector.current.y > 0 ? -1 : 1) * pointToPoint.current.angleTo(vectorZ)
 
 		if (characterRef.current) {
-			if (pointToPoint.current.length() > (followCharacter ? 2 : 1)) {
-				moveCharacter(false, slopeAngle, movingObjectVelocity)
+			if (pointToPoint.current.length() > (followCharacter ? 2 : 1) && canMove.current) {
+				moveCharacter(isFollowingCharacter.current, slopeAngle, movingObjectVelocity)
 				isPointMoving = true
 			} else {
 				isPointMoving = false
@@ -308,6 +325,8 @@ const AxieAutoMove = ({
 		currentPos.current.copy(characterRef.current.translation() as THREE.Vector3)
 		currentVel.current.copy(characterRef.current.linvel() as THREE.Vector3)
 
+		!followCharacter && colliderRef.current?.setTranslation(characterRef.current.translation(), false)
+
 		modelEuler.current.y = ((movingDirection) => (movingDirection === null ? modelEuler.current.y : movingDirection))(
 			getMovingDirection(false, false, false, false, pivot),
 		)
@@ -317,10 +336,6 @@ const AxieAutoMove = ({
 
 		rayOrigin.current.addVectors(currentPos.current, rayOriginOffset as THREE.Vector3)
 		rayHit = world.castRay(rayCast, rayLength, true, 16, undefined, undefined, characterRef.current)
-
-		/**
-		 * Ray detect if on rigid body or dynamic platform, then apply the linear velocity and angular velocity to character
-		 */
 
 		if (rayHit) {
 			const parentCol = rayHit.collider.parent()
@@ -448,43 +463,92 @@ const AxieAutoMove = ({
 
 		autoBalanceCharacter()
 
-		pointToMove(slopeAngle, movingObjectVelocity.current)
+		canMove.current && pointToMove(slopeAngle, movingObjectVelocity.current)
 
 		if (!isPointMoving) {
 			setAnimation('idle')
+		} else if (isFollowingCharacter.current && emote === 'angry') {
+			setAnimation('run')
 		} else if (isPointMoving) {
 			setAnimation('walk')
 		}
 	})
 
-	return (
-		<RigidBody
-			name={axieId}
-			onContactForce={(e) => bodyContactForce.set(e.totalForce.x, e.totalForce.y, e.totalForce.z)}
-			onCollisionExit={() => bodyContactForce.set(0, 0, 0)}
-			colliders={false}
-			ref={characterRef}
-			enabledRotations={[true, true, true]}
-			position={props.position}
-		>
-			<CapsuleCollider name={`axie-${axieId}`} args={[capsuleHalfHeight, capsuleRadius]} />
-			<BallCollider args={[0.5]} position={[0, 0.3, 0]} />
-			<group ref={characterModelRef} position={[0, -0.6, 0]} userData={{ camExcludeCollision: true }}>
-				<mesh
-					renderOrder={3}
-					position={[rayOriginOffset.x, rayOriginOffset.y, rayOriginOffset.z + slopeRayOriginOffset]}
-					ref={slopeRayOriginRef}
-					visible={showSlopeRayOrigin}
-					userData={{ camExcludeCollision: true }}
-				>
-					<boxGeometry args={[0.15, 0.15, 0.15]} />
-				</mesh>
+	const onEnter = (e: CollisionPayload) => {
+		if (e.colliderObject?.name.includes('character-body')) {
+			if (isFirstTimeMeetAxie) {
+				showDialog('first_time_meet_axie', 'bottom')
+			}
 
-				<AxieNotation key={axieId} emote="normal">
-					<AxieMixer key={axieId} animation={animation} axieId={axieId} />
-				</AxieNotation>
-			</group>
-		</RigidBody>
+			const emote = sample<AxieEmote>(['happy'])
+
+			setEmote(emote)
+
+			if (emote === 'angry') {
+				showTip('Runnnnnnnnnn!')
+				isFollowingCharacter.current = true
+
+				return
+			}
+
+			showTip('Press F to pet Axie')
+
+			canMove.current = false
+			isPointMoving = false
+		}
+	}
+
+	const onExit = (e: CollisionPayload) => {
+		if (e.colliderObject?.name.includes('character-body')) {
+			canMove.current = true
+			isPointMoving = false
+			setEmote('normal')
+
+			if (emote === 'angry') {
+				isFollowingCharacter.current = false
+
+				return
+			}
+		}
+	}
+
+	return (
+		<>
+			<RigidBody
+				name={axieId}
+				onContactForce={(e) => bodyContactForce.set(e.totalForce.x, e.totalForce.y, e.totalForce.z)}
+				onCollisionExit={() => bodyContactForce.set(0, 0, 0)}
+				colliders={false}
+				ref={characterRef}
+				enabledRotations={[true, true, true]}
+				position={props.position}
+			>
+				<CapsuleCollider name={`axie-${axieId}`} args={[capsuleHalfHeight, capsuleRadius]} />
+				<BallCollider args={[0.5]} position={[0, 0.3, 0]} />
+
+				<group ref={characterModelRef} position={[0, -0.6, 0]} userData={{ camExcludeCollision: true }}>
+					<mesh
+						renderOrder={3}
+						position={[rayOriginOffset.x, rayOriginOffset.y, rayOriginOffset.z + slopeRayOriginOffset]}
+						ref={slopeRayOriginRef}
+						visible={showSlopeRayOrigin}
+						userData={{ camExcludeCollision: true }}
+					>
+						<boxGeometry args={[0.15, 0.15, 0.15]} />
+					</mesh>
+
+					<AxieNotation key={axieId} emote={emote}>
+						<AxieMixer key={axieId} animation={animation} axieId={axieId} />
+					</AxieNotation>
+				</group>
+			</RigidBody>
+
+			{!followCharacter && (
+				<RigidBody type="fixed" sensor ref={colliderRef}>
+					<BallCollider onIntersectionEnter={onEnter} onIntersectionExit={onExit} args={[3]} position={[0, 0.3, 0]} />
+				</RigidBody>
+			)}
+		</>
 	)
 }
 

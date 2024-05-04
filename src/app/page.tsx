@@ -7,10 +7,10 @@ import PhoneOpenButton from '@/features/phone/phone-open-button'
 import PokiedexOpenButton from '@/features/pokiedex/pokiedex-open-button'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
-import { KeyboardControls, View } from '@react-three/drei'
+import { Html, KeyboardControls, View, useProgress } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import dynamic from 'next/dynamic'
-import { type MutableRefObject, Suspense, useRef } from 'react'
+import { type MutableRefObject, Suspense, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
@@ -68,7 +68,9 @@ export default function Page() {
 							}}
 							eventSource={ref as MutableRefObject<HTMLElement>}
 						>
-							<View.Port />
+							<Suspense fallback={null}>
+								<View.Port />
+							</Suspense>
 						</Canvas>
 
 						<View index={1} className="absolute inset-0 z-0 h-screen w-screen">
@@ -98,7 +100,7 @@ export default function Page() {
 
 								<PhoneCase />
 
-								<aside className="absolute top-1/2 right-6 flex flex-col gap-2 -translate-y-1/2">
+								<aside className="-translate-y-1/2 absolute top-1/2 right-6 flex flex-col gap-2">
 									<CustomAvatarOpenButton />
 									<CatchAxieOpenButton />
 									<PokiedexOpenButton />

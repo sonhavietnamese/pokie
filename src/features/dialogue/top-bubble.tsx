@@ -48,13 +48,13 @@ export default function TopBubble({ message, author, ...props }: TopBubbleProps)
 					}}
 					className="absolute top-0 left-0 h-full w-full"
 				/>
-				<span className="-top-1 absolute left-6 z-[2] rounded-full bg-[#CBAB79] p-0.5 px-3 font-bold text-[#ffffff] text-[18px] tracking-wide">
+				<span className="-top-1 absolute left-6 z-[20] rounded-full bg-[#CBAB79] p-0.5 px-3 font-bold text-[#ffffff] text-[18px] tracking-wide">
 					{capitalize(author)}
 				</span>
 
 				<span className="z-[2] font-extrabold text-[#735427] text-[20px] leading-5 tracking-wide">{message}</span>
 
-				<div className="absolute right-[58px] bottom-5 z-[2] flex items-center justify-center gap-1 text-[#F3A84B] text-[14px] tracking-wide">
+				<div className="absolute right-[58px] bottom-5 z-[20] flex items-center justify-center gap-1 text-[#F3A84B] text-[14px] tracking-wide">
 					<span className="">Next</span>
 					<figure className="h-3 w-3 animate-shake">
 						<Sprite

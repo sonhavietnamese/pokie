@@ -31,7 +31,7 @@ export default function BottomBubble({ message, ...props }: TopBubbleProps) {
 			{...props}
 		>
 			<div role="button" className="relative flex min-h-[200px] w-full min-w-[450px] p-10 pr-16 pb-12 pl-14">
-				<div className="absolute top-16 left-[5.1px] z-[4] flex items-center justify-center gap-1 text-[#F3A84B] text-[14px] tracking-wide">
+				<div className="absolute top-16 left-[5.1px] z-[20] flex items-center justify-center gap-1 text-[#F3A84B] text-[14px] tracking-wide">
 					<figure className="h-5 w-5">
 						<Sprite
 							data={{
@@ -59,9 +59,9 @@ export default function BottomBubble({ message, ...props }: TopBubbleProps) {
 					className="absolute top-0 left-0 h-full w-full"
 				/>
 
-				<span className="z-[3] font-bold text-[#A7782D] text-[20px] leading-6 tracking-wide">{message}</span>
+				<span className="z-20 font-bold text-[#A7782D] text-[20px] leading-6 tracking-wide">{message}</span>
 
-				<div className="absolute right-[44px] bottom-6 z-[4] flex items-center justify-center gap-1 text-[#F3A84B] text-[14px] tracking-wide">
+				<div className="absolute right-[44px] bottom-6 z-[20] flex items-center justify-center gap-1 text-[#F3A84B] text-[14px] tracking-wide">
 					<span className="">Next</span>
 					<figure className="h-3 w-3 animate-shake">
 						<Sprite

@@ -4,6 +4,7 @@ import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 import { usePhoneStore } from '@/features/phone/phone-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
+import { useLoadingAssets } from '@/hooks/use-assets'
 import { NPCS } from '@/libs/constants'
 import { Environment } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
@@ -31,6 +32,8 @@ export default function Home() {
 
 	const searchParams = useSearchParams()
 	const debug = searchParams.get('debug')
+
+	const loading = useLoadingAssets()
 
 	return (
 		<>
@@ -62,7 +65,7 @@ export default function Home() {
 			<GuideLineManager />
 
 			<Suspense>
-				<Physics debug={Boolean(debug)} timeStep="vary">
+				<Physics debug={Boolean(debug)} timeStep="vary" paused={loading}>
 					<Bimy position={NPCS.bano.position as [number, number, number]} />
 
 					<Butterflies />
@@ -74,8 +77,8 @@ export default function Home() {
 
 					<Ground />
 
-					<AxieAutoMove position={[5, 3, 0]} axieId="123" />
-					<AxieAutoMove position={[15, 3, 0]} axieId="11429880" />
+					<AxieAutoMove sprintMult={2.2} position={[5, 3, 0]} axieId="123" />
+					{/* <AxieAutoMove followCharacter position={[15, 3, 0]} axieId="11429880" /> */}
 
 					<CharacterController
 						followLight

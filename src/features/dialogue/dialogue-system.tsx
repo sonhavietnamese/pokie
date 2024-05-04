@@ -13,25 +13,16 @@ const TopDialogue = dynamic(() => import('./top-dialogue'))
 const BottomDialogue = dynamic(() => import('./bottom-dialogue'))
 
 export default function DialogueSystem() {
-	const [
-		selectedDialogue,
-		dialogueType,
-		subDialogue,
-		topDialogues,
-		bottomDialogues,
-		setSubDialogue,
-		setSelectedDialogue,
-		clear,
-	] = useDialogueStore((s) => [
-		s.selectedDialogue,
-		s.dialogueType,
-		s.subDialogue,
-		s.topDialogues,
-		s.bottomDialogues,
-		s.setSubDialogue,
-		s.setSelectedDialogue,
-		s.clear,
-	])
+	const [selectedDialogue, dialogueType, subDialogue, topDialogues, bottomDialogues, setSubDialogue, clear] =
+		useDialogueStore((s) => [
+			s.selectedDialogue,
+			s.dialogueType,
+			s.subDialogue,
+			s.topDialogues,
+			s.bottomDialogues,
+			s.setSubDialogue,
+			s.clear,
+		])
 	const setOpenMavisId = useMavisIdStore((s) => s.setOpen)
 	const setStage = useStageStore((s) => s.setStage)
 
@@ -41,9 +32,10 @@ export default function DialogueSystem() {
 	)
 	const [choices, setChoices] = useState(subDialogue ? subDialogue.choices : null)
 	const [setCanControl] = useCharacterStore((s) => [s.setCanControl])
-	const [setIsFirstTimeChest, setIsFirstTimeCatchAxie] = useOnboardingStore((s) => [
+	const [setIsFirstTimeChest, setIsFirstTimeCatchAxie, setIsFirstTimeMeetAxie] = useOnboardingStore((s) => [
 		s.setIsFirstTimeChest,
 		s.setIsFirstTimeCatchAxie,
+		s.setIsFirstTimeMeetAxie,
 	])
 
 	useEffect(() => {
@@ -101,6 +93,10 @@ export default function DialogueSystem() {
 				if (selectedDialogue === 'first_time_catch_axie') {
 					setIsFirstTimeCatchAxie(false)
 				}
+				if (selectedDialogue === 'first_time_meet_axie') {
+					setIsFirstTimeMeetAxie(false)
+				}
+
 				clear()
 
 				return
@@ -119,10 +115,10 @@ export default function DialogueSystem() {
 	return (
 		<>
 			{selectedDialogue && dialogueType === 'top' && (
-				<section className="absolute inset-0 z-[10] flex h-screen w-screen justify-center">
+				<section className="absolute inset-0 z-[20] flex h-screen w-screen justify-center">
 					<TopDialogue onBubbleClick={onBubbleClick} content={subDialogue?.bubbles?.[0] ?? ''} />
 
-					<div className="absolute bottom-10 z-[10] flex">
+					<div className="absolute bottom-10 z-[20] flex">
 						{size(choices) > 0 && choices && (
 							<div className="flex gap-4">
 								{choices.no && (

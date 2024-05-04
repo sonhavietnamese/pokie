@@ -238,6 +238,8 @@ export const ANIMATION_SET = {
 	action: 'floating',
 	swim: 'swim',
 	pet: 'pet-animal',
+	open: 'open-00',
+	pickup: 'pick-up-00',
 } as const
 
 export type AnimationSet = typeof ANIMATION_SET
