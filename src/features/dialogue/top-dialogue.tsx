@@ -11,12 +11,8 @@ type TopDialogueProps = {
 
 export default function TopDialogue({ content, onBubbleClick }: TopDialogueProps) {
 	return (
-		<>
-			<div className="absolute top-20 z-[3] max-w-[700px]">
-				<AnimatePresence>
-					<TopBubble message={content} author="bino" onMouseUp={onBubbleClick} key={content} />
-				</AnimatePresence>
-			</div>
-		</>
+		<AnimatePresence>
+			<TopBubble message={content} author="bano" onMouseUp={onBubbleClick} key={content} />
+		</AnimatePresence>
 	)
 }

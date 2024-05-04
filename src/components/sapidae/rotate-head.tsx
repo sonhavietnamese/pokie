@@ -1,19 +1,13 @@
-// @ts-nocheck
-
 import { SapidaeModel } from '@/components/sapidae/sapidae-model'
 import useTextureFactory from '@/components/sapidae/use-texture-factory'
-// import { useBackpackStore } from '@/components/backpack/store'
-// import { useCustomAvatarStore } from '@/components/custom-avatar/store'
-// import { useButterflyStore } from '@/stores/butterfly'
-// import { useMultiplayerStore } from '@/stores/multiplayer'
-// import { useGame } from '@/stores/use-game'
+
 import { Billboard, useAnimations, useGLTF, useTexture } from '@react-three/drei'
 import { useFrame, useGraph } from '@react-three/fiber'
 import { type JSX, useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import type { GLTF } from 'three-stdlib'
 import { SkeletonUtils } from 'three-stdlib'
-import { ANIMATION_SET, useCharacterControl } from './use-character-control'
+import { ANIMATION_SET, useCharacterControl } from '../../features/movement/use-character-control'
 
 type GLTFResult = GLTF & {
 	nodes: {
@@ -115,41 +109,4 @@ export function Sapidae(props: JSX.IntrinsicElements['group']) {
 			</group>
 		</group>
 	)
-}
-
-function getMouseDegrees(x: number, y: number, degreeLimit: number) {
-	let dx = 0
-	let dy = 0
-	let xdiff = 0
-	let xPercentage = 0
-	let ydiff = 0
-	let yPercentage = 0
-
-	const w = { x: window.innerWidth, y: window.innerHeight }
-
-	if (x <= w.x / 2) {
-		xdiff = w.x / 2 - x
-		xPercentage = (xdiff / (w.x / 2)) * 100
-		dx = ((degreeLimit * xPercentage) / 100) * -1
-	}
-
-	if (x >= w.x / 2) {
-		xdiff = x - w.x / 2
-		xPercentage = (xdiff / (w.x / 2)) * 100
-		dx = (degreeLimit * xPercentage) / 100
-	}
-
-	if (y <= w.y / 2) {
-		ydiff = w.y / 2 - y
-		yPercentage = (ydiff / (w.y / 2)) * 100
-		dy = ((degreeLimit * 0.5 * yPercentage) / 100) * -1
-	}
-
-	if (y >= w.y / 2) {
-		ydiff = y - w.y / 2
-		yPercentage = (ydiff / (w.y / 2)) * 100
-		dy = (degreeLimit * yPercentage) / 100
-	}
-
-	return { x: dx, y: dy }
 }

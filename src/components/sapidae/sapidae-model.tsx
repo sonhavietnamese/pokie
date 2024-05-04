@@ -1,38 +1,29 @@
+import { getMouseDegrees } from '@/libs/utils'
 import { Detailed, useGLTF, useTexture } from '@react-three/drei'
-import { useGraph } from '@react-three/fiber'
+import { useFrame, useGraph } from '@react-three/fiber'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
-import type { GLTF } from 'three-stdlib'
 import { SkeletonUtils } from 'three-stdlib'
+import type { SapidaeGLTFResult } from './type'
 import useTextureFactory from './use-texture-factory'
-
-type GLTFResult = GLTF & {
-	nodes: {
-		Sapidae_male_arms2_new001: THREE.SkinnedMesh
-		Sapidae_male_arms2_new002: THREE.SkinnedMesh
-		Sapidae_male_arms2_new003: THREE.SkinnedMesh
-		mixamorigHips: THREE.Bone
-	}
-	materials: {
-		lambert11: THREE.MeshStandardMaterial
-	}
-	animations: string[]
-}
 
 type SapidaeRawProps = JSX.IntrinsicElements['group'] & {
 	enableShadow?: boolean
 	skin?: string
+	isLookAtMouse?: boolean
 }
 
 export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
-	({ skin = 'default', enableShadow = true, ...props }, ref) => {
+	({ skin = 'default', enableShadow = true, isLookAtMouse = false, ...props }, ref) => {
 		const eyeMaterialRef = useRef<THREE.MeshStandardMaterial>(null)
-		const { scene } = useGLTF('/models/character.glb') as GLTFResult
+		const { scene } = useGLTF('/models/character.glb')
 		const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
-		const { nodes } = useGraph(clone) as GLTFResult
+		const { nodes } = useGraph(clone) as SapidaeGLTFResult
 		const { skins } = useTextureFactory()
 
 		const diffuse = useTexture('/fourTone.jpg')
+
+		const mousePosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
 
 		diffuse.minFilter = diffuse.magFilter = THREE.NearestFilter
 
@@ -41,6 +32,12 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 		const textureEyeOpen = skins.EYE_OPEN
 
 		useEffect(() => {
+			const handleMouseMove = (e: MouseEvent) => {
+				if (nodes.mixamorigNeck) {
+					mousePosition.current = { x: e.clientX, y: e.clientY }
+				}
+			}
+
 			if (!eyeMaterialRef.current) return
 
 			const blink = () => {
@@ -55,10 +52,22 @@ export const SapidaeModel = forwardRef<THREE.Group, SapidaeRawProps>(
 
 			const blinkInterval = setInterval(blink, 2500)
 
+			document.addEventListener('mousemove', handleMouseMove, false)
+
 			return () => {
 				clearInterval(blinkInterval)
+
+				document.removeEventListener('mousemove', handleMouseMove, false)
 			}
 		}, [])
+
+		useFrame(() => {
+			if (!isLookAtMouse) return
+			const degrees = getMouseDegrees(mousePosition.current.x, mousePosition.current.y, 30)
+
+			nodes.mixamorigNeck.rotation.y = THREE.MathUtils.degToRad(degrees.x)
+			nodes.mixamorigNeck.rotation.x = THREE.MathUtils.degToRad(degrees.y)
+		})
 
 		return (
 			<group renderOrder={1} ref={ref} {...props} dispose={null}>

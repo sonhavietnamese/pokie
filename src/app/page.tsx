@@ -36,75 +36,73 @@ export default function Page() {
 
 	return (
 		<>
-			<main ref={ref} className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden">
-				<Suspense fallback={<span className="text-white">loading</span>}>
-					<OnboardingManager />
-					<AnimationManager />
+			<main ref={ref} className="relative h-screen w-screen items-center justify-center">
+				<OnboardingManager />
+				<AnimationManager />
 
-					{/* <Vignette /> */}
-					<DialogueSystem />
-					<ToastManager />
+				{/* <Vignette /> */}
+				<DialogueSystem />
+				<ToastManager />
 
-					<KeyboardControls map={KEYBOARD_MAP}>
-						<ShortcutManager />
+				<KeyboardControls map={KEYBOARD_MAP}>
+					<ShortcutManager />
 
-						<Pokiedex>
-							<Canvas
-								className="absolute inset-0 z-0 h-screen w-screen"
-								dpr={0.75}
-								shadows={{
-									enabled: true,
-									type: THREE.PCFShadowMap,
-								}}
-								gl={{
-									outputColorSpace: THREE.SRGBColorSpace,
-									toneMapping: THREE.ACESFilmicToneMapping,
-								}}
-								camera={{
-									fov: 40,
-									near: 0.1,
-									far: 200,
-								}}
-								eventSource={ref as MutableRefObject<HTMLElement>}
-							>
-								<View.Port />
-							</Canvas>
+					<Pokiedex>
+						<Canvas
+							className="absolute inset-0 z-0 h-screen w-screen"
+							dpr={0.75}
+							shadows={{
+								enabled: true,
+								type: THREE.PCFShadowMap,
+							}}
+							gl={{
+								outputColorSpace: THREE.SRGBColorSpace,
+								toneMapping: THREE.ACESFilmicToneMapping,
+							}}
+							camera={{
+								fov: 40,
+								near: 0.1,
+								far: 200,
+							}}
+							eventSource={ref as MutableRefObject<HTMLElement>}
+						>
+							<View.Port />
+						</Canvas>
 
-							<View index={1} className="absolute inset-0 z-0 h-screen w-screen">
-								{stage === 'home' && <Home />}
-								{stage === 'onboarding' && <Onboarding />}
-							</View>
+						<View index={1} className="absolute inset-0 z-0 h-screen w-screen">
+							{stage === 'home' && <Home />}
+							{stage === 'onboarding' && <Onboarding />}
+						</View>
 
-							{stage === 'home' && (
-								<Suspense fallback={<span>loading...</span>}>
-									<div className="absolute top-8 right-6 flex gap-4">
-										<Energy />
-										<PokieCoinBalance />
-									</div>
+						{stage === 'home' && (
+							<>
+								<div className="absolute top-8 right-6 flex gap-4">
+									<Energy />
+									<PokieCoinBalance />
+								</div>
 
-									<Avatar />
-									<LogoutButton />
-									<MovementInstructions />
-									<CustomAvatarSelectSkin />
+								<Avatar />
+								<LogoutButton />
+								<MovementInstructions />
+								<CustomAvatarSelectSkin />
 
-									<GuideLineDisableButton />
+								<GuideLineDisableButton />
 
-									<QuestManager />
+								<QuestManager />
 
-									<RonManager />
-									<TipManager />
-									<CatchAxieAim />
+								<RonManager />
+								<TipManager />
+								<CatchAxieAim />
 
-									<PhoneCase />
-								</Suspense>
-							)}
+								<PhoneCase />
+							</>
+						)}
 
-							{stage === 'onboarding' && (
-								<div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" />
-							)}
-						</Pokiedex>
-					</KeyboardControls>
-				</Suspense>
+						{stage === 'onboarding' && (
+							<div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" />
+						)}
+					</Pokiedex>
+				</KeyboardControls>
 			</main>
 		</>
 	)

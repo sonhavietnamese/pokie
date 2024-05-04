@@ -119,8 +119,9 @@ export default function DialogueSystem() {
 	return (
 		<>
 			{selectedDialogue && dialogueType === 'top' && (
-				<>
+				<section className="absolute inset-0 z-[10] flex h-screen w-screen justify-center">
 					<TopDialogue onBubbleClick={onBubbleClick} content={subDialogue?.bubbles?.[0] ?? ''} />
+
 					<div className="absolute bottom-10 z-[10] flex">
 						{size(choices) > 0 && choices && (
 							<div className="flex gap-4">
@@ -145,15 +146,9 @@ export default function DialogueSystem() {
 							</div>
 						)}
 					</div>
-				</>
+				</section>
 			)}
-			{/* <View index={3} className="z-[10] absolute h-[400px] w-[250px]">
-				<OrthographicCamera makeDefault position={[0, 0, 5]} zoom={90} />
-				<ambientLight intensity={4} />
-				<animated.group position={[0, 0, 0]}>
-					<Sapidae animation="talk-01" scale={2} rotation={[0, 0.2, 0]} />
-				</animated.group>
-			</View> */}
+
 			{selectedDialogue && dialogueType === 'bottom' && (
 				<BottomDialogue onBubbleClick={onBubbleClick} content={subDialogue?.bubbles?.[0] ?? ''} />
 			)}
