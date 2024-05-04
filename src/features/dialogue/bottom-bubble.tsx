@@ -27,7 +27,7 @@ export default function BottomBubble({ message, ...props }: TopBubbleProps) {
 			initial={'hidden'}
 			animate={'visible'}
 			exit={'hidden'}
-			className="origin-top-left"
+			className="absolute top-[80px] w-[400px] origin-top-left"
 			{...props}
 		>
 			<div role="button" className="relative flex min-h-[200px] w-full min-w-[450px] p-10 pr-16 pb-12 pl-14">

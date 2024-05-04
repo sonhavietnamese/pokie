@@ -78,7 +78,8 @@ export default function SapidaeNotation({ children, emote, ...props }: SapidaeNo
 
 	return (
 		<group {...props}>
-			<Billboard position={[0, 2.35, 0]}>
+			{/* <Billboard position={[0, 2.35, 0]}> */}
+			<Billboard position={[0, 2.6, 0]}>
 				<animated.mesh
 					scale={springs.scale as unknown as number}
 					rotation={springs.rotate as unknown as [number, number, number]}

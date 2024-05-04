@@ -1,5 +1,4 @@
 import type { Stuff } from '@/features/backpack/type'
-import type { Npc } from '@/features/npc/type'
 import type { App } from '@/features/phone/type'
 
 export const VERSION = '0.0.1'
@@ -131,10 +130,34 @@ export const NPCS = {
 		position: [2, 1.67, 0],
 		rotation: [0, 0, 0],
 	},
-	bino: {
-		name: 'Bano',
-		id: 'bano',
-		position: [2, 3, 0],
+	bimy: {
+		name: 'Bimy',
+		id: 'bimy',
+		position: [2, 1.67, 0],
+		rotation: [0, 0, 0],
+	},
+	lolo: {
+		name: 'Lolo',
+		id: 'lolo',
+		position: [2, 1.67, 0],
+		rotation: [0, 0, 0],
+	},
+	ooap: {
+		name: 'Ooap',
+		id: 'ooap',
+		position: [2, 1.67, 0],
+		rotation: [0, 0, 0],
+	},
+	blub: {
+		name: 'Blub',
+		id: 'blub',
+		position: [2, 1.67, 0],
+		rotation: [0, 0, 0],
+	},
+	koac: {
+		name: 'Koac',
+		id: 'koac',
+		position: [2, 1.67, 0],
 		rotation: [0, 0, 0],
 	},
 } as const

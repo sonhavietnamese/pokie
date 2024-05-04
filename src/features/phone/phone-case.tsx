@@ -139,7 +139,7 @@ export default function PhoneCase() {
 						animate={isOpen ? 'visible' : 'hidden'}
 						exit={'hidden'}
 						variants={overlayVariants}
-						className="h-screen w-screen bg-[#d942426e]"
+						className="h-screen w-screen bg-[#200c04]/70"
 					/>
 					<div className="absolute z-[5] flex h-screen w-screen items-center justify-center rounded-lg">
 						<motion.div

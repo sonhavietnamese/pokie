@@ -2,8 +2,6 @@
 
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
-import { Ground } from '@/features/environment/ground'
-import GuideLineDisableButton from '@/features/guide-line/guide-line-disable-button'
 import { usePhoneStore } from '@/features/phone/phone-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { NPCS } from '@/libs/constants'
@@ -15,7 +13,7 @@ import { Perf } from 'r3f-perf'
 import { Suspense } from 'react'
 
 const AxieAutoMove = dynamic(() => import('@/features/axie/axie-auto-move'))
-const Bano = dynamic(() => import('@/features/npc/bano'))
+const Bimy = dynamic(() => import('@/features/npc/bimy'))
 const PokiedexRay = dynamic(() => import('@/features/pokiedex/pokiedex-ray'))
 const CharacterController = dynamic(() => import('@/features/movement/character-controller'))
 const Chest = dynamic(() => import('@/components/chest/chest'))
@@ -23,6 +21,7 @@ const ShootBall = dynamic(() => import('@/features/catch-axie/shoot-ball'))
 const Butterflies = dynamic(() => import('@/features/environment/butterfly/butterflies'))
 const GuideLineManager = dynamic(() => import('@/features/guide-line/guide-line-manager'))
 const Sapidae = dynamic(() => import('@/features/movement/character'))
+const Ground = dynamic(() => import('@/features/environment/ground'))
 
 export default function Home() {
 	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
@@ -64,22 +63,19 @@ export default function Home() {
 
 			<Suspense>
 				<Physics debug={Boolean(debug)} timeStep="vary">
-					<Bano position={NPCS.bano.position as [number, number, number]} />
+					<Bimy position={NPCS.bano.position as [number, number, number]} />
 
 					<Butterflies />
 					<ShootBall />
 
-					{/* <Butterflies />
-					<Chest position={[3, 2, 3]} />
-
-					  */}
+					<Chest position={[-5, 2, 3]} />
 
 					<PokiedexRay />
 
 					<Ground />
 
-					<AxieAutoMove position={[-1, 3, 0]} axieId="123" />
-					<AxieAutoMove position={[2, 3, 0]} axieId="11429880" />
+					<AxieAutoMove position={[5, 3, 0]} axieId="123" />
+					<AxieAutoMove position={[15, 3, 0]} axieId="11429880" />
 
 					<CharacterController
 						followLight

@@ -1,6 +1,10 @@
 'use client'
 
+import CatchAxieOpenButton from '@/features/catch-axie/catch-axie-open-button'
+import CustomAvatarOpenButton from '@/features/custom-avatar/custom-avatar-open-button'
 import GuideLineDisableButton from '@/features/guide-line/guide-line-disable-button'
+import PhoneOpenButton from '@/features/phone/phone-open-button'
+import PokiedexOpenButton from '@/features/pokiedex/pokiedex-open-button'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -13,7 +17,6 @@ const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
 const Avatar = dynamic(() => import('@/components/avatar'), { ssr: false })
 const Energy = dynamic(() => import('@/features/energy-system/energy'), { ssr: false })
 const Pokiedex = dynamic(() => import('@/features/pokiedex/pokiedex'), { ssr: false })
-const Vignette = dynamic(() => import('@/components/vignette'), { ssr: false })
 const RonManager = dynamic(() => import('@/features/ron-manager'), { ssr: false })
 const TipManager = dynamic(() => import('@/features/tip/tip-manager'), { ssr: false })
 const Onboarding = dynamic(() => import('@/scenes/onboarding'), { ssr: false })
@@ -40,7 +43,6 @@ export default function Page() {
 				<OnboardingManager />
 				<AnimationManager />
 
-				{/* <Vignette /> */}
 				<DialogueSystem />
 				<ToastManager />
 
@@ -76,10 +78,10 @@ export default function Page() {
 
 						{stage === 'home' && (
 							<>
-								<div className="absolute top-8 right-6 flex gap-4">
+								{/* <div className="absolute top-8 right-6 flex gap-4">
 									<Energy />
 									<PokieCoinBalance />
-								</div>
+								</div> */}
 
 								<Avatar />
 								<LogoutButton />
@@ -95,6 +97,13 @@ export default function Page() {
 								<CatchAxieAim />
 
 								<PhoneCase />
+
+								<aside className="absolute top-1/2 right-6 flex flex-col gap-2 -translate-y-1/2">
+									<CustomAvatarOpenButton />
+									<CatchAxieOpenButton />
+									<PokiedexOpenButton />
+									<PhoneOpenButton />
+								</aside>
 							</>
 						)}
 

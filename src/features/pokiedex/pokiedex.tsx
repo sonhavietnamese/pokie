@@ -33,7 +33,7 @@ const pokiedexVariants: Variants = {
 const partSecondVariants: Variants = {
 	hide: {
 		opacity: 0,
-		translateX: '-45%',
+		translateX: '-40%',
 		translateY: '-50%',
 	},
 	show: {

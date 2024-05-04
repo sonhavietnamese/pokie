@@ -29,7 +29,7 @@ export default function AppBadges({ isOpen }: AppBadgesProps) {
 
 	const onFind = () => {
 		setIsOpen(false)
-		setTarget(new THREE.Vector3().fromArray(NPCS.bino.position))
+		setTarget(new THREE.Vector3().fromArray(NPCS.bimy.position))
 	}
 
 	return (
@@ -92,7 +92,7 @@ export default function AppBadges({ isOpen }: AppBadgesProps) {
 
 				<div className="absolute bottom-1 left-2 z-[3]">
 					<span className="text-[#b5a87c] text-sm italic">
-						*Challenge Bino to earn badge! Use Find button to find him.
+						*Challenge Bimy to earn badge! Use Find button to find him.
 					</span>
 				</div>
 			</AppWrapper>

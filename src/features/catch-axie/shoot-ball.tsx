@@ -54,7 +54,7 @@ export default function ShootBall() {
 
 		setCubeMesh((prevMeshes) => [...prevMeshes, newMesh])
 		setIsThrew(false)
-		setCanControl(true)
+		// setCanControl(true)
 	}
 
 	useEffect(() => {
@@ -71,7 +71,7 @@ export default function ShootBall() {
 	useEffect(() => {
 		if (isThrew) {
 			throwAnimation()
-			setCanControl(false)
+			// setCanControl(false)
 
 			const timeout = setTimeout(() => {
 				clickToCreateBox()

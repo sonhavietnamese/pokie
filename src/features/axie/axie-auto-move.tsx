@@ -251,7 +251,10 @@ const AxieAutoMove = ({
 		} else {
 			if (!isPointMoving) {
 				// const next = { x: 10, z: 10 }
-				const next = { x: random(movingRange[0], movingRange[1]), z: random(movingRange[0], movingRange[1]) }
+				const next = {
+					x: random(movingRange[0], movingRange[1]) + (props.position as [number, number, number])[0],
+					z: random(movingRange[0], movingRange[1]) + (props.position as [number, number, number])[2],
+				}
 
 				nextPosition.current.set(next.x, 0, next.z)
 			}

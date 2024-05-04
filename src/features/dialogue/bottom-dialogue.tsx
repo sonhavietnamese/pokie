@@ -28,7 +28,7 @@ export default function BottomDialogue({ content, onBubbleClick }: BottomDialogu
 				</View>
 
 				<div className="z-[10] w-[400px]">
-					<AnimatePresence>
+					<AnimatePresence mode="wait">
 						<BottomBubble key={content} message={content} onMouseUp={onBubbleClick} />
 					</AnimatePresence>
 				</div>

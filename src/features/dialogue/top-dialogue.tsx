@@ -11,7 +11,7 @@ type TopDialogueProps = {
 
 export default function TopDialogue({ content, onBubbleClick }: TopDialogueProps) {
 	return (
-		<AnimatePresence>
+		<AnimatePresence mode="wait">
 			<TopBubble message={content} author="bano" onMouseUp={onBubbleClick} key={content} />
 		</AnimatePresence>
 	)

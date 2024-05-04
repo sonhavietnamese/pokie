@@ -25,7 +25,7 @@ export default function ToastManager() {
 
 	return (
 		<section className="absolute top-16 z-10 flex w-full items-center justify-center">
-			<AnimatePresence>
+			<AnimatePresence mode="wait">
 				{toasts && (
 					<Toast key={toasts.id} className="absolute w-[800px]">
 						<span className="font-extrabold text-[#FFF0C7] text-xl tracking-wide">{toasts.content}</span>

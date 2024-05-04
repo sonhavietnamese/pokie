@@ -23,16 +23,16 @@ export default function QuestManager() {
 	// 	}
 	// }, [quests])
 
-	useEffect(() => {
-		newQuest({
-			id: '1',
-			isFinished: false,
-			name: 'Find Bano',
-		})
-	}, [])
+	// useEffect(() => {
+	// 	newQuest({
+	// 		id: '1',
+	// 		isFinished: false,
+	// 		name: 'Find Bano',
+	// 	})
+	// }, [])
 
 	return (
-		<section className="absolute bottom-7 left-5 z-[4]">
+		<section className="absolute bottom-[20%] left-5 z-[4]">
 			<AnimatePresence>{quests && <QuestItem key={quests.id} quest={quests} />}</AnimatePresence>
 		</section>
 	)

@@ -1,6 +1,7 @@
 import SapidaeT from '@/components/sapidae/sapidae'
 import SapidaeNotation, { type SapidaeEmote } from '@/components/sapidae/sapidae-notation'
 import { useGuideLineStore } from '@/features/guide-line/guide-line-store'
+import { Billboard, Text } from '@react-three/drei'
 import { CapsuleCollider, type CollisionPayload, RigidBody, type RigidBodyProps } from '@react-three/rapier'
 import React, { useState } from 'react'
 import { useNpcStore } from './npc-store'
@@ -28,9 +29,14 @@ export default function Bano({ ...props }: BanoProps) {
 
 	return (
 		<RigidBody {...props} type="fixed" colliders={false}>
-			<CapsuleCollider sensor args={[1, 1]} onIntersectionEnter={onEnter} onCollisionExit={onExit} />
+			<CapsuleCollider sensor args={[1, 2.5]} onIntersectionEnter={onEnter} onCollisionExit={onExit} />
 
 			<SapidaeNotation emote={emotion}>
+				<Billboard position={[0, 2.3, 0]}>
+					<Text font="Prompt-Black.ttf" color="white" strokeWidth={0.015} strokeColor="#735427" fontSize={0.25}>
+						Bimy
+					</Text>
+				</Billboard>
 				<SapidaeT animation="idle-00" />
 			</SapidaeNotation>
 		</RigidBody>

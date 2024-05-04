@@ -30,7 +30,7 @@ const grassColorProps = {
 	tipColor2: '#1f352a',
 }
 
-export function Ground(props: JSX.IntrinsicElements['group']) {
+export default function Ground(props: JSX.IntrinsicElements['group']) {
 	const { nodes } = useGLTF('/models/environment/map-ground.glb') as GLTFResult
 	const grassLOD = useGLTF('/models/environment/grass-lods.glb')
 	const prototypeGrid = useTexture('/textures/prototype-grid.png')
@@ -47,6 +47,7 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
 
 	const scene = useThree((state) => state.scene)
 
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	const uniforms: { [key: string]: { value: any } } = {
 		uTime: { value: 0 },
 		uEnableShadows: { value: false },
@@ -258,7 +259,7 @@ export function Ground(props: JSX.IntrinsicElements['group']) {
 		}
 
 		const terrainMesh = nodes.grass
-		const grassGeometry = (grassLOD.nodes.GrassLOD02 as any).geometry as THREE.BufferGeometry
+		const grassGeometry = (grassLOD.nodes.GrassLOD02 as THREE.Mesh).geometry as THREE.BufferGeometry
 		const sampler = new MeshSurfaceSampler(terrainMesh).setWeightAttribute('color').build()
 
 		const grassInstancedMesh = new THREE.InstancedMesh(grassGeometry, material, grassCount)
