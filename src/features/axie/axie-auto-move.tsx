@@ -1,5 +1,8 @@
-import { AxieMixer } from '@/components/axie-mixer'
+'use client'
+
+import AxieMixer from '@/components/axie-mixer'
 import type { AxieAnimation } from '@/components/axie-mixer/types'
+import { useDialogueStore } from '@/features/dialogue/store'
 import { useOnboardingStore } from '@/features/onboarding/onboarding-store'
 import { useTipStore } from '@/features/tip/store'
 import { getMovingDirection } from '@/libs/utils'
@@ -18,7 +21,6 @@ import {
 import { random, sample } from 'lodash-es'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { useDialogueStore } from '../dialogue/store'
 import AxieNotation from './axie-notation'
 import type { AxieEmote } from './type'
 
@@ -463,7 +465,7 @@ const AxieAutoMove = ({
 
 		autoBalanceCharacter()
 
-		canMove.current && pointToMove(slopeAngle, movingObjectVelocity.current)
+		// canMove.current && pointToMove(slopeAngle, movingObjectVelocity.current)
 
 		if (!isPointMoving) {
 			setAnimation('idle')

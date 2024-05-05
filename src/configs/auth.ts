@@ -40,6 +40,7 @@ export const authConfig: AuthOptions = {
 						return {
 							id: newUser.id,
 							wallet: newUser.wallet,
+							isBoarded: newUser.isBoarded,
 							// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 						} as any
 					}
@@ -59,6 +60,7 @@ export const authConfig: AuthOptions = {
 			if (user) {
 				token.id = user.id
 				token.wallet = user.wallet
+				token.isBoarded = user.isBoarded
 			}
 
 			return token
@@ -66,6 +68,7 @@ export const authConfig: AuthOptions = {
 		async session({ session, token }) {
 			session.user.id = token.id as string
 			session.user.wallet = token.wallet as string
+			session.user.isBoarded = token.isBoarded as boolean
 
 			return session
 		},

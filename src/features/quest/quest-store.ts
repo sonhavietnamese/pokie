@@ -1,16 +1,23 @@
-import type { ReactNode } from 'react'
 import { create } from 'zustand'
 import type { Quest } from './type'
 
 interface QuestState {
-	quests: Quest | null
+	quest: Quest | null
 	newQuest: (quest: Quest) => void
+
+	onGoingQuest: string
+
+	clear: () => void
 }
 
 export const useQuestStore = create<QuestState>()((set) => ({
-	quests: null,
+	quest: null,
 	newQuest: (quest: Quest) =>
 		set(() => {
-			return { quests: quest }
+			return { quests: quest, onGoingQuest: quest.id }
 		}),
+
+	onGoingQuest: '',
+
+	clear: () => set(() => ({ quests: null, onGoingQuest: '' })),
 }))

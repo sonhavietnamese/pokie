@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { boolean, integer, jsonb, pgTable, primaryKey, serial, text, timestamp } from 'drizzle-orm/pg-core'
+import { boolean, integer, pgEnum, pgTable, primaryKey, serial, text, timestamp } from 'drizzle-orm/pg-core'
 import type { AdapterAccount } from 'next-auth/adapters'
 
 export const users = pgTable('user', {
@@ -10,7 +10,7 @@ export const users = pgTable('user', {
 	wallet: text('wallet').notNull().default('0x'),
 	created_at: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
 	image: text('image'),
-	onboarding: integer('onboarding').notNull().default(0),
+	isBoarded: boolean('is_boarded').notNull().default(false),
 })
 
 export const accounts = pgTable(
@@ -82,11 +82,11 @@ export const backpack = pgTable('backpacks', {
 	moons: integer('moons').notNull().default(0),
 })
 
+export const questTypeEnum = pgEnum('quest_type', ['onboarding', 'main'])
 export const quests = pgTable('quests', {
-	id: serial('id').notNull().primaryKey(),
-	reward: jsonb('reward').notNull().default(0),
+	id: text('id').notNull().primaryKey(),
 	name: text('name').notNull(),
-	description: text('description').notNull(),
+	type: questTypeEnum('type').notNull(),
 })
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -97,16 +97,17 @@ export const questsRelation = relations(quests, ({ many }) => ({
 	usersToQuests: many(usersToQuests),
 }))
 
+export const statusEnum = pgEnum('status', ['idle', 'ongoing', 'completed'])
 export const usersToQuests = pgTable(
 	'users_to_quests',
 	{
 		userId: text('user_id')
 			.notNull()
 			.references(() => users.id),
-		questId: integer('quest_id')
+		questId: text('quest_id')
 			.notNull()
 			.references(() => quests.id),
-		completed: boolean('completed').notNull().default(false),
+		status: statusEnum('status').notNull().default('idle'),
 	},
 	(t) => ({
 		pk: primaryKey({ columns: [t.userId, t.questId] }),

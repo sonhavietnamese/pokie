@@ -23,5 +23,5 @@ export default function useEnergy() {
 		mutate('getProfile')
 	}
 
-	return { fetchEnergy, increaseEnergy, energy: profile ? profile.energy : '0' }
+	return { fetchEnergy, increaseEnergy, energy: profile ? profile.energy : 0 }
 }

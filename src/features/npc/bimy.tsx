@@ -1,23 +1,29 @@
 import SapidaeT from '@/components/sapidae/sapidae'
 import SapidaeNotation, { type SapidaeEmote } from '@/components/sapidae/sapidae-notation'
 import { useGuideLineStore } from '@/features/guide-line/guide-line-store'
+import { useQuestStore } from '@/features/quest/quest-store'
 import { Billboard, Text } from '@react-three/drei'
 import { CapsuleCollider, type CollisionPayload, RigidBody, type RigidBodyProps } from '@react-three/rapier'
 import React, { useState } from 'react'
 import { useNpcStore } from './npc-store'
 
-type BanoProps = {} & RigidBodyProps
+type BimyProps = {} & RigidBodyProps
 
-export default function Bano({ ...props }: BanoProps) {
+export default function Bimy({ ...props }: BimyProps) {
 	const [emotion, setEmotion] = useState<SapidaeEmote>('normal')
 	const meetNpc = useNpcStore((s) => s.meetNpc)
 	const setTarget = useGuideLineStore((s) => s.setTarget)
+	const [quest] = useQuestStore((s) => [s.clear, s.quest])
 
 	const onEnter = (e: CollisionPayload) => {
 		if (e.colliderObject?.name === 'character-body') {
 			setTarget(null)
 			setEmotion('question')
-			meetNpc('bano')
+			meetNpc('bimy')
+
+			if (!quest) {
+				meetNpc('bimy')
+			}
 		}
 	}
 

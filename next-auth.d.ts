@@ -1,20 +1,17 @@
+type CustomUser = {
+	wallet: string
+	id: string
+	isBoarded: boolean
+}
+
 export declare module 'next-auth' {
 	interface Session {
-		user: {
-			wallet: string
-			id: string
-		}
+		user: CustomUser
 	}
 
 	interface JWT {
-		user: {
-			wallet: string
-			id: string
-		}
+		user: CustomUser
 	}
 
-	interface User {
-		wallet: string
-		id: string
-	}
+	interface User extends CustomUser {}
 }

@@ -7,16 +7,17 @@ import PhoneOpenButton from '@/features/phone/phone-open-button'
 import PokiedexOpenButton from '@/features/pokiedex/pokiedex-open-button'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
-import { Html, KeyboardControls, View, useProgress } from '@react-three/drei'
+import { KeyboardControls, View } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import dynamic from 'next/dynamic'
-import { type MutableRefObject, Suspense, useEffect, useRef, useState } from 'react'
+import { type MutableRefObject, Suspense, useRef } from 'react'
 import * as THREE from 'three'
 
 const Home = dynamic(() => import('@/scenes/home'), { ssr: false })
 const Avatar = dynamic(() => import('@/components/avatar'), { ssr: false })
 const Energy = dynamic(() => import('@/features/energy-system/energy'), { ssr: false })
 const Pokiedex = dynamic(() => import('@/features/pokiedex/pokiedex'), { ssr: false })
+const PhoneCase = dynamic(() => import('@/features/phone/phone-case'), { ssr: false })
 const RonManager = dynamic(() => import('@/features/ron-manager'), { ssr: false })
 const TipManager = dynamic(() => import('@/features/tip/tip-manager'), { ssr: false })
 const Onboarding = dynamic(() => import('@/scenes/onboarding'), { ssr: false })
@@ -31,7 +32,6 @@ const AnimationManager = dynamic(() => import('@/features/axie/animation-manager
 const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding-manager'), { ssr: false })
 const MovementInstructions = dynamic(() => import('@/components/movement-instructions'), { ssr: false })
 const CustomAvatarSelectSkin = dynamic(() => import('@/features/custom-avatar/select-skin'), { ssr: false })
-const PhoneCase = dynamic(() => import('@/features/phone/phone-case'), { ssr: false })
 
 export default function Page() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -93,6 +93,7 @@ export default function Page() {
 								<GuideLineDisableButton />
 
 								<QuestManager />
+								{/* <QuestOnboardingManager /> */}
 
 								<RonManager />
 								<TipManager />

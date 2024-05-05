@@ -96,6 +96,45 @@
       ]
     }
   },
+  "quest_01": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["gesture-02"]
+        }
+      ],
+      "bubbles": [
+        "Tada! Welcome to the meadow where there's ton of things to enjoy."
+      ],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": [
+        "People here are nice! Go find Blub, he has a surprise for you."
+      ],
+      "next": [
+        {
+          "action": "NEW_QUEST",
+          "node": "quest_01"
+        }
+      ]
+    }
+  },
   "ron_insufficient": {
     "_entry": "01",
     "01": {

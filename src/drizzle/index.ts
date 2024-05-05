@@ -12,5 +12,7 @@ export type SelectProfile = typeof schema.profile.$inferSelect
 export type InsertProfile = typeof schema.profile.$inferInsert
 export type SelectBackpack = typeof schema.backpack.$inferSelect
 export type InsertBackpack = typeof schema.backpack.$inferInsert
+export type SelectQuest = typeof schema.quests.$inferSelect
+export type InsertQuest = typeof schema.quests.$inferInsert
 
 export const db = drizzle(client, { schema })

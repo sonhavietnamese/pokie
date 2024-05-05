@@ -2,7 +2,7 @@ import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { cn } from '@/libs/utils'
 import { type Variants, motion } from 'framer-motion'
-import React, { type HTMLAttributes, type ReactNode } from 'react'
+import React, { useMemo, type HTMLAttributes } from 'react'
 import type { Quest } from './type'
 
 const itemVatiants: Variants = {
@@ -22,6 +22,22 @@ type QuestItemProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 const QuestItem = React.forwardRef<HTMLDivElement, QuestItemProps>(({ className, quest, ...props }, ref) => {
+	const goal = useMemo(() => {
+		if (quest.goal.type === 'FIND') {
+			return 1
+		}
+
+		return 1
+	}, [quest])
+
+	const current = useMemo(() => {
+		if (quest.goal.type === 'FIND') {
+			return quest.isFinished ? 1 : 0
+		}
+
+		return 0
+	}, [quest])
+
 	return (
 		<motion.div
 			ref={ref}
@@ -34,9 +50,9 @@ const QuestItem = React.forwardRef<HTMLDivElement, QuestItemProps>(({ className,
 			<Sprite
 				data={{
 					part: '3',
-					l: SPRITESHEET_DATA.frames[`box-quest-${quest.isFinished ? 'blue' : 'green'}-l.png`].frame,
-					m: SPRITESHEET_DATA.frames[`box-quest-${quest.isFinished ? 'blue' : 'green'}-m.png`].frame,
-					r: SPRITESHEET_DATA.frames[`box-quest-${quest.isFinished ? 'blue' : 'green'}-r.png`].frame,
+					l: SPRITESHEET_DATA.frames[`box-quest-${!quest.isFinished ? 'blue' : 'green'}-l.png`].frame,
+					m: SPRITESHEET_DATA.frames[`box-quest-${!quest.isFinished ? 'blue' : 'green'}-m.png`].frame,
+					r: SPRITESHEET_DATA.frames[`box-quest-${!quest.isFinished ? 'blue' : 'green'}-r.png`].frame,
 				}}
 				className="absolute top-0 left-0 z-[0] h-full w-full"
 			/>
@@ -46,7 +62,7 @@ const QuestItem = React.forwardRef<HTMLDivElement, QuestItemProps>(({ className,
 					<Sprite
 						data={{
 							part: '1',
-							m: SPRITESHEET_DATA.frames[`icon-quest-${quest.isFinished ? 'blue' : 'green'}.png`].frame,
+							m: SPRITESHEET_DATA.frames[`icon-quest-${!quest.isFinished ? 'blue' : 'green'}.png`].frame,
 						}}
 						className="h-[55px] w-[55px]"
 					/>
@@ -64,20 +80,29 @@ const QuestItem = React.forwardRef<HTMLDivElement, QuestItemProps>(({ className,
 									}}
 									className="top-0 left-0 z-[0] h-full w-full"
 								/>
-								<div className={cn('absolute inset-0 z-[2] h-full p-1 px-[5px]', 'w-[100%]')}>
-									<Sprite
-										data={{
-											part: '3',
-											l: SPRITESHEET_DATA.frames['progress-bar-02-l.png'].frame,
-											m: SPRITESHEET_DATA.frames['progress-bar-02-m.png'].frame,
-											r: SPRITESHEET_DATA.frames['progress-bar-02-r.png'].frame,
-										}}
-										className="h-full w-full"
-									/>
-								</div>
+
+								{/* Because the sprite always have default width */}
+								{current > 0 && (
+									<div
+										className={cn('absolute inset-0 z-[2] h-full p-1 px-[5px]')}
+										style={{ width: `${Math.min((current / goal) * 100, 100)}%` }}
+									>
+										<Sprite
+											data={{
+												part: '3',
+												l: SPRITESHEET_DATA.frames['progress-bar-02-l.png'].frame,
+												m: SPRITESHEET_DATA.frames['progress-bar-02-m.png'].frame,
+												r: SPRITESHEET_DATA.frames['progress-bar-02-r.png'].frame,
+											}}
+											className="h-full w-full"
+										/>
+									</div>
+								)}
 							</div>
 
-							<span className="w-[30px] text-right text-[#A7782D] leading-none">1/1</span>
+							<span className="w-[30px] text-right text-[#A7782D] leading-none">
+								{current}/{goal}
+							</span>
 						</div>
 					</div>
 				</div>
