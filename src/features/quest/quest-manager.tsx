@@ -1,5 +1,6 @@
 'use client'
 
+import Reward from '@/components/reward'
 import { type DialogueID, useDialogueStore } from '@/features/dialogue/store'
 import { useGuideLineStore } from '@/features/guide-line/guide-line-store'
 import { NPCS } from '@/libs/constants'
@@ -8,6 +9,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import * as THREE from 'three'
 import { QuestItem } from './quest-item'
+import { useQuestStore } from './quest-store'
 import questData from './quests.json'
 import type { Quest } from './type'
 import useQuest from './use-quest'
@@ -23,6 +25,8 @@ export default function QuestManager() {
 		s.selectedDialogue,
 		s.clear,
 	])
+
+	const [reward] = useQuestStore((s) => [s.reward])
 
 	const { onGoingQuest, isLoading, idleQuest } = useQuest()
 
@@ -66,12 +70,16 @@ export default function QuestManager() {
 	}
 
 	return (
-		<section className="absolute bottom-10 left-6 z-[5]">
-			<AnimatePresence>
-				{currentQuest && (
-					<QuestItem onClick={() => onQuestClick(currentQuest)} key={currentQuest.id} quest={currentQuest} />
-				)}
-			</AnimatePresence>
-		</section>
+		<>
+			{reward && <Reward />}
+
+			<section className="absolute bottom-10 left-6 z-[5]">
+				<AnimatePresence>
+					{currentQuest && (
+						<QuestItem onClick={() => onQuestClick(currentQuest)} key={currentQuest.id} quest={currentQuest} />
+					)}
+				</AnimatePresence>
+			</section>
+		</>
 	)
 }

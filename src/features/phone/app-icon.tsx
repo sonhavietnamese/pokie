@@ -1,3 +1,5 @@
+'use client'
+
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { type HTMLMotionProps, type Variants, motion } from 'framer-motion'

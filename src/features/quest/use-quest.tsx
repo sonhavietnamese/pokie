@@ -53,11 +53,10 @@ export default function useQuest() {
 		mutate()
 	}
 
-	const switchToCompletedQuest = () => {
+	const switchToCompletedQuest = (questId: string) => {
 		if (!data) return
-		if (!onGoingQuest) return
 
-		switchToCompleted(data.user.id, onGoingQuest.questId)
+		switchToCompleted(data.user.id, questId)
 		mutate()
 	}
 

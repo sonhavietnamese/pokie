@@ -29,7 +29,7 @@ export default function TopBubble({ message, author, ...props }: TopBubbleProps)
 			initial={'hidden'}
 			animate={'visible'}
 			exit={'hidden'}
-			className="absolute mt-10 h-fit max-w-[700px] origin-bottom-left"
+			className="absolute mt-20 h-fit max-w-[700px] origin-bottom-left"
 			{...props}
 		>
 			<div className="relative flex w-full items-center justify-center p-9 px-20 pb-12 pl-12">

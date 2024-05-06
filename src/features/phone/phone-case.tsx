@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button'
 import { Sprite } from '@/components/ui/sprite'
-import Vignette from '@/components/vignette'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { APPS } from '@/libs/constants'
 import { AnimatePresence, type Variants, motion, useAnimate, useAnimation } from 'framer-motion'
@@ -10,7 +9,6 @@ import { useEffect, useState } from 'react'
 import AppBadges from './app-badges'
 import AppIcon from './app-icon'
 import { usePhoneStore } from './phone-store'
-import type { App } from './type'
 
 const overlayVariants: Variants = {
 	hidden: {
@@ -133,7 +131,6 @@ export default function PhoneCase() {
 		<AnimatePresence>
 			{isOpen && (
 				<div className="absolute inset-0 z-[5] flex items-center justify-center">
-					<Vignette />
 					<motion.div
 						initial={'hidden'}
 						animate={isOpen ? 'visible' : 'hidden'}

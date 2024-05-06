@@ -59,6 +59,8 @@ export type Props = RigidBodyProps & {
 	autoBalanceDampingOnY?: number
 	mode?: 'PointToMove' | 'CameraBasedMovement'
 	props?: RigidBodyProps
+
+	isTalkingToNpc?: boolean
 }
 
 export interface userDataType {

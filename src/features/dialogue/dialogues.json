@@ -125,7 +125,7 @@
         }
       ],
       "bubbles": [
-        "People here are nice! Go find Blub, he has a surprise for you."
+        "People here are nice! Go find Bimy, he has a surprise for you."
       ],
       "next": [
         {
@@ -477,6 +477,57 @@
       "next": [
         {
           "action": "END"
+        }
+      ]
+    }
+  },
+  "bimy_01": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["wave-01"]
+        }
+      ],
+      "bubbles": ["Eh hmm, I'm Bimy, you're finally here!"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["I'm quite mad, but I'll help you to get started."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "03"
+        }
+      ]
+    },
+    "03": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["Grab this!"],
+      "next": [
+        {
+          "action": "REWARD",
+          "node": "quest_01"
         }
       ]
     }

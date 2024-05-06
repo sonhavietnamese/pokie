@@ -1,9 +1,21 @@
 import { create } from 'zustand'
-import type { Quest } from './type'
 
 interface QuestState {
 	onGoingQuestId: string
 	setOnGoingQuestId: (questId: string) => void
+
+	reward: {
+		id: string
+		name: string
+		count: number
+	} | null
+	setReward: (
+		reward: {
+			id: string
+			name: string
+			count: number
+		} | null,
+	) => void
 
 	clear: () => void
 }
@@ -11,6 +23,9 @@ interface QuestState {
 export const useQuestStore = create<QuestState>()((set) => ({
 	onGoingQuestId: '',
 	setOnGoingQuestId: (questId: string) => set(() => ({ onGoingQuestId: questId })),
+
+	reward: null,
+	setReward: (reward) => set(() => ({ reward })),
 
 	clear: () => set(() => ({ quests: null, onGoingQuestId: '' })),
 }))

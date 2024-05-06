@@ -27,8 +27,8 @@ export default function DialogueSystem() {
 		])
 	const setOpenMavisId = useMavisIdStore((s) => s.setOpen)
 	const setStage = useStageStore((s) => s.setStage)
-	const setOnGoingQuestId = useQuestStore((s) => s.setOnGoingQuestId)
-	const { switchToOngoingQuest } = useQuest()
+	const setReward = useQuestStore((s) => s.setReward)
+	const { switchToOngoingQuest, switchToCompletedQuest } = useQuest()
 
 	const dialogues = useMemo(
 		() => (dialogueType === 'bottom' ? bottomDialogues : topDialogues),
@@ -98,6 +98,20 @@ export default function DialogueSystem() {
 				}
 				clear()
 
+				return
+
+			case 'REWARD':
+				if (!node) return
+
+				if (node === 'quest_01') {
+					setReward({
+						id: 'ball-beast',
+						name: 'Ball Beast',
+						count: 1,
+					})
+					switchToCompletedQuest('quest_01')
+				}
+				clear()
 				return
 
 			case 'END':

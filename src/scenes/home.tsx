@@ -31,7 +31,7 @@ export default function Home() {
 	const isCustomAvatarOpen = useCustomAvatarStore((s) => s.isOpenUI)
 	const isPhoneOpen = usePhoneStore((s) => s.isOpen)
 
-	const npc = useNpcStore((s) => s.npc)
+	const isTalking = useNpcStore((s) => s.isTalking)
 
 	const searchParams = useSearchParams()
 	const debug = searchParams.get('debug')
@@ -84,7 +84,7 @@ export default function Home() {
 					{/* <AxieAutoMove followCharacter position={[15, 3, 0]} axieId="11429880" /> */}
 
 					<CharacterController
-						pointToNpc={!!npc}
+						isTalkingToNpc={!!isTalking}
 						camMaxDis={-10}
 						camInitDis={isCustomAvatarOpen || isPhoneOpen ? -5 : isPokiedexOpen || isCatchAxieOpen ? -2 : -10}
 						camInitDir={{ x: 0, y: Math.PI, z: 0 }}

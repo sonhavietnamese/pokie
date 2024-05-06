@@ -15,7 +15,6 @@ export default function Bimy({ ...props }: BimyProps) {
 	const [emotion, setEmotion] = useState<SapidaeEmote>('normal')
 	const meetNpc = useNpcStore((s) => s.meetNpc)
 	const setTarget = useGuideLineStore((s) => s.setTarget)
-	const canControl = useCharacterStore((s) => s.setCanControl)
 
 	const doLerp = useRef(false)
 

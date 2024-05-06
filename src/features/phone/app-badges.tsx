@@ -1,3 +1,5 @@
+'use client'
+
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { useGuideLineStore } from '@/features/guide-line/guide-line-store'

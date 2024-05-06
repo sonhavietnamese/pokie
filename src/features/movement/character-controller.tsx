@@ -26,7 +26,7 @@ const CharacterController = ({
 	disableFollowCamPos = { x: 0, y: 0, z: -5 },
 	disableFollowCamTarget = { x: 0, y: 0, z: 0 },
 
-	pointToNpc = false,
+	isTalkingToNpc = false,
 	// Follow camera setups
 	camInitDis = -8,
 	camMaxDis = -30,
@@ -183,7 +183,7 @@ const CharacterController = ({
 		camMoveSpeed,
 		camZoomSpeed,
 		camCollisionOffset,
-		disableRotateCam: pointToNpc,
+		disableRotateCam: isTalkingToNpc,
 	}
 
 	/**
@@ -474,7 +474,7 @@ const CharacterController = ({
 		//#region Character controller
 		// Character current position
 		if (characterRef.current) {
-			if (pointToNpc) currentPos.set(2, 1.2, 0 - 4)
+			if (isTalkingToNpc) currentPos.set(2, 1.2, 0 - 4)
 			else currentPos.copy(characterRef.current.translation() as THREE.Vector3)
 			;(characterRef.current.userData as userDataType).canJump = canJump
 		}
@@ -509,13 +509,13 @@ const CharacterController = ({
 			camTargetPos = { x: 0, y: 1.7, z: 0 }
 		} else if (isOpenCustomAvatarUI) {
 			camTargetPos = { x: 0, y: -0.05, z: 0 }
-		} else if (pointToNpc) {
+		} else if (isTalkingToNpc) {
 			camTargetPos = { x: 0, y: 1.67, z: 0 }
 		} else {
 			camTargetPos = { x: 0, y: 0, z: 0 }
 		}
 
-		if (pointToNpc) {
+		if (isTalkingToNpc) {
 			currentPos.set(2, 1.2, 0 - 5)
 			pivot.rotation.x = camInitDir.x
 			pivot.rotation.y = camInitDir.y
@@ -747,7 +747,12 @@ const CharacterController = ({
 			<CapsuleCollider name="character-body" args={[capsuleHalfHeight, capsuleRadius]} />
 			<BallCollider args={[0.5]} position={[0, 0.3, 0]} />
 
-			<group name="character" ref={characterModelRef} userData={{ camExcludeCollision: true }}>
+			<group
+				name="character"
+				visible={!isTalkingToNpc}
+				ref={characterModelRef}
+				userData={{ camExcludeCollision: true }}
+			>
 				<mesh
 					position={[rayOriginOffest.x, rayOriginOffest.y, rayOriginOffest.z + slopeRayOriginOffest]}
 					ref={slopeRayOriginRef}
