@@ -7,6 +7,9 @@ export default function PhoneOpenButton() {
 
 	return (
 		<button type="button" className="group relative w-[80px]" onMouseUp={() => setIsOpen(true)}>
+			<div className="absolute top-0 right-0 z-[2] flex aspect-square w-6 items-center justify-center rounded-full bg-[#A17C45] text-lg leading-none">
+				<span className="mb-1 leading-none">p</span>
+			</div>
 			<Sprite
 				data={{
 					part: '1',

@@ -108,6 +108,7 @@ export const usersToQuests = pgTable(
 			.notNull()
 			.references(() => quests.id),
 		status: statusEnum('status').notNull().default('idle'),
+		updatedAt: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),
 	},
 	(t) => ({
 		pk: primaryKey({ columns: [t.userId, t.questId] }),

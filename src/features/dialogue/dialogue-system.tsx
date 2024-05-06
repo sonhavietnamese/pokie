@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { useMavisIdStore } from '@/features/mavis-id/store'
 import { useOnboardingStore } from '@/features/onboarding/onboarding-store'
 import { useQuestStore } from '@/features/quest/quest-store'
-import questData from '@/features/quest/quests.json'
+import useQuest from '@/features/quest/use-quest'
 import { useCharacterStore } from '@/stores/character'
 import { type Stage, useStageStore } from '@/stores/stage'
 import { size } from 'lodash-es'
@@ -27,7 +27,8 @@ export default function DialogueSystem() {
 		])
 	const setOpenMavisId = useMavisIdStore((s) => s.setOpen)
 	const setStage = useStageStore((s) => s.setStage)
-	const newQuest = useQuestStore((s) => s.newQuest)
+	const setOnGoingQuestId = useQuestStore((s) => s.setOnGoingQuestId)
+	const { switchToOngoingQuest } = useQuest()
 
 	const dialogues = useMemo(
 		() => (dialogueType === 'bottom' ? bottomDialogues : topDialogues),
@@ -93,10 +94,7 @@ export default function DialogueSystem() {
 				if (!node) return
 
 				if (node === 'quest_01') {
-					newQuest({
-						...questData.quest_01,
-						isFinished: false,
-					})
+					switchToOngoingQuest('quest_01')
 				}
 				clear()
 

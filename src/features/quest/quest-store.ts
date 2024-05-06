@@ -2,22 +2,15 @@ import { create } from 'zustand'
 import type { Quest } from './type'
 
 interface QuestState {
-	quest: Quest | null
-	newQuest: (quest: Quest) => void
-
-	onGoingQuest: string
+	onGoingQuestId: string
+	setOnGoingQuestId: (questId: string) => void
 
 	clear: () => void
 }
 
 export const useQuestStore = create<QuestState>()((set) => ({
-	quest: null,
-	newQuest: (quest: Quest) =>
-		set(() => {
-			return { quests: quest, onGoingQuest: quest.id }
-		}),
+	onGoingQuestId: '',
+	setOnGoingQuestId: (questId: string) => set(() => ({ onGoingQuestId: questId })),
 
-	onGoingQuest: '',
-
-	clear: () => set(() => ({ quests: null, onGoingQuest: '' })),
+	clear: () => set(() => ({ quests: null, onGoingQuestId: '' })),
 }))

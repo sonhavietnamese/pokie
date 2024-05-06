@@ -5,6 +5,7 @@ import dialoguesData from './dialogues.json'
 import type { Dialogue, DialogueNode } from './type'
 
 type DialogType = 'top' | 'bottom'
+export type DialogueID = keyof typeof dialoguesData
 
 interface DialogueStore {
 	data: typeof dialoguesData
@@ -12,8 +13,8 @@ interface DialogueStore {
 	topDialogues: Dialogue
 	setTopDialogues: (topDialogues: Dialogue) => void
 
-	selectedDialogue: keyof typeof dialoguesData | null
-	setSelectedDialogue: (selectedDialogue: keyof typeof dialoguesData | null) => void
+	selectedDialogue: DialogueID | null
+	setSelectedDialogue: (selectedDialogue: DialogueID | null) => void
 
 	subDialogue: DialogueNode | null
 	setSubDialogue: (subDialogue: DialogueNode | null) => void
@@ -22,7 +23,7 @@ interface DialogueStore {
 	setBottomDialogues: (bottomDialogues: Dialogue | null) => void
 
 	dialogueType: DialogType | null
-	showDialogue: (dialogue: keyof typeof dialoguesData, dialogueType: DialogType | null) => void
+	showDialogue: (dialogue: DialogueID, dialogueType: DialogType | null) => void
 
 	clear: () => void
 }

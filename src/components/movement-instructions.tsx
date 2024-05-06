@@ -7,6 +7,7 @@ const containerVariants: Variants = {
 	hidden: {
 		opacity: 0,
 		y: 10,
+		x: '-50%',
 	},
 	visible: {
 		opacity: 1,
@@ -14,6 +15,7 @@ const containerVariants: Variants = {
 		transition: {
 			delay: 2,
 		},
+		x: '-50%',
 	},
 }
 
@@ -42,7 +44,7 @@ export default function MovementInstructions() {
 					animate={isOpened ? 'visible' : 'hidden'}
 					variants={containerVariants}
 					exit="hidden"
-					className="absolute bottom-6 z-[2] flex w-full flex-col px-8"
+					className="absolute bottom-6 left-1/2 z-[2] flex w-full flex-col px-8"
 				>
 					<Sprite
 						data={{

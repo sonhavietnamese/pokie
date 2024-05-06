@@ -3,6 +3,7 @@
 import CatchAxieOpenButton from '@/features/catch-axie/catch-axie-open-button'
 import CustomAvatarOpenButton from '@/features/custom-avatar/custom-avatar-open-button'
 import GuideLineDisableButton from '@/features/guide-line/guide-line-disable-button'
+import NpcOpenChatButton from '@/features/npc/npc-open-chat-button'
 import PhoneOpenButton from '@/features/phone/phone-open-button'
 import PokiedexOpenButton from '@/features/pokiedex/pokiedex-open-button'
 import { KEYBOARD_MAP } from '@/libs/constants'
@@ -80,10 +81,10 @@ export default function Page() {
 
 						{stage === 'home' && (
 							<>
-								{/* <div className="absolute top-8 right-6 flex gap-4">
+								<aside className="absolute top-8 right-6 flex gap-4">
 									<Energy />
 									<PokieCoinBalance />
-								</div> */}
+								</aside>
 
 								<Avatar />
 								<LogoutButton />
@@ -107,6 +108,8 @@ export default function Page() {
 									<PokiedexOpenButton />
 									<PhoneOpenButton />
 								</aside>
+
+								<NpcOpenChatButton />
 							</>
 						)}
 

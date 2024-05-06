@@ -7,6 +7,10 @@ export default function CustomAvatarOpenButton() {
 
 	return (
 		<button type="button" className="group relative w-[80px]" onMouseUp={() => setOpenUI(true)}>
+			<div className="absolute top-0 right-0 z-[2] flex aspect-square w-6 items-center justify-center rounded-full bg-[#A17C45] text-lg leading-none">
+				<span className="mb-1 leading-none">z</span>
+			</div>
+
 			<Sprite
 				data={{
 					part: '1',

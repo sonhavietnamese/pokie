@@ -1,7 +1,7 @@
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { cn } from '@/libs/utils'
-import { type Variants, motion } from 'framer-motion'
+import { type HTMLMotionProps, type Variants, motion } from 'framer-motion'
 import React, { useMemo, type HTMLAttributes } from 'react'
 import type { Quest } from './type'
 
@@ -19,7 +19,7 @@ const itemVatiants: Variants = {
 
 type QuestItemProps = {
 	quest: Quest
-} & HTMLAttributes<HTMLDivElement>
+} & HTMLMotionProps<'div'>
 
 const QuestItem = React.forwardRef<HTMLDivElement, QuestItemProps>(({ className, quest, ...props }, ref) => {
 	const goal = useMemo(() => {
@@ -46,6 +46,7 @@ const QuestItem = React.forwardRef<HTMLDivElement, QuestItemProps>(({ className,
 			initial={'hidden'}
 			animate={'visible'}
 			exit={'hidden'}
+			{...props}
 		>
 			<Sprite
 				data={{

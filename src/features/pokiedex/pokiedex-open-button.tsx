@@ -7,6 +7,9 @@ export default function PokiedexOpenButton() {
 
 	return (
 		<button type="button" className="group relative w-[80px]" onMouseUp={() => setIsOpen(true)}>
+			<div className="absolute top-0 right-0 z-[2] flex aspect-square w-6 items-center justify-center rounded-full bg-[#A17C45] text-lg leading-none">
+				<span className="mb-1 leading-none">e</span>
+			</div>
 			<Sprite
 				data={{
 					part: '1',
@@ -25,7 +28,7 @@ export default function PokiedexOpenButton() {
 				/>
 			</div>
 			<span className="-translate-x-1/2 absolute bottom-[22px] left-1/2 text-[#CBAB79] text-sm opacity-0 transition-opacity ease-in-out group-hover:opacity-100">
-				Pokiedex
+				Poxiedex
 			</span>
 
 			<div className="-left-8 absolute top-[30px] hidden animate-shake-horizontal group-hover:block">
