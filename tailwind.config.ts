@@ -20,6 +20,7 @@ const config: Config = {
 			animation: {
 				shake: 'shake 1s linear infinite',
 				'shake-horizontal': 'shake-horizontal 1s linear infinite',
+				'spin-slow': 'spin 10s linear infinite',
 			},
 			keyframes: {
 				shake: {

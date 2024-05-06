@@ -1,4 +1,6 @@
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
+// import { useBackpackStore } from '@/components/backpack/store'
+import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { getMovingDirection } from '@/libs/utils'
 import { useCharacterStore } from '@/stores/character'
@@ -11,9 +13,6 @@ import * as THREE from 'three'
 import type { Props, userDataType } from './type'
 // import { useMultiplayerStore } from '@/stores/multiplayer'
 import { useCharacterControl } from './use-character-control'
-// import { useBackpackStore } from '@/components/backpack/store'
-
-import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 // import { usePokiedex } from '@/components/pokiedex'
 import { useFollowCamera } from './use-follow-camera'
 
@@ -23,10 +22,11 @@ const CharacterController = ({
 	capsuleRadius = 0.3,
 	floatHeight = 0.3,
 	characterInitDir = 0, // in rad
-	followLight = false,
 	disableFollowCam = false,
 	disableFollowCamPos = { x: 0, y: 0, z: -5 },
 	disableFollowCamTarget = { x: 0, y: 0, z: 0 },
+
+	pointToNpc = false,
 	// Follow camera setups
 	camInitDis = -8,
 	camMaxDis = -30,
@@ -37,8 +37,6 @@ const CharacterController = ({
 	camZoomSpeed = 1,
 	camCollision = true,
 	camCollisionOffset = 0.7,
-	// Follow light setups
-	followLightPos = { x: 20, y: 30, z: 10 },
 	// Base control setups
 	maxVelLimit = 2.5,
 	turnVelMultiplier = 0.2,
@@ -185,16 +183,13 @@ const CharacterController = ({
 		camMoveSpeed,
 		camZoomSpeed,
 		camCollisionOffset,
+		disableRotateCam: pointToNpc,
 	}
 
 	/**
 	 * Load camera pivot and character move preset
 	 */
-	const {
-		pivot,
-		cameraCollisionDetect,
-		// joystickCamMove
-	} = useFollowCamera(cameraSetups)
+	const { pivot, cameraCollisionDetect, followCam } = useFollowCamera(cameraSetups)
 	const pivotPosition = useMemo(() => new THREE.Vector3(), [])
 	const modelEuler = useMemo(() => new THREE.Euler(), [])
 	const modelQuat = useMemo(() => new THREE.Quaternion(), [])
@@ -474,13 +469,13 @@ const CharacterController = ({
 	useFrame((state, delta) => {
 		if (!characterRef.current) return
 		if (!characterModelRef.current) return
-
 		if (!slopeRayOriginRef.current) return
 
 		//#region Character controller
 		// Character current position
 		if (characterRef.current) {
-			currentPos.copy(characterRef.current.translation() as THREE.Vector3)
+			if (pointToNpc) currentPos.set(2, 1.2, 0 - 4)
+			else currentPos.copy(characterRef.current.translation() as THREE.Vector3)
 			;(characterRef.current.userData as userDataType).canJump = canJump
 		}
 
@@ -510,16 +505,23 @@ const CharacterController = ({
 
 		if (characterRef.current) currentVel.copy(characterRef.current.linvel() as THREE.Vector3)
 
-		/**
-		 *  Camera movement
-		 */
-
 		if (isPokiedexOpen || isCatchAxieOpen) {
 			camTargetPos = { x: 0, y: 1.7, z: 0 }
 		} else if (isOpenCustomAvatarUI) {
 			camTargetPos = { x: 0, y: -0.05, z: 0 }
+		} else if (pointToNpc) {
+			camTargetPos = { x: 0, y: 1.67, z: 0 }
 		} else {
 			camTargetPos = { x: 0, y: 0, z: 0 }
+		}
+
+		if (pointToNpc) {
+			currentPos.set(2, 1.2, 0 - 5)
+			pivot.rotation.x = camInitDir.x
+			pivot.rotation.y = camInitDir.y
+			pivot.rotation.z = camInitDir.z
+
+			followCam.rotation.x = 0.05
 		}
 
 		pivotPosition.set(
@@ -528,12 +530,10 @@ const CharacterController = ({
 			currentPos.z + camTargetPos.z,
 		)
 		pivot.position.lerp(pivotPosition, 1 - Math.exp(-camFollowMult * delta))
-		!disableFollowCam && state.camera.lookAt(pivot.position)
 
-		/**
-		 * Ray casting detect if on ground
-		 */
-		rayOrigin.addVectors(currentPos, rayOriginOffest as THREE.Vector3)
+		state.camera.lookAt(pivot.position)
+
+		rayOrigin.addVectors(characterRef.current.translation(), rayOriginOffest as THREE.Vector3)
 		rayHit = world.castRay(
 			rayCast,
 			rayLength,

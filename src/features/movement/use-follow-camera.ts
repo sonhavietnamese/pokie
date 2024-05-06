@@ -4,9 +4,6 @@ import * as THREE from 'three'
 
 export const useFollowCamera = (props: UseFollowCamProps) => {
 	const { scene, camera } = useThree()
-	const disableFollowCam = props.disableFollowCam
-	const disableFollowCamPos = props.disableFollowCamPos
-	const disableFollowCamTarget = props.disableFollowCamTarget
 
 	let isMouseDown = false
 	let previousTouch1: Touch | null
@@ -40,17 +37,19 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 
 	// Mouse move event
 	const onDocumentMouseMove = (e: MouseEvent) => {
-		if (document.pointerLockElement || isMouseDown) {
+		if ((document.pointerLockElement || isMouseDown) && !props.disableRotateCam) {
 			pivot.rotation.y -= e.movementX * 0.002 * camMoveSpeed
 			const vy = followCam.rotation.x + e.movementY * 0.002 * camMoveSpeed
 
 			cameraDistance = followCam.position.length()
 
-			if (vy >= -0.5 && vy <= 1.5) {
+			if (vy >= -0.1 && vy <= 0.6) {
 				followCam.rotation.x = vy
 				followCam.position.y = -cameraDistance * Math.sin(-vy)
 				followCam.position.z = -cameraDistance * Math.cos(-vy)
 			}
+
+			return false
 		}
 
 		return false
@@ -128,22 +127,6 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 	}
 
 	/**
-	 * Gamepad second joystick event
-	 */
-	const joystickCamMove = (movementX: number, movementY: number) => {
-		pivot.rotation.y -= movementX * 0.005 * camMoveSpeed * 3
-		const vy = followCam.rotation.x + movementY * 0.005 * camMoveSpeed * 3
-
-		cameraDistance = followCam.position.length()
-
-		if (vy >= -0.5 && vy <= 1.5) {
-			followCam.rotation.x = vy
-			followCam.position.y = -cameraDistance * Math.sin(-vy)
-			followCam.position.z = -cameraDistance * Math.cos(vy)
-		}
-	}
-
-	/**
 	 * Custom traverse function
 	 */
 	// Prepare intersect objects for camera collision
@@ -187,24 +170,25 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 	}
 
 	// Set camera position to (0,0,0), if followCam is disabled set to disableFollowCamPos (default 0,0,-5)
-	useEffect(() => {
-		if (disableFollowCam) {
-			camera.position.set(disableFollowCamPos.x, disableFollowCamPos.y, disableFollowCamPos.z)
-			camera.lookAt(new THREE.Vector3(disableFollowCamTarget.x, disableFollowCamTarget.y, disableFollowCamTarget.z))
-		} else {
-			camera.position.set(0, 0, 0)
-		}
-		// camera.position.set(0, 0, 0)
-	}, [disableFollowCam])
+	// useEffect(() => {
+	// 	if (props.disableRotateCam) {
+	// 		camera.position.set(0, 0, 3)
+	// 		camera.lookAt(new THREE.Vector3(0, 1, 2))
+	// 	} else {
+	// 		camera.position.set(0, 0, 0)
+	// 	}
+	// }, [props.disableRotateCam])
 
 	useEffect(() => {
+		camera.position.set(0, 0, 0)
+
 		// Prepare for camera ray intersect objects
 		for (const child of scene.children) {
 			customTraverse(child) // Continue the traversal for all child objects
 		}
 
-		// Prepare for followCam and pivot point
-		disableFollowCam ? followCam.remove(camera) : followCam.add(camera)
+		followCam.add(camera)
+
 		pivot.add(followCam)
 
 		document.addEventListener('mousedown', () => {
@@ -234,9 +218,9 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 			// Remove camera from followCam
 			followCam.remove(camera)
 		}
-	})
+	}, [props.disableRotateCam])
 
-	return { pivot, followCam, cameraCollisionDetect, joystickCamMove }
+	return { pivot, followCam, cameraCollisionDetect }
 }
 
 export type UseFollowCamProps = {
@@ -249,4 +233,5 @@ export type UseFollowCamProps = {
 	camMoveSpeed: number
 	camZoomSpeed: number
 	camCollisionOffset: number
+	disableRotateCam: boolean
 }

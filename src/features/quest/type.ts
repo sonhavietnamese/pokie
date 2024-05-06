@@ -2,11 +2,11 @@ export type Quest = {
 	id: string
 	name: string
 	isFinished: boolean
-	goal: {
+	goal?: {
 		type: string
 		target: string
 	}
-	rewards: {
+	rewards?: {
 		token?: number
 		balls?: string[]
 		props?: string[]

@@ -40,15 +40,16 @@ export default function QuestManager() {
 
 	useEffect(() => {
 		if (onGoingQuest) {
-			setCurrentQuest(questData[onGoingQuest.questId])
-			check(onGoingQuest)
+			// TODO: update typesafe
+			setCurrentQuest(questData[onGoingQuest.questId as keyof typeof questData] as unknown as Quest)
+			check({ ...onGoingQuest, id: onGoingQuest.questId } as unknown as Quest)
 		} else {
 			setCurrentQuest(undefined)
 		}
 	}, [onGoingQuest])
 
-	const check = (quest: any) => {
-		switch (quest.questId) {
+	const check = (quest: Quest) => {
+		switch (quest.id) {
 			// TODO: Make it dynamic
 			case 'quest_01':
 				setTarget(new THREE.Vector3().fromArray(NPCS.bimy.position))
@@ -60,8 +61,8 @@ export default function QuestManager() {
 		}
 	}
 
-	const onQuestClick = (quest: any) => {
-		check({ ...quest, questId: quest.id })
+	const onQuestClick = (quest: Quest) => {
+		check(quest)
 	}
 
 	return (

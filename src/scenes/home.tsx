@@ -2,6 +2,7 @@
 
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
+import { useNpcStore } from '@/features/npc/npc-store'
 import { usePhoneStore } from '@/features/phone/phone-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { useLoadingAssets } from '@/hooks/use-assets'
@@ -29,6 +30,8 @@ export default function Home() {
 	const isCatchAxieOpen = useCatchAxieStore((s) => s.isOpen)
 	const isCustomAvatarOpen = useCustomAvatarStore((s) => s.isOpenUI)
 	const isPhoneOpen = usePhoneStore((s) => s.isOpen)
+
+	const npc = useNpcStore((s) => s.npc)
 
 	const searchParams = useSearchParams()
 	const debug = searchParams.get('debug')
@@ -66,7 +69,7 @@ export default function Home() {
 
 			<Suspense>
 				<Physics debug={Boolean(debug)} timeStep="vary" paused={loading}>
-					<Bimy position={NPCS.bano.position as [number, number, number]} />
+					<Bimy position={NPCS.bimy.position as [number, number, number]} />
 
 					<Butterflies />
 					<ShootBall />
@@ -81,7 +84,7 @@ export default function Home() {
 					{/* <AxieAutoMove followCharacter position={[15, 3, 0]} axieId="11429880" /> */}
 
 					<CharacterController
-						followLight
+						pointToNpc={!!npc}
 						camMaxDis={-10}
 						camInitDis={isCustomAvatarOpen || isPhoneOpen ? -5 : isPokiedexOpen || isCatchAxieOpen ? -2 : -10}
 						camInitDir={{ x: 0, y: Math.PI, z: 0 }}

@@ -1,9 +1,12 @@
 import SapidaeT from '@/components/sapidae/sapidae'
 import SapidaeNotation, { type SapidaeEmote } from '@/components/sapidae/sapidae-notation'
 import { useGuideLineStore } from '@/features/guide-line/guide-line-store'
+import { useCharacterStore } from '@/stores/character'
 import { Billboard, Text } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, type CollisionPayload, RigidBody, type RigidBodyProps } from '@react-three/rapier'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import * as THREE from 'three'
 import { useNpcStore } from './npc-store'
 
 type BimyProps = {} & RigidBodyProps
@@ -12,12 +15,16 @@ export default function Bimy({ ...props }: BimyProps) {
 	const [emotion, setEmotion] = useState<SapidaeEmote>('normal')
 	const meetNpc = useNpcStore((s) => s.meetNpc)
 	const setTarget = useGuideLineStore((s) => s.setTarget)
+	const canControl = useCharacterStore((s) => s.setCanControl)
+
+	const doLerp = useRef(false)
 
 	const onEnter = (e: CollisionPayload) => {
 		if (e.colliderObject?.name === 'character-body') {
 			setTarget(null)
 			setEmotion('question')
 			meetNpc('bimy')
+			doLerp.current = true
 		}
 	}
 
@@ -25,6 +32,8 @@ export default function Bimy({ ...props }: BimyProps) {
 		if (e.colliderObject?.name === 'character-body') {
 			setEmotion('normal')
 			meetNpc(undefined)
+
+			doLerp.current = false
 		}
 	}
 
