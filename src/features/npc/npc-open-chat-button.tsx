@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
+import { useDialogueStore } from '@/features/dialogue/store'
 import useQuest from '@/features/quest/use-quest'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
-import { useMemo, useState } from 'react'
-import { useDialogueStore } from '../dialogue/store'
+import { useMemo } from 'react'
 import { useNpcStore } from './npc-store'
 
 const buttonVariants: Variants = {
@@ -31,7 +31,10 @@ export default function NpcOpenChatButton() {
 
 	const onClick = () => {
 		setIsTalking(true)
-		showDialogue('bimy_01', 'top')
+
+		if (onGoingQuest) {
+			showDialogue('bimy_01', 'top')
+		} else showDialogue('bimy_02', 'top')
 	}
 
 	return (
@@ -42,9 +45,9 @@ export default function NpcOpenChatButton() {
 					initial="hidden"
 					animate={shouldShowButton ? 'visible' : 'hidden'}
 					exit={'hidden'}
-					className="absolute bottom-6 left-1/2 z-[5] h-[80px] w-[200px]"
+					className="absolute bottom-6 left-1/2 z-[5] h-[70px] w-[200px]"
 				>
-					<Button className="h-full w-full" onClick={onClick}>
+					<Button color="green" className="h-full w-full" onClick={onClick}>
 						<span className="font-extrabold text-2xl">Ask Bimy</span>
 					</Button>
 				</motion.div>

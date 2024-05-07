@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { useMavisIdStore } from '@/features/mavis-id/store'
+import { useNpcStore } from '@/features/npc/npc-store'
 import { useOnboardingStore } from '@/features/onboarding/onboarding-store'
 import { useQuestStore } from '@/features/quest/quest-store'
 import useQuest from '@/features/quest/use-quest'
@@ -29,6 +30,7 @@ export default function DialogueSystem() {
 	const setStage = useStageStore((s) => s.setStage)
 	const setReward = useQuestStore((s) => s.setReward)
 	const { switchToOngoingQuest, switchToCompletedQuest } = useQuest()
+	const setIsTalking = useNpcStore((s) => s.setIsTalking)
 
 	const dialogues = useMemo(
 		() => (dialogueType === 'bottom' ? bottomDialogues : topDialogues),
@@ -126,6 +128,7 @@ export default function DialogueSystem() {
 				}
 
 				clear()
+				setIsTalking(false)
 
 				return
 

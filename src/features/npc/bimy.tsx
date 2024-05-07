@@ -1,12 +1,9 @@
 import SapidaeT from '@/components/sapidae/sapidae'
 import SapidaeNotation, { type SapidaeEmote } from '@/components/sapidae/sapidae-notation'
 import { useGuideLineStore } from '@/features/guide-line/guide-line-store'
-import { useCharacterStore } from '@/stores/character'
 import { Billboard, Text } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, type CollisionPayload, RigidBody, type RigidBodyProps } from '@react-three/rapier'
 import { useRef, useState } from 'react'
-import * as THREE from 'three'
 import { useNpcStore } from './npc-store'
 
 type BimyProps = {} & RigidBodyProps
@@ -38,7 +35,7 @@ export default function Bimy({ ...props }: BimyProps) {
 
 	return (
 		<RigidBody {...props} type="fixed" colliders={false}>
-			<CapsuleCollider sensor args={[1, 2.5]} onIntersectionEnter={onEnter} onCollisionExit={onExit} />
+			<CapsuleCollider sensor args={[1, 2.3]} onIntersectionEnter={onEnter} onCollisionExit={onExit} />
 
 			<SapidaeNotation emote={emotion}>
 				<Billboard position={[0, 2.3, 0]}>

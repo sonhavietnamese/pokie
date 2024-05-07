@@ -2,7 +2,7 @@ import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { cn } from '@/libs/utils'
 import { type HTMLMotionProps, type Variants, motion } from 'framer-motion'
-import React, { useMemo, type HTMLAttributes } from 'react'
+import React, { useMemo } from 'react'
 import type { Quest } from './type'
 
 const itemVatiants: Variants = {
@@ -23,17 +23,17 @@ type QuestItemProps = {
 
 const QuestItem = React.forwardRef<HTMLDivElement, QuestItemProps>(({ className, quest, ...props }, ref) => {
 	const goal = useMemo(() => {
-		if (quest.goal.type === 'FIND') {
-			return 1
-		}
+		// if (quest.goal.type === 'FIND') {
+		// 	return 1
+		// }
 
 		return 1
 	}, [quest])
 
 	const current = useMemo(() => {
-		if (quest.goal.type === 'FIND') {
-			return quest.isFinished ? 1 : 0
-		}
+		// if (quest.goal.type === 'FIND') {
+		// 	return quest.isFinished ? 1 : 0
+		// }
 
 		return 0
 	}, [quest])

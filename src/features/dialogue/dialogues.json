@@ -531,5 +531,53 @@
         }
       ]
     }
+  },
+  "bimy_02": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["wave-01"]
+        }
+      ],
+      "bubbles": ["What!?"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-01"]
+        }
+      ],
+      "bubbles": ["Wanna fight?"],
+      "choices": {
+        "no": {
+          "value": "Stay away",
+          "next": [
+            {
+              "action": "END"
+            }
+          ]
+        },
+        "yes": {
+          "value": "Let's go!",
+          "next": [
+            {
+              "action": "CONNECT_WALLET",
+              "node": "hello_06"
+            }
+          ]
+        }
+      }
+    }
   }
 }

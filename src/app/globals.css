@@ -259,3 +259,51 @@ footer::before {
   -o-animation-timing-function: linear;
   animation-timing-function: linear;
 }
+
+.vfx-electric-01 {
+  background-image: url("/vfx/electric-01.png");
+  -webkit-animation: e01 0.5s steps(25) 2 forwards;
+  -moz-animation: e01 0.5s steps(25) 2 forwards;
+  -o-animation: e01 0.5s steps(25) 2 forwards;
+  animation: e01 0.5s steps(25) 2 forwards;
+}
+
+@-webkit-keyframes e01 {
+  from {
+    background-position-x: 3200px;
+  }
+  to {
+    background-position-x: 0;
+    display: none;
+  }
+}
+
+@-moz-keyframes e01 {
+  from {
+    background-position-x: 3200px;
+  }
+  to {
+    background-position-x: 0;
+    display: none;
+  }
+}
+
+@-o-keyframes e01 {
+  from {
+    background-position-x: 3200px;
+  }
+  to {
+    background-position-x: 0;
+    display: none;
+  }
+}
+
+@keyframes e01 {
+  from {
+    background-position-x: 3200px;
+  }
+  to {
+    background-position-x: 0;
+    display: none;
+  }
+}

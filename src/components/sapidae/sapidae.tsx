@@ -37,9 +37,5 @@ export default function Sapidae({ animation, ...props }: SapidaeProps) {
 		}
 	}, [animation])
 
-	return (
-		<group>
-			<SapidaeModel ref={group} {...props} />
-		</group>
-	)
+	return <SapidaeModel ref={group} {...props} />
 }
