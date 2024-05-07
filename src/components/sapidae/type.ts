@@ -20,6 +20,13 @@ export type SapidaeAnimation =
 	| 'throw-00'
 	| 'wave-01'
 	| 'clap-01'
+	| 'fight-00'
+	| 'fight-01'
+	| 'fight-02'
+	| 'fight-03'
+	| 'gesture-01'
+	| 'gesture-02'
+	| 'gesture-03'
 
 export type SapidaeGLTFResult = GLTF & {
 	nodes: {

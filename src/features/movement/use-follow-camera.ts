@@ -169,23 +169,13 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 		followCam.position.lerp(camLerpingPoint, delta * 4) // delta * 2 for rapier ray setup
 	}
 
-	// Set camera position to (0,0,0), if followCam is disabled set to disableFollowCamPos (default 0,0,-5)
-	// useEffect(() => {
-	// 	if (props.disableRotateCam) {
-	// 		camera.position.set(0, 0, 3)
-	// 		camera.lookAt(new THREE.Vector3(0, 1, 2))
-	// 	} else {
-	// 		camera.position.set(0, 0, 0)
-	// 	}
-	// }, [props.disableRotateCam])
-
 	useEffect(() => {
 		camera.position.set(0, 0, 0)
 
 		// Prepare for camera ray intersect objects
-		for (const child of scene.children) {
-			customTraverse(child) // Continue the traversal for all child objects
-		}
+		// for (const child of scene.children) {
+		// 	customTraverse(child) // Continue the traversal for all child objects
+		// }
 
 		followCam.add(camera)
 
@@ -200,8 +190,8 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 		document.addEventListener('mousemove', onDocumentMouseMove)
 		document.addEventListener('mousewheel', onDocumentMouseWheel)
 		// Touch event
-		document.addEventListener('touchend', onTouchEnd)
-		document.addEventListener('touchmove', onTouchMove, { passive: false })
+		// document.addEventListener('touchend', onTouchEnd)
+		// document.addEventListener('touchmove', onTouchMove, { passive: false })
 
 		return () => {
 			document.removeEventListener('mousedown', () => {
@@ -213,8 +203,8 @@ export const useFollowCamera = (props: UseFollowCamProps) => {
 			document.removeEventListener('mousemove', onDocumentMouseMove)
 			document.removeEventListener('mousewheel', onDocumentMouseWheel)
 			// Touch event
-			document.removeEventListener('touchend', onTouchEnd)
-			document.removeEventListener('touchmove', onTouchMove)
+			// document.removeEventListener('touchend', onTouchEnd)
+			// document.removeEventListener('touchmove', onTouchMove)
 			// Remove camera from followCam
 			followCam.remove(camera)
 		}

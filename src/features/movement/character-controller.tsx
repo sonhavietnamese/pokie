@@ -1,5 +1,4 @@
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
-// import { useBackpackStore } from '@/components/backpack/store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { getMovingDirection } from '@/libs/utils'
@@ -13,7 +12,6 @@ import * as THREE from 'three'
 import type { Props, userDataType } from './type'
 // import { useMultiplayerStore } from '@/stores/multiplayer'
 import { useCharacterControl } from './use-character-control'
-// import { usePokiedex } from '@/components/pokiedex'
 import { useFollowCamera } from './use-follow-camera'
 
 const CharacterController = ({
@@ -82,7 +80,6 @@ const CharacterController = ({
 }: Props) => {
 	const characterRef = useRef<RapierRigidBody>(null)
 	const characterModelRef = useRef<THREE.Group>(null)
-
 	const spawnPositionRef = useRef<THREE.Object3D>(null)
 
 	const characterModelIndicator = useMemo(() => new THREE.Object3D(), [])
@@ -143,9 +140,8 @@ const CharacterController = ({
 	/**
 	 * keyboard controls setup
 	 */
-	// const [subscribeKeys, getKeys] = isInsideKeyboardControls ? useKeyboardControls() : [null]
 	const [subscribeKeys, getKeys] = useKeyboardControls()
-	// const presetKeys = { forward: false, backward: false, leftward: false, rightward: false, jump: false, run: false }
+
 	const { rapier, world } = useRapier()
 
 	// const isAiming = useRef(false)
@@ -432,7 +428,7 @@ const CharacterController = ({
 			unSubscribeAction7()
 			unSubscribeAction()
 		}
-	})
+	}, [])
 
 	useEffect(() => {
 		if (!characterRef.current) return
@@ -450,6 +446,7 @@ const CharacterController = ({
 	}, [autoBalance])
 
 	useEffect(() => {
+		console.log('mount')
 		modelEuler.y = characterInitDir
 		pivot.rotation.x = camInitDir.x
 		pivot.rotation.y = camInitDir.y
@@ -461,10 +458,6 @@ const CharacterController = ({
 			window.removeEventListener('visibilitychange', sleepCharacter)
 		}
 	}, [])
-
-	// useEffect(() => {
-	//   if (run && !SOUNDS.FOOTSTEP.playing()) SOUNDS.FOOTSTEP.play()
-	// }, [])
 
 	useFrame((state, delta) => {
 		if (!characterRef.current) return

@@ -12,7 +12,7 @@ export default function BattleHeader({ timer, round }: BattleHeaderProps) {
 	const { players } = useBattle()
 
 	return (
-		<motion.div className="absolute top-0 left-0 z-[10] flex w-full items-center justify-between p-4 px-8">
+		<motion.div className="absolute top-0 left-0 z-[2] flex w-full items-center justify-between p-4 px-8">
 			<div className="flex h-full w-full items-center justify-between">
 				<div className="flex items-center gap-4">
 					<div className="flex flex-col items-start gap-1">
@@ -31,7 +31,6 @@ export default function BattleHeader({ timer, round }: BattleHeaderProps) {
 								{players && (
 									<>
 										{players?.player.health > 75 ? (
-											// <img src="/sprites/health-bar/100.png" alt="" className="h-full origin-left object-contain" />
 											<Sprite
 												data={{
 													part: '1',
@@ -55,7 +54,7 @@ export default function BattleHeader({ timer, round }: BattleHeaderProps) {
 												}}
 												className="h-full w-[50%]"
 											/>
-										) : (
+										) : players?.player.health > 10 ? (
 											<Sprite
 												data={{
 													part: '1',
@@ -63,6 +62,8 @@ export default function BattleHeader({ timer, round }: BattleHeaderProps) {
 												}}
 												className="h-full w-[25%]"
 											/>
+										) : (
+											<></>
 										)}
 									</>
 								)}
@@ -143,7 +144,7 @@ export default function BattleHeader({ timer, round }: BattleHeaderProps) {
 												}}
 												className="h-full w-[50%]"
 											/>
-										) : (
+										) : players?.bot.health > 10 ? (
 											<Sprite
 												data={{
 													part: '1',
@@ -151,6 +152,8 @@ export default function BattleHeader({ timer, round }: BattleHeaderProps) {
 												}}
 												className="h-full w-[25%]"
 											/>
+										) : (
+											<></>
 										)}
 									</>
 								)}

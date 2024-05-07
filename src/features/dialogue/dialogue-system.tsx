@@ -114,6 +114,7 @@ export default function DialogueSystem() {
 					switchToCompletedQuest('quest_01')
 				}
 				clear()
+
 				return
 
 			case 'END':

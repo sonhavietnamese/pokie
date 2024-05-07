@@ -1,53 +1,37 @@
-import Sapidae from '@/components/sapidae/sapidae'
-import BattleCamera from '@/features/battle/battle-camera'
-import { BattleBackdrop } from '@/features/battle/battle-map'
-import { BattleSystem } from '@/features/battle/battle-system'
+import type { SapidaeAnimation } from '@/components/sapidae/type'
 import { useBattle } from '@/features/battle/use-battle'
-import { Canvas } from '@react-three/fiber'
-import { useEffect, useRef } from 'react'
-import type * as THREE from 'three'
+import { useFrame } from '@react-three/fiber'
+import { sample } from 'lodash-es'
+import dynamic from 'next/dynamic'
+import { useEffect, useMemo, useRef } from 'react'
+import * as THREE from 'three'
 
-// const BATTLE_BACKGROUND = new Howl({
-// 	src: ['/audio/battle-background.mp3'],
-// 	volume: 0.5,
-// 	loop: true,
-// })
+const Sapidae = dynamic(() => import('@/components/sapidae/sapidae'), { ssr: false })
+const BattleCamera = dynamic(() => import('@/features/battle/battle-camera'), { ssr: false })
+const BattleBackdrop = dynamic(() => import('@/features/battle/battle-map'), { ssr: false })
 
 export default function BattleScene() {
-	// useEffect(() => {
-	// 	if (SOUNDS.HOME_BACKGROUND.playing()) {
-	// 		SOUNDS.HOME_BACKGROUND.fade(1, 0, 2000)
-	// 	}
-	// 	if (!BATTLE_BACKGROUND.playing()) {
-	// 		BATTLE_BACKGROUND.play()
-	// 	}
-	// }, [])
-
 	return (
-		<main className="relative h-screen w-screen cursor-none overflow-hidden">
-			<BattleSystem />
+		<>
+			<ambientLight intensity={2} />
+			<directionalLight
+				castShadow
+				position={[20, 10, 10]}
+				intensity={1}
+				shadow-mapSize={[1024, 1024]}
+				shadow-camera-near={1}
+				shadow-camera-far={50}
+				shadow-camera-top={50}
+				shadow-camera-right={50}
+				shadow-camera-bottom={-50}
+				shadow-camera-left={-50}
+			/>
 
-			<Canvas shadows>
-				<ambientLight intensity={2} />
-				<directionalLight
-					castShadow
-					position={[20, 10, 10]}
-					intensity={1}
-					shadow-mapSize={[1024, 1024]}
-					shadow-camera-near={1}
-					shadow-camera-far={50}
-					shadow-camera-top={50}
-					shadow-camera-right={50}
-					shadow-camera-bottom={-50}
-					shadow-camera-left={-50}
-				/>
+			<BattleCamera />
+			<BattleBackdrop />
 
-				<BattleCamera />
-				<BattleBackdrop />
-
-				<Sapidaes />
-			</Canvas>
-		</main>
+			<Sapidaes />
+		</>
 	)
 }
 
@@ -55,23 +39,33 @@ const Sapidaes = () => {
 	const meRef = useRef<THREE.Group>(null)
 	const enemyRef = useRef<THREE.Group>(null)
 
-	const {
-		stage,
-		roundWinner,
-		// players
-	} = useBattle()
+	const lerpMe = useRef(false)
+	const lerpEnemy = useRef(false)
+
+	const { stage, roundWinner } = useBattle()
 	const timeout = useRef<NodeJS.Timeout>()
+
+	const myAnimation = useMemo<SapidaeAnimation>(() => {
+		if (stage === 'ready') return 'fight-00'
+		if (stage === 'animation' && roundWinner === 'draw') return sample<SapidaeAnimation>(['fight-03', 'gesture-01'])
+		if (stage === 'end' && roundWinner !== 'player') return 'fight-01'
+
+		return 'idle-00'
+	}, [stage])
+	const enemyAnimation = useMemo<SapidaeAnimation>(() => {
+		if (stage === 'ready') return 'fight-02'
+		if (stage === 'end' && roundWinner !== 'bot') return 'fight-01'
+		if (stage === 'animation' && roundWinner === 'draw') return sample<SapidaeAnimation>(['fight-03', 'gesture-01'])
+
+		return 'idle-00'
+	}, [stage])
 
 	useEffect(() => {
 		if (stage === 'animation') {
 			if (roundWinner === 'player') {
 				timeout.current = setTimeout(() => {
+					lerpMe.current = true
 					if (meRef.current && enemyRef.current) {
-						meRef.current.position.set(0, 0, -2.5)
-
-						// SOUNDS.BATTLE.play(`MOVE_${players?.player.move.toUpperCase()}`)
-						// console.log('MOVE_', players?.player.move.toUpperCase())
-
 						setTimeout(() => {
 							if (meRef.current && enemyRef.current) {
 								meRef.current.position.set(0, 0, 4)
@@ -81,12 +75,8 @@ const Sapidaes = () => {
 				}, 3500)
 			} else if (roundWinner === 'bot') {
 				timeout.current = setTimeout(() => {
+					lerpEnemy.current = true
 					if (enemyRef.current && meRef.current) {
-						enemyRef.current.position.set(0, 0, 2.5)
-
-						// SOUNDS.BATTLE.play(`MOVE_${players?.bot.move.toUpperCase()}`)
-						// console.log('MOVE_', players?.bot.move.toUpperCase())
-
 						setTimeout(() => {
 							if (enemyRef.current && meRef.current) {
 								enemyRef.current.position.set(0, 0, -4)
@@ -95,6 +85,9 @@ const Sapidaes = () => {
 					}
 				}, 3500)
 			}
+		} else {
+			lerpMe.current = false
+			lerpEnemy.current = false
 		}
 
 		return () => {
@@ -102,13 +95,27 @@ const Sapidaes = () => {
 		}
 	}, [stage])
 
+	useFrame((_, delta) => {
+		if (lerpMe.current) {
+			if (meRef.current) {
+				meRef.current.position.lerp(new THREE.Vector3(0, 0, -2.5), delta * 10)
+			}
+		}
+
+		if (lerpEnemy.current) {
+			if (enemyRef.current) {
+				enemyRef.current.position.lerp(new THREE.Vector3(0, 0, 2.5), delta * 10)
+			}
+		}
+	})
+
 	return (
 		<>
 			<group ref={meRef} position={[0, 0, 4]} rotation={[0, Math.PI, 0]}>
-				<Sapidae animation="idle-00" />
+				<Sapidae animation={myAnimation} />
 			</group>
 			<group ref={enemyRef} position={[0, 0, -4]}>
-				<Sapidae animation="idle-00" />
+				<Sapidae animation={enemyAnimation} />
 			</group>
 		</>
 	)

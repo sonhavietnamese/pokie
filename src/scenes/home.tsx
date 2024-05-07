@@ -12,7 +12,7 @@ import { Physics } from '@react-three/rapier'
 import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { Perf } from 'r3f-perf'
-import { Suspense } from 'react'
+import { useEffect } from 'react'
 
 const AxieAutoMove = dynamic(() => import('@/features/axie/axie-auto-move'))
 const Bimy = dynamic(() => import('@/features/npc/bimy'))
@@ -26,22 +26,20 @@ const Sapidae = dynamic(() => import('@/features/movement/character'))
 const Ground = dynamic(() => import('@/features/environment/ground'))
 
 export default function Home() {
+	const searchParams = useSearchParams()
+	const debug = searchParams.get('debug')
+
 	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
 	const isCatchAxieOpen = useCatchAxieStore((s) => s.isOpen)
 	const isCustomAvatarOpen = useCustomAvatarStore((s) => s.isOpenUI)
 	const isPhoneOpen = usePhoneStore((s) => s.isOpen)
-
 	const isTalking = useNpcStore((s) => s.isTalking)
-
-	const searchParams = useSearchParams()
-	const debug = searchParams.get('debug')
 
 	const loading = useLoadingAssets()
 
 	return (
 		<>
 			{Boolean(debug) && <Perf />}
-
 			<directionalLight
 				castShadow
 				rotation={[42.2, -30.65, -24]}
@@ -67,39 +65,36 @@ export default function Home() {
 
 			<GuideLineManager />
 
-			<Suspense>
-				<Physics debug={Boolean(debug)} timeStep="vary" paused={loading}>
-					<Bimy position={NPCS.bimy.position as [number, number, number]} />
+			<Physics debug={Boolean(debug)} timeStep="vary" paused={loading}>
+				<Bimy position={NPCS.bimy.position as [number, number, number]} />
 
-					<Butterflies />
-					<ShootBall />
+				<Butterflies />
+				<ShootBall />
 
-					<Chest position={[-5, 2, 3]} />
+				<Chest position={[-5, 2, 3]} />
 
-					<PokiedexRay />
+				<PokiedexRay />
 
-					<Ground />
+				<Ground />
 
-					<AxieAutoMove sprintMult={2.2} position={[5, 3, 0]} axieId="123" />
-					{/* <AxieAutoMove followCharacter position={[15, 3, 0]} axieId="11429880" /> */}
+				<AxieAutoMove sprintMult={2.2} position={[5, 3, 0]} axieId="123" />
 
-					<CharacterController
-						isTalkingToNpc={!!isTalking}
-						camMaxDis={-10}
-						camInitDis={isCustomAvatarOpen || isPhoneOpen ? -5 : isPokiedexOpen || isCatchAxieOpen ? -2 : -10}
-						camInitDir={{ x: 0, y: Math.PI, z: 0 }}
-						springK={2}
-						dampingC={0.2}
-						position={[2, 5, 3]}
-						autoBalanceSpringK={1.2}
-						autoBalanceDampingC={0.04}
-						autoBalanceSpringOnY={0.7}
-						autoBalanceDampingOnY={0.05}
-					>
-						<Sapidae position={[0, -0.9, 0]} />
-					</CharacterController>
-				</Physics>
-			</Suspense>
+				<CharacterController
+					isTalkingToNpc={!!isTalking}
+					camMaxDis={-10}
+					camInitDis={isCustomAvatarOpen || isPhoneOpen ? -5 : isPokiedexOpen || isCatchAxieOpen ? -2 : -10}
+					camInitDir={{ x: 0, y: Math.PI, z: 0 }}
+					springK={2}
+					dampingC={0.2}
+					position={[2, 5, 3]}
+					autoBalanceSpringK={1.2}
+					autoBalanceDampingC={0.04}
+					autoBalanceSpringOnY={0.7}
+					autoBalanceDampingOnY={0.05}
+				>
+					<Sapidae position={[0, -0.9, 0]} />
+				</CharacterController>
+			</Physics>
 		</>
 	)
 }

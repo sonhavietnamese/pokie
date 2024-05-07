@@ -162,10 +162,10 @@ export const NPCS = {
 	},
 } as const
 
-export const BATTLE_READY_COUNTDOWN = 3
+export const BATTLE_READY_COUNTDOWN = 3.2
 export const BATTLE_ROUND_COUNTDOWN = 5
 export const BATTLE_ANIMATION_COUNTDOWN = 5
 export const BATTLE_END_COUNTDOWN = 5
 export const BATTLE_MAX_HEALTH = 100
-export const BATTLE_MAX_ROUND = 5
-export const BATTLE_MAX_DAMAGE = 25
+export const BATTLE_MAX_ROUND = 3
+export const BATTLE_MAX_DAMAGE = 100

@@ -1,5 +1,6 @@
 'use client'
 
+import { BattleSystem } from '@/features/battle/battle-system'
 import CatchAxieOpenButton from '@/features/catch-axie/catch-axie-open-button'
 import CustomAvatarOpenButton from '@/features/custom-avatar/custom-avatar-open-button'
 import GuideLineDisableButton from '@/features/guide-line/guide-line-disable-button'
@@ -7,6 +8,7 @@ import NpcOpenChatButton from '@/features/npc/npc-open-chat-button'
 import PhoneOpenButton from '@/features/phone/phone-open-button'
 import PokiedexOpenButton from '@/features/pokiedex/pokiedex-open-button'
 import { KEYBOARD_MAP } from '@/libs/constants'
+import BattleScene from '@/scenes/battle'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
@@ -76,6 +78,7 @@ export default function Page() {
 
 						<View index={1} className="absolute inset-0 z-0 h-screen w-screen">
 							{stage === 'home' && <Home />}
+							{stage === 'battle' && <BattleScene />}
 							{stage === 'onboarding' && <Onboarding />}
 						</View>
 
@@ -94,7 +97,6 @@ export default function Page() {
 								<GuideLineDisableButton />
 
 								<QuestManager />
-								{/* <QuestOnboardingManager /> */}
 
 								<RonManager />
 								<TipManager />
@@ -116,6 +118,8 @@ export default function Page() {
 						{stage === 'onboarding' && (
 							<div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" />
 						)}
+
+						{stage === 'battle' && <BattleSystem />}
 					</Pokiedex>
 				</KeyboardControls>
 			</main>

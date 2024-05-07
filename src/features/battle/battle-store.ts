@@ -4,98 +4,100 @@ export type Move = 'rock' | 'paper' | 'scissors' | null
 export type Actor = 'player' | 'bot'
 
 export type PlayerState = {
-  health: number
-  move: Move
+	health: number
+	move: Move
 }
 
 export type State = 'ready' | 'waiting' | 'animation' | 'end'
 
 export type History = {
-  player: {
-    move: Move
-    result: 'draw' | 'win' | 'lose'
-  }
-  bot: { move: Move; result: 'draw' | 'win' | 'lose' }
+	player: {
+		move: Move
+		result: 'draw' | 'win' | 'lose'
+	}
+	bot: { move: Move; result: 'draw' | 'win' | 'lose' }
 }
 
 type BattleState = {
-  isStarted: boolean
-  setIsStarted: (isStarted: boolean) => void
+	isStarted: boolean
+	setIsStarted: (isStarted: boolean) => void
 
-  players: Record<Actor, PlayerState> | null
-  setPlayers: (players: Record<Actor, PlayerState> | null) => void
-  setPlayerMove: (actor: Actor, move: Move) => void
-  setPlayerHealth: (actor: Actor, health: number) => void
+	players: Record<Actor, PlayerState> | null
+	setPlayers: (players: Record<Actor, PlayerState> | null) => void
+	setPlayerMove: (actor: Actor, move: Move) => void
+	setPlayerHealth: (actor: Actor, health: number) => void
 
-  currentTurn: string
-  setCurrentTurn: (currentTurn: string) => void
+	currentTurn: string
+	setCurrentTurn: (currentTurn: string) => void
 
-  roundCountdown: number
+	roundCountdown: number
 
-  history: History[]
-  addHistory: (history: History) => void
-  clearHistory: () => void
+	history: History[]
+	addHistory: (history: History) => void
+	clearHistory: () => void
 
-  stage: State
-  setStage: (stage: State) => void
+	stage: State
+	setStage: (stage: State) => void
 
-  round: number
-  setRound: (round: number) => void
+	round: number
+	setRound: (round: number) => void
 
-  selectedMove: Move
-  setSelectedMove: (move: Move) => void
+	selectedMove: Move
+	setSelectedMove: (move: Move) => void
 
-  roundWinner: 'player' | 'bot' | 'draw'
-  setRoundWinner: (roundWinner: 'player' | 'bot' | 'draw') => void
+	roundWinner: 'player' | 'bot' | 'draw'
+	setRoundWinner: (roundWinner: 'player' | 'bot' | 'draw') => void
 }
 
 export const useBattleStore = create<BattleState>()((set) => ({
-  isStarted: false,
-  setIsStarted: (isStarted) => set({ isStarted }),
+	isStarted: false,
+	setIsStarted: (isStarted) => set({ isStarted }),
 
-  players: null,
-  setPlayers: (players) => set({ players }),
-  setPlayerMove: (actor, move) => {
-    set((state) => {
-      if (!state.players) return state
-      return {
-        players: {
-          ...state.players,
-          [actor]: { ...state.players[actor], move },
-        },
-      }
-    })
-  },
-  setPlayerHealth: (actor, health) => {
-    set((state) => {
-      if (!state.players) return state
-      return {
-        players: {
-          ...state.players,
-          [actor]: { ...state.players[actor], health },
-        },
-      }
-    })
-  },
+	players: null,
+	setPlayers: (players) => set({ players }),
+	setPlayerMove: (actor, move) => {
+		set((state) => {
+			if (!state.players) return state
 
-  currentTurn: '',
-  setCurrentTurn: (currentTurn) => set({ currentTurn }),
+			return {
+				players: {
+					...state.players,
+					[actor]: { ...state.players[actor], move },
+				},
+			}
+		})
+	},
+	setPlayerHealth: (actor, health) => {
+		set((state) => {
+			if (!state.players) return state
 
-  roundCountdown: 10,
+			return {
+				players: {
+					...state.players,
+					[actor]: { ...state.players[actor], health },
+				},
+			}
+		})
+	},
 
-  history: [],
-  addHistory: (history) => set((state) => ({ history: [...state.history, history] })),
-  clearHistory: () => set({ history: [] }),
+	currentTurn: '',
+	setCurrentTurn: (currentTurn) => set({ currentTurn }),
 
-  stage: 'ready',
-  setStage: (stage) => set({ stage }),
+	roundCountdown: 10,
 
-  round: 0,
-  setRound: (round) => set({ round }),
+	history: [],
+	addHistory: (history) => set((state) => ({ history: [...state.history, history] })),
+	clearHistory: () => set({ history: [] }),
 
-  selectedMove: null,
-  setSelectedMove: (selectedMove) => set({ selectedMove }),
+	stage: 'ready',
+	setStage: (stage) => set({ stage }),
 
-  roundWinner: 'draw',
-  setRoundWinner: (roundWinner) => set({ roundWinner }),
+	round: 0,
+	setRound: (round) => set({ round }),
+
+	selectedMove: null,
+	setSelectedMove: (selectedMove) => set({ selectedMove }),
+
+	roundWinner: 'draw',
+	setRoundWinner: (roundWinner) => set({ roundWinner }),
 }))

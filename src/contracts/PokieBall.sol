@@ -6,12 +6,12 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import "./PokieID.sol";
+import "./PoxieID.sol";
 
-contract PokieBall is ERC1155, Ownable, ERC1155Burnable {
+contract PoxieBall is ERC1155, Ownable, ERC1155Burnable {
     address contractAddress;
 
-    PokieID public pokieID;
+    PoxieID public poxieID;
 
     constructor(
         address initialOwner,
@@ -22,28 +22,16 @@ contract PokieBall is ERC1155, Ownable, ERC1155Burnable {
         Ownable(initialOwner)
     {
         contractAddress = marketplaceAddress;
-        pokieID = PokieID(idAddress);
+        poxieID = PoxieID(idAddress);
     }
 
     function craft(uint8 id) public {
         _mint(msg.sender, id, 1, "");
         setApprovalForAll(contractAddress, true);
-        pokieID.addPoints(msg.sender, 10);
+        poxieID.addPoints(msg.sender, 10);
     }
 
     function burn(uint256 id) public {
         _burn(msg.sender, id, 1);
-    }
-
-    function uri(
-        uint256 _tokenid
-    ) public pure override returns (string memory) {
-        return
-            string(
-                abi.encodePacked(
-                    "https://pokemon-psi-two.vercel.app/api/metadata/balls/",
-                    Strings.toString(_tokenid)
-                )
-            );
     }
 }

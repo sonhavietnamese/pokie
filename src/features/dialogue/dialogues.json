@@ -572,8 +572,8 @@
           "value": "Let's go!",
           "next": [
             {
-              "action": "CONNECT_WALLET",
-              "node": "hello_06"
+              "action": "CHANGE_STAGE",
+              "node": "battle"
             }
           ]
         }

@@ -51,7 +51,7 @@ export default function BattleHistory() {
 			{history.length > 0 && (
 				<div className="pointer-events-auto h-full max-h-[460px] space-y-1 overflow-auto rounded-[44px] border-[#82FDDC]/50 border-[6px] bg-[#2B7A82]/40 p-2">
 					{history.map((h) => (
-						<div ref={ref} id={`item-${h.player.result}`} className={'flex items-center gap-2'} key={h.player.result}>
+						<div ref={ref} id={`item-${h.player.result}`} className={'flex items-center gap-2'} key={JSON.stringify(h)}>
 							<figure className={'w-16'}>
 								<Sprite
 									data={{

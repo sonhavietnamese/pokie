@@ -1,3 +1,4 @@
+import { useStageStore } from '@/stores/stage'
 import { PerspectiveCamera } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
@@ -6,9 +7,9 @@ import * as THREE from 'three'
 const CAMERA_POSITION = {
 	INITIAL: new THREE.Vector3(20, 2, 0),
 	ZOOM: new THREE.Vector3(8, 2, 0),
-	PLAYER: new THREE.Vector3(1.9, 0.6, -1.5),
+	PLAYER: new THREE.Vector3(1.9, 0.8, -1.5),
 
-	BOT: new THREE.Vector3(2.2, 0.9, -0.2),
+	BOT: new THREE.Vector3(1, 1.1, 1),
 	END: new THREE.Vector3(4.35, 1.0, 8.06),
 }
 
@@ -21,12 +22,12 @@ const CAMERA_ROTATION = {
 }
 
 const CAMERA_POSITIONS = [CAMERA_POSITION.PLAYER, CAMERA_POSITION.BOT, CAMERA_POSITION.END]
-
 const CAMERA_ROTATIONS = [CAMERA_ROTATION.PLAYER, CAMERA_ROTATION.BOT, CAMERA_ROTATION.END]
 
 export default function BattleCamera() {
 	const cameraRef = useRef<THREE.PerspectiveCamera>(null)
 	const currentPoint = useRef(0)
+	const stage = useStageStore((s) => s.stage)
 
 	useFrame((state, delta) => {
 		if (!cameraRef.current) return
@@ -48,14 +49,5 @@ export default function BattleCamera() {
 		}
 	})
 
-	return (
-		<PerspectiveCamera
-			ref={cameraRef}
-			fov={40}
-			makeDefault={true}
-			rotation={[0, Math.PI / 2, 0]}
-			// position={cameraConfigs.position}
-			// rotation={cameraConfigs.rotation}
-		/>
-	)
+	return <PerspectiveCamera ref={cameraRef} fov={40} makeDefault={stage === 'battle'} rotation={[0, Math.PI / 2, 0]} />
 }

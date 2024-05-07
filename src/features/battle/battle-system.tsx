@@ -1,3 +1,6 @@
+import { Sprite } from '@/components/ui/sprite'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
+import { useNpcStore } from '@/features/npc/npc-store'
 import { useCountDown } from '@/hooks/use-countdown'
 import {
 	BATTLE_ANIMATION_COUNTDOWN,
@@ -8,7 +11,6 @@ import {
 import { useStageStore } from '@/stores/stage'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
-// import { useNPC } from '../npc/hook'
 import { ActionPanel } from './action-panel'
 import type { Move } from './battle-store'
 import Defeat from './defeat'
@@ -38,15 +40,14 @@ export function BattleSystem() {
 		roundWinner,
 		setRoundWinner,
 	} = useBattle()
-	// const { closeUI } = useNPC()
 	const setGameStage = useStageStore((s) => s.setStage)
+	const [showFightCutscene, setShowFightCutscene] = useState(false)
+	const setIsTalking = useNpcStore((s) => s.setIsTalking)
 
 	const [timeLeft, { start, isRunning, isEnd, reset }] = useCountDown(initialTime, interval)
 
 	const [playerMove, setPlayerMove] = useState<Move>(null)
 	const [botMove, setBotMove] = useState<Move>(null)
-
-	const [showFightCutscene, setShowFightCutscene] = useState(false)
 
 	useEffect(() => {
 		startGame()
@@ -121,7 +122,10 @@ export function BattleSystem() {
 		if (stage === 'end') {
 			setTimeout(() => {
 				setGameStage('home')
-				// closeUI()
+				setIsTalking(false)
+
+				cleanUp()
+				reset()
 			}, 2000)
 		}
 	}, [stage])
@@ -129,15 +133,6 @@ export function BattleSystem() {
 	return (
 		<>
 			<BattleHeader timer={stage === 'waiting' ? String(timeLeft / 1000) : '-'} round={round} />
-
-			{/* <AnimatePresence>
-				<FightCutscene
-					show={true}
-					winner={roundWinner === 'player' ? 'left' : roundWinner === 'bot' ? 'right' : 'draw'}
-					leftMove={'rock'}
-					rightMove={'rock'}
-				/>
-			</AnimatePresence> */}
 
 			<AnimatePresence>
 				{showFightCutscene && (
@@ -150,11 +145,18 @@ export function BattleSystem() {
 				)}
 			</AnimatePresence>
 
-			<BattleHistory />
+			{stage !== 'animation' && <BattleHistory />}
+
 			{stage === 'waiting' && <ActionPanel onSelected={(move) => action(move)} />}
 
 			<figure className="absolute bottom-6 left-6 z-[3]" onMouseUp={() => setStage('end')}>
-				<img src="/sprites/battle/back.png" alt="" className="h-20 w-20" />
+				<Sprite
+					data={{
+						part: '1',
+						m: SPRITESHEET_DATA.frames['battle-icon-arrow.png'].frame,
+					}}
+					className="h-20 w-20"
+				/>
 			</figure>
 
 			{winner() === 'player' && stage === 'end' && <Victory />}

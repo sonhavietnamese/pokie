@@ -103,7 +103,7 @@ export default function FightCutscene({ show, leftMove = 'paper', rightMove = 'p
 			<motion.section>
 				<div className="absolute inset-0 z-[6] h-screen w-screen bg-[#002450]/60">
 					<div className="scale-x-[-1]">
-						<div className="-ml-[33%] absolute top-[8%] flex w-fit items-center">
+						<div className="-ml-[37cqw] absolute top-[8%] flex w-fit items-center">
 							<motion.figure variants={trailVariants} initial={'hide'} animate={'show'} className="z-[6] w-[1500px]">
 								<Sprite
 									data={{
@@ -128,7 +128,7 @@ export default function FightCutscene({ show, leftMove = 'paper', rightMove = 'p
 						</div>
 					</div>
 
-					<div className="-ml-[33%] absolute bottom-[10%] z-[20] flex w-fit items-center">
+					<div className="-ml-[37cqw] absolute bottom-[10%] z-[20] flex w-fit items-center">
 						<motion.figure variants={trailVariants} initial={'hide'} animate={'show'} className="z-[6] w-[1500px]">
 							<Sprite
 								data={{

@@ -29,7 +29,6 @@ const containerVariants: Variants = {
 		transition: {
 			ease: [0, 0.71, 0.2, 1.01],
 			duration: 0.8,
-			// delay: 3,
 		},
 	},
 	hide: { y: 300 },
@@ -88,8 +87,14 @@ export function ActionPanel({ onSelected }: ActionPanelProps) {
 					/>
 				</figure>
 
-				<figure className="absolute -top-8 left-[40%] z-[3]">
-					<img draggable={false} alt={'Rock'} src={'/sprites/battle/choose-action.png'} />
+				<figure className="-top-8 absolute left-[40%] z-[3]">
+					<Sprite
+						data={{
+							part: '1',
+							m: SPRITESHEET_DATA.frames['battle-choose-action.png'].frame,
+						}}
+						className="w-[350px]"
+					/>
 				</figure>
 
 				<div className="absolute bottom-0 z-[2] h-full w-[850px]">
