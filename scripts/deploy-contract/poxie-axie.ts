@@ -1,18 +1,20 @@
 import type { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { OWNER_ADDRESS } from '../utils'
+import { AXIE_ADDRESS, OWNER_ADDRESS } from '../utils'
 
 const deploy = async ({ getNamedAccounts, deployments }: HardhatRuntimeEnvironment) => {
 	const { deploy } = deployments
 	const { deployer } = await getNamedAccounts()
 
-	await deploy('PokieID', {
+	const idContract = await deployments.get('PoxieID')
+
+	await deploy('PoxieAxie', {
 		from: deployer,
 		log: true,
-		args: [OWNER_ADDRESS],
+		args: [OWNER_ADDRESS, AXIE_ADDRESS, idContract.address],
 	})
 }
 
-deploy.tags = ['PokieID']
-deploy.dependencies = ['VerifyContracts']
+deploy.tags = ['PoxieAxie']
+deploy.dependencies = ['VerifyContracts', 'PoxieID']
 
 export default deploy

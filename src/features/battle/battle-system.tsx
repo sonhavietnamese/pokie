@@ -1,3 +1,5 @@
+'use client'
+
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { useNpcStore } from '@/features/npc/npc-store'
@@ -10,20 +12,22 @@ import {
 } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { AnimatePresence } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { ActionPanel } from './action-panel'
 import type { Move } from './battle-store'
-import Defeat from './defeat'
-import FightCutscene from './fight-cutscene'
-import BattleHeader from './header'
-import BattleHistory from './history'
 import { useBattle } from './use-battle'
-import Victory from './victory'
+
+const Defeat = dynamic(() => import('@/features/battle/defeat'))
+const Victory = dynamic(() => import('@/features/battle/victory'))
+const BattleHeader = dynamic(() => import('@/features/battle/header'))
+const BattleHistory = dynamic(() => import('@/features/battle/history'))
+const FightCutscene = dynamic(() => import('@/features/battle/fight-cutscene'))
 
 const initialTime: number = 20000
 const interval: number = 1000
 
-export function BattleSystem() {
+export default function BattleSystem() {
 	const {
 		stage,
 		setStage,

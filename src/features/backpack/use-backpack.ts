@@ -5,11 +5,14 @@ import { updateBackpack } from '@/app/actions/update-backpack'
 import type { STUFFS } from '@/libs/constants'
 import { useSession } from 'next-auth/react'
 import useSWRImmutable, { useSWRConfig } from 'swr'
-import { useBackpackStore } from './store'
+import { useBackpackStore } from './backpack-store'
 
 export default function useBackpack() {
 	const { isOpen, setOpen } = useBackpackStore()
 	const { data } = useSession()
+
+	console.log(data)
+
 	const { data: backpack } = useSWRImmutable(data?.user ? 'getBackpack' : null, () =>
 		getBackpack(data ? data.user.id : ''),
 	)

@@ -21,7 +21,7 @@ const config: HardhatUserConfig = {
 		version: '0.8.20',
 	},
 	typechain: {
-		outDir: './src/contract/typechain',
+		outDir: './src/contracts/typechain',
 	},
 	paths: {
 		sources: './src/contracts',

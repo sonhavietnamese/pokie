@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface Timer {
@@ -21,6 +23,8 @@ export const useCountDown = (timeToCount = 60 * 1000, interval = 1000) => {
 	const isEnd = useRef(false)
 
 	const run = (ts: number) => {
+		// if (!timer.current.lastInterval || !timer.current.timeToCount) return
+
 		isRunning.current = true
 		if (!timer.current.started) {
 			timer.current.started = ts
@@ -28,10 +32,12 @@ export const useCountDown = (timeToCount = 60 * 1000, interval = 1000) => {
 		}
 
 		const localInterval = Math.min(interval, timer.current.timeLeft || Number.POSITIVE_INFINITY)
+
 		if (ts - timer.current.lastInterval >= localInterval) {
 			timer.current.lastInterval += localInterval
 			setTimeLeft((timeLeft) => {
 				timer.current.timeLeft = timeLeft - localInterval
+
 				return timer.current.timeLeft
 			})
 		}
@@ -53,10 +59,13 @@ export const useCountDown = (timeToCount = 60 * 1000, interval = 1000) => {
 	}
 
 	const start = useCallback((ttc: number) => {
+		// if (!timer.current.requestId) return
+
 		isEnd.current = false
-		window.cancelAnimationFrame(timer.current.requestId!)
+		window.cancelAnimationFrame(timer.current.requestId)
 
 		const newTimeToCount = ttc !== undefined ? ttc : timeToCount
+
 		timer.current.started = null
 		timer.current.lastInterval = null
 		timer.current.timeToCount = newTimeToCount
@@ -66,7 +75,9 @@ export const useCountDown = (timeToCount = 60 * 1000, interval = 1000) => {
 	}, [])
 
 	const pause = useCallback(() => {
-		window.cancelAnimationFrame(timer.current.requestId!)
+		if (!timer.current.requestId) return
+
+		window.cancelAnimationFrame(timer.current.requestId)
 		timer.current.started = null
 		timer.current.lastInterval = null
 		timer.current.timeToCount = timer.current.timeLeft
@@ -75,15 +86,15 @@ export const useCountDown = (timeToCount = 60 * 1000, interval = 1000) => {
 	}, [])
 
 	const resume = useCallback(() => {
-		if (!timer.current.started && timer.current.timeLeft! > 0) {
-			window.cancelAnimationFrame(timer.current.requestId!)
+		if (!timer.current.started && timer.current.timeLeft > 0) {
+			window.cancelAnimationFrame(timer.current.requestId)
 			timer.current.requestId = window.requestAnimationFrame(run)
 		}
 	}, [])
 
 	const reset = useCallback(() => {
-		if (timer.current.timeLeft) {
-			window.cancelAnimationFrame(timer.current.requestId!)
+		if (timer.current.timeLeft && timer.current.requestId) {
+			window.cancelAnimationFrame(timer.current.requestId)
 			timer.current = {
 				started: null,
 				lastInterval: null,
@@ -98,7 +109,7 @@ export const useCountDown = (timeToCount = 60 * 1000, interval = 1000) => {
 	}, [])
 
 	useEffect(() => {
-		return () => window.cancelAnimationFrame(timer.current.requestId!)
+		return () => window.cancelAnimationFrame(timer.current.requestId)
 	}, [])
 
 	return [timeLeft, { start, pause, resume, reset, isRunning: isRunning.current, isEnd: isEnd.current }] as const

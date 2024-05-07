@@ -73,7 +73,7 @@ export function ActionPanel({ onSelected }: ActionPanelProps) {
 				initial={'hide'}
 				animate={'show'}
 				exit={'hide'}
-				className="pointer-events-none absolute right-0 bottom-0 z-[1]"
+				className="pointer-events-none absolute right-0 bottom-0 z-20"
 			>
 				<figure className="w-[850px]">
 					<Sprite

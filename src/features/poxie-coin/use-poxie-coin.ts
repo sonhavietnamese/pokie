@@ -1,8 +1,8 @@
-import { abi } from '@/contracts/abis/pokie-coin'
+import { abi } from '@/contracts/abis/poxie-coin'
 import useContract from '@/hooks/use-contract'
 import { POKIECOIN_ADDRESS, POKIECOIN_DECIMALS } from '@/libs/constants'
 import { useWalletgo } from '@roninnetwork/walletgo'
-import { usePokieCoinBalanceStore } from './store'
+import { usePokieCoinBalanceStore } from './poxie-coin-store'
 
 export default function usePokieCoin() {
 	const { loadContract } = useContract()

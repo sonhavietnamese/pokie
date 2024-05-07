@@ -5,17 +5,14 @@ const deploy = async ({ getNamedAccounts, deployments }: HardhatRuntimeEnvironme
 	const { deploy } = deployments
 	const { deployer } = await getNamedAccounts()
 
-	const coinContract = await deployments.get('PokieCoin')
-	const idContract = await deployments.get('PokieID')
-
-	await deploy('PokieProps', {
+	await deploy('PoxieCoin', {
 		from: deployer,
 		log: true,
-		args: [OWNER_ADDRESS, coinContract.address, idContract.address],
+		args: [OWNER_ADDRESS],
 	})
 }
 
-deploy.tags = ['PokieProps']
-deploy.dependencies = ['VerifyContracts', 'PokieCoin', 'PokieID']
+deploy.tags = ['PoxieCoin']
+deploy.dependencies = ['VerifyContracts']
 
 export default deploy

@@ -1,5 +1,5 @@
 import { Sprite } from '@/components/ui/sprite'
-import { SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { cn } from '@/libs/utils'
 import type { DetailedHTMLProps, HTMLAttributes } from 'react'
 import type { Stuff } from './type'
@@ -20,7 +20,7 @@ export default function Item({ item, selected, className, type = 'stuff', ...pro
 				<Sprite
 					data={{
 						part: '1',
-						m: SPRITESHEET_ICON.frames['frame-item-01.png'].frame,
+						m: SPRITESHEET_DATA.frames['frame-item-01.png'].frame,
 					}}
 					className="h-full w-full scale-[0.9]"
 				/>
@@ -29,7 +29,7 @@ export default function Item({ item, selected, className, type = 'stuff', ...pro
 					<Sprite
 						data={{
 							part: '1',
-							m: SPRITESHEET_ICON.frames['frame-item-01-selected.png'].frame,
+							m: SPRITESHEET_DATA.frames['frame-item-01-selected.png'].frame,
 						}}
 						className="absolute h-full w-full"
 					/>
@@ -41,7 +41,7 @@ export default function Item({ item, selected, className, type = 'stuff', ...pro
 					className={'h-full w-full'}
 					data={{
 						part: '1',
-						m: SPRITESHEET_ICON.frames[`icon-item-${item.slug}.png` as keyof typeof SPRITESHEET_ICON.frames].frame,
+						m: SPRITESHEET_DATA.frames[`icon-item-${item.slug}.png` as keyof typeof SPRITESHEET_DATA.frames].frame,
 					}}
 				/>
 			</figure>

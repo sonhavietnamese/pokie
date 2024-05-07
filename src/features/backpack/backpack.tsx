@@ -3,7 +3,7 @@
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Divider } from '@/components/ui/divider'
 import { Sprite } from '@/components/ui/sprite'
-import { SPRITESHEET_ICON } from '@/configs/spritesheet'
+import { SPRITESHEET_DATA, SPRITESHEET_ICON } from '@/configs/spritesheet'
 import { useEffect } from 'react'
 import Item from './item'
 import useBackpack from './use-backpack'
@@ -17,6 +17,8 @@ export default function Backpack() {
 		fetchBackpack()
 	}, [isOpen])
 
+	console.log(backpack)
+
 	return (
 		<Dialog open={isOpen}>
 			<DialogContent className={'h-screen w-screen'}>
@@ -25,7 +27,7 @@ export default function Backpack() {
 						<Sprite
 							data={{
 								part: '1',
-								m: SPRITESHEET_ICON.frames['background.webp'].frame,
+								m: SPRITESHEET_DATA.frames['frame-backpack.png'].frame,
 							}}
 							className="h-full w-full"
 						/>
@@ -119,6 +121,7 @@ export default function Backpack() {
 
 											{Array.from({ length: 20 }).map((_, index) => (
 												<Item
+													// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 													key={index}
 													type="stuff"
 													item={{
@@ -162,14 +165,16 @@ export default function Backpack() {
 										</div>
 									</div>
 
-									<div className="w-fit flex-1 h-full flex items-center justify-center p-2">
+									<div className="flex h-full w-fit flex-1 items-center justify-center p-2">
 										{/* {selectedItem && ( */}
-										<div className="w-full h-full relative">
+										<div className="relative h-full w-full">
 											<figure className="h-full w-auto">
 												<Sprite
 													data={{
-														part: '1',
-														m: SPRITESHEET_ICON.frames['panel-detail.webp'].frame,
+														part: '3',
+														l: SPRITESHEET_DATA.frames['panel-01-l.png'].frame,
+														m: SPRITESHEET_DATA.frames['panel-01-m.png'].frame,
+														r: SPRITESHEET_DATA.frames['panel-01-r.png'].frame,
 													}}
 													className="h-full w-full"
 												/>
@@ -181,7 +186,7 @@ export default function Backpack() {
 														<Sprite
 															data={{
 																part: '1',
-																m: SPRITESHEET_ICON.frames['icon-item-fish.png'].frame,
+																m: SPRITESHEET_DATA.frames['icon-item-fish.png'].frame,
 															}}
 															className="h-full w-full"
 														/>
