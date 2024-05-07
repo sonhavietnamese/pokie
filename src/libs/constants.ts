@@ -170,3 +170,27 @@ export const BATTLE_END_COUNTDOWN = 5
 export const BATTLE_MAX_HEALTH = 100
 export const BATTLE_MAX_ROUND = 3
 export const BATTLE_MAX_DAMAGE = 100
+
+export enum BALLS {
+	BEAST = 1,
+	AQUATIC = 2,
+	PLANT = 3,
+	BUG = 4,
+	BIRD = 5,
+	REPTILE = 6,
+	MECH = 7,
+	DAWN = 8,
+	DUSK = 9,
+}
+
+export enum SKINS {
+	BLUE = 1,
+	GREEN = 2,
+	RED = 3,
+	YELLOW = 4,
+}
+
+export enum TOOLS {
+	HAMMER = 11,
+	NET = 12,
+}

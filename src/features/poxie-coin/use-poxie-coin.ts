@@ -2,6 +2,7 @@ import { abi } from '@/contracts/abis/poxie-coin'
 import useContract from '@/hooks/use-contract'
 import { POKIECOIN_ADDRESS, POKIECOIN_DECIMALS } from '@/libs/constants'
 import { useWalletgo } from '@roninnetwork/walletgo'
+import { utils } from 'ethers'
 import { usePokieCoinBalanceStore } from './poxie-coin-store'
 
 export default function usePokieCoin() {
@@ -21,5 +22,12 @@ export default function usePokieCoin() {
 		return balance
 	}
 
-	return { fetchBalances }
+	const approve = async (address: string, amount: number) => {
+		const contract = await loadContract(POKIECOIN_ADDRESS, abi)
+		const tx = await contract.approve(address, utils.parseEther(amount.toString()))
+
+		return tx
+	}
+
+	return { fetchBalances, approve }
 }

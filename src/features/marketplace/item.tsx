@@ -1,15 +1,14 @@
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
-// import { BALLS } from '@/libs/constants'
+import { BALLS, SKINS, TOOLS } from '@/libs/constants'
 import { cn, trimWallet } from '@/libs/utils'
 import { type HTMLMotionProps, type Variants, motion } from 'framer-motion'
-import { capitalize } from 'lodash-es'
+import { lowerCase } from 'lodash-es'
 import type { MarketplaceItem } from './marketplace'
 
 type Props = {
 	selected: boolean
 	item: MarketplaceItem
-	src: string
 } & HTMLMotionProps<'div'>
 
 const itemVariants: Variants = {
@@ -21,7 +20,7 @@ const itemVariants: Variants = {
 	},
 }
 
-export default function Item({ selected, item, src, className, ...props }: Props) {
+export default function Item({ selected, item, className, ...props }: Props) {
 	return (
 		<motion.div
 			initial={'normal'}
@@ -52,24 +51,48 @@ export default function Item({ selected, item, src, className, ...props }: Props
 				)}
 
 				<div className="flex h-full w-full flex-col items-center justify-between">
-					<span className="text-[#735427] text-xl">
-						Ball
-						{/* {capitalize(BALLS[Number(item.tokenId)])} */}
-					</span>
+					<span className="text-[#735427] text-xl">{item.name}</span>
 
 					<figure className="h-fit w-[90px]">
-						{/* <img draggable="false" src={src} alt="" className="w-full mb-4 h-auto" /> */}
-						<Sprite
-							data={{
-								part: '1',
-								m: SPRITESHEET_DATA.frames['icon-ball-aquatic.png'].frame,
-							}}
-							className="h-full w-full"
-						/>
+						{item.id.split('-')[0] === 'balls' && (
+							<Sprite
+								data={{
+									part: '1',
+									m: SPRITESHEET_DATA.frames[
+										`icon-ball-${lowerCase(BALLS[Number(item.tokenId)])}.png` as keyof typeof SPRITESHEET_DATA.frames
+									].frame,
+								}}
+								className="h-full w-full"
+							/>
+						)}
+
+						{item.id.split('-')[0] === 'skins' && (
+							<Sprite
+								data={{
+									part: '1',
+									m: SPRITESHEET_DATA.frames[
+										`icon-skin-${lowerCase(SKINS[Number(item.tokenId)])}.png` as keyof typeof SPRITESHEET_DATA.frames
+									].frame,
+								}}
+								className="h-full w-full"
+							/>
+						)}
+
+						{item.id.split('-')[0] === 'tools' && (
+							<Sprite
+								data={{
+									part: '1',
+									m: SPRITESHEET_DATA.frames[
+										`icon-tool-${lowerCase(TOOLS[Number(item.tokenId)])}.png` as keyof typeof SPRITESHEET_DATA.frames
+									].frame,
+								}}
+								className="h-full w-full"
+							/>
+						)}
 					</figure>
 
 					<span className="scale-90 rounded-2xl bg-[#735427] p-.5 px-3 pb-1 text-[#FEF1C6] text-lg">
-						{trimWallet(item.seller, 4)}
+						{item.seller.startsWith('0x') ? trimWallet(item.seller, 4) : item.seller}
 					</span>
 
 					<div className="mt-1 flex items-center gap-1">
@@ -82,7 +105,7 @@ export default function Item({ selected, item, src, className, ...props }: Props
 								className="h-full w-full"
 							/>
 						</figure>
-						<span className="text-3xl text-[#301B0A]">{item.price}</span>
+						<span className="text-3xl text-[#301B0A]">{Number(item.price)}</span>
 					</div>
 				</div>
 			</div>

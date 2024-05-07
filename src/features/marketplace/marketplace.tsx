@@ -1,14 +1,16 @@
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
-import { POKIEMARKETPLACE_ADDRESS } from '@/libs/constants'
+import { BALLS, POKIEMARKETPLACE_ADDRESS, SKINS as SKIN_ENUM, TOOLS as TOOL_ENUM } from '@/libs/constants'
 import { cn } from '@/libs/utils'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
 import { lowerCase, round } from 'lodash-es'
 import { useEffect, useState } from 'react'
+import { useToastStore } from '../toast/store'
 // import { usePokieMarketplaceContract } from '../backpack/use-pokie-marketplace-contract'
 // import { usePokieCoinBalance, usePokieCoinContract } from '../pokie-coin'
 import Item from './item'
 import { useMarketplaceStore } from './marketplace-store'
+import { usePoxieMarketplaceContract } from './poxie-marketplace-contract'
 
 const overlayVariants: Variants = {
 	hide: {
@@ -53,9 +55,58 @@ const tabs: { name: Tab; icon: keyof typeof SPRITESHEET_DATA.frames }[] = [
 export type MarketplaceItem = {
 	tokenId: number
 	seller: string
-	price: number
-	id: number
+	price: string
+	id: string
+	name: string
 }
+
+const SKINS: MarketplaceItem[] = [
+	{
+		id: 'skins-1',
+		tokenId: SKIN_ENUM.BLUE,
+		seller: 'Poxie',
+		name: 'Summer Sky',
+		price: '10',
+	},
+	{
+		id: 'skins-2',
+		tokenId: SKIN_ENUM.GREEN,
+		seller: 'Poxie',
+		name: 'Green Forest',
+		price: '15',
+	},
+	{
+		id: 'skins-3',
+		tokenId: SKIN_ENUM.RED,
+		seller: 'Poxie',
+		name: 'Mystic Patina',
+		price: '20',
+	},
+	{
+		id: 'skins-4',
+		tokenId: SKIN_ENUM.YELLOW,
+		seller: 'Poxie',
+		name: 'Sunshine',
+		price: '25',
+	},
+]
+
+const TOOLS: MarketplaceItem[] = [
+	{
+		tokenId: TOOL_ENUM.HAMMER,
+		id: 'tools-1',
+		name: 'Hammer',
+		price: '15',
+		seller: 'Poxie',
+	},
+	{
+		tokenId: TOOL_ENUM.NET,
+		id: 'tools-2',
+		name: 'Net',
+		price: '10',
+		seller: 'Poxie',
+	},
+]
 
 export default function Marketplace() {
 	const store = useMarketplaceStore()
@@ -64,24 +115,40 @@ export default function Marketplace() {
 	const [stage, setStage] = useState<string>('')
 	const [selected, setSelected] = useState<{
 		tokenId: number
-		id: number
+		id: string
 	} | null>(null)
-
+	const [loading, setLoading] = useState(false)
 	const [activeTab, setActiveTab] = useState<Tab>('balls')
+	const showToast = useToastStore((s) => s.showToast)
 
-	// const { fetchMarketItems, createMarketSale } = usePokieMarketplaceContract()
+	const { fetchMarketItems, createMarketSale } = usePoxieMarketplaceContract()
 	// const setBalance = usePokieCoinBalance((s) => s.setBalance)
 	// const { getBalances, approve } = usePokieCoinContract()
 
-	// useEffect(() => {
-	// 	const fetchItem = async () => {
-	// 		const data = await fetchMarketItems()
+	useEffect(() => {
+		const fetchItem = async () => {
+			setSelected(null)
+			let data = []
 
-	// 		setItems(data)
-	// 	}
+			try {
+				setLoading(true)
+				if (activeTab === 'balls') {
+					data = await fetchMarketItems()
+				} else if (activeTab === 'skins') {
+					data = SKINS
+				} else if (activeTab === 'tools') {
+					data = TOOLS
+				}
+				setItems(data)
+			} catch (error) {
+				showToast('Marketplace is not available at the moment')
+			} finally {
+				setLoading(false)
+			}
+		}
 
-	// 	store.isOpenUI && fetchItem()
-	// }, [store.isOpenUI])
+		store.isOpenUI && fetchItem()
+	}, [store.isOpenUI, activeTab])
 
 	const buyBall = async () => {
 		// if (!selected) return
@@ -147,83 +214,6 @@ export default function Marketplace() {
 										</div>
 									</div>
 								))}
-
-								{/* <div className="relative w-[100px]">
-									<Sprite
-										data={{
-											part: '1',
-											m: SPRITESHEET_DATA.frames[`marketplace-frame-tab-${tab === 'balls' ? 'active' : 'inactive'}.png`]
-												.frame,
-										}}
-										className="w-full"
-									/>
-
-									<div className="-translate-y-1/2 -translate-x-1/2 absolute inset-0 top-1/2 left-1/2 flex items-center justify-center">
-										<Sprite
-											data={{
-												part: '1',
-												m: SPRITESHEET_DATA.frames['icon-ball-bird.png'].frame,
-											}}
-											className="w-[50px]"
-										/>
-									</div>
-								</div>
-
-								<div className="relative w-[100px]">
-									<Sprite
-										data={{
-											part: '1',
-											m: SPRITESHEET_DATA.frames['marketplace-frame-tab-inactive.png'].frame,
-										}}
-										className="h-full w-full"
-									/>
-
-									<Sprite
-										data={{
-											part: '1',
-											m: SPRITESHEET_DATA.frames['marketplace-frame-tab-active.png'].frame,
-										}}
-										className="hidden h-full w-full"
-									/>
-
-									<div className="-translate-y-1/2 -translate-x-1/2 absolute inset-0 top-1/2 left-1/2 flex items-center justify-center">
-										<Sprite
-											data={{
-												part: '1',
-												m: SPRITESHEET_DATA.frames['icon-skin-blue.png'].frame,
-											}}
-											className="w-[50px]"
-										/>
-									</div>
-								</div>
-
-								<div className="relative w-[100px]">
-									<Sprite
-										data={{
-											part: '1',
-											m: SPRITESHEET_DATA.frames['marketplace-frame-tab-inactive.png'].frame,
-										}}
-										className="w-full"
-									/>
-
-									<Sprite
-										data={{
-											part: '1',
-											m: SPRITESHEET_DATA.frames['marketplace-frame-tab-active.png'].frame,
-										}}
-										className="hidden w-full"
-									/>
-
-									<div className="-translate-y-1/2 -translate-x-1/2 absolute inset-0 top-1/2 left-1/2 flex items-center justify-center">
-										<Sprite
-											data={{
-												part: '1',
-												m: SPRITESHEET_DATA.frames['icon-skin-blue.png'].frame,
-											}}
-											className="w-[50px]"
-										/>
-									</div>
-								</div> */}
 							</div>
 
 							<Sprite
@@ -234,25 +224,37 @@ export default function Marketplace() {
 								className="h-full w-full"
 							/>
 
-							{/* {page < Math.ceil(items.length / 6) - 1 && (
+							{page < Math.ceil(items.length / 6) - 1 && (
 								<button
-									onMouseDown={() => SOUNDS.BUTTON_CLICK.play()}
-									className="w-[2cqw] absolute right-[7%] top-[50%] translate-y-[-20%] z-[10] hover:translate-x-1 active:scale-90"
+									type="button"
+									className="absolute top-[50%] right-[7%] z-[10] w-[2cqw] translate-y-[-20%] hover:translate-x-1 active:scale-90"
 									onClick={() => setPage(Math.min(page + 1, Math.ceil(items.length / 6)))}
 								>
-									<img src="/sprites/marketplace/arrow.png" draggable={false} />
+									<Sprite
+										data={{
+											part: '1',
+											m: SPRITESHEET_DATA.frames['icon-arrow-02.png'].frame,
+										}}
+										className="h-full w-full scale-x-[-1]"
+									/>
 								</button>
 							)}
 
 							{page > 0 && (
 								<button
-									onMouseDown={() => SOUNDS.BUTTON_CLICK.play()}
-									className="w-[2cqw] absolute left-[7%] active:scale-90 top-[50%] translate-y-[-20%] z-[10] rotate-180 hover:-translate-x-1"
+									type="button"
+									className="hover:-translate-x-1 absolute top-[50%] left-[7%] z-[10] w-[2cqw] translate-y-[-20%] active:scale-90"
 									onClick={() => setPage(Math.max(page - 1, 0))}
 								>
-									<img src="/sprites/marketplace/arrow.png" draggable={false} />
+									<Sprite
+										data={{
+											part: '1',
+											m: SPRITESHEET_DATA.frames['icon-arrow-02.png'].frame,
+										}}
+										className="h-full w-full"
+									/>
 								</button>
-							)} */}
+							)}
 
 							<button
 								type="button"
@@ -271,62 +273,49 @@ export default function Marketplace() {
 							</button>
 
 							<section className="absolute top-0 z-[5] h-full w-full p-[70px] px-[80px] pt-[105px] pb-[110px]">
-								<div className="grid h-full w-full grid-rows-2 gap-4">
-									<span className="absolute right-[68px] bottom-16 text-[#FFECAF]">
-										{page + 1}/{Math.ceil(items.length / 6)}
-									</span>
-
-									<div className="row-span-1 flex w-full flex-1 justify-center space-x-5">
-										<Item
-											// onClick={() => {
-											// 	setSelected({ tokenId: skin.tokenId, id: skin.id })
-											// }}
-											// selected={selected?.id === skin.id}
-											// src={`/sprites/balls/${lowerCase(BALLS[Number(skin.tokenId)])}.png`}
-											selected={false}
-											src="avs"
-											item={{
-												tokenId: 1,
-												seller: '0xasd',
-												price: 5,
-												id: 12,
+								{loading ? (
+									<div className="flex h-full w-full items-center justify-center">
+										<Sprite
+											data={{
+												part: '1',
+												m: SPRITESHEET_DATA.frames['icon-puff-loading.png'].frame,
 											}}
+											className="h-[150px] w-[150px] animate-spin"
 										/>
-										<Item
-											selected={false}
-											src="avs"
-											item={{
-												tokenId: 1,
-												seller: '0xasd',
-												price: 5,
-												id: 12,
-											}}
-										/>
-										{/* {items.slice(page * 6, page * 6 + 3).map((skin) => (
-											<Item
-												onClick={() => {
-													setSelected({ tokenId: skin.tokenId, id: skin.id })
-												}}
-												selected={selected?.id === skin.id}
-												src={`/sprites/balls/${lowerCase(BALLS[Number(skin.tokenId)])}.png`}
-												item={skin}
-											/>
-										))} */}
 									</div>
+								) : (
+									<div className="grid h-full w-full grid-rows-2 gap-4">
+										<span className="absolute right-[68px] bottom-16 text-[#FFECAF]">
+											{page + 1}/{Math.ceil(items.length / 6)}
+										</span>
 
-									<div className="row-span-1 flex w-full flex-1 justify-center space-x-5">
-										{/* {items.slice(page * 6 + 3, page * 6 + 3 + 3).map((skin) => (
-											<Item
-												onClick={() => {
-													setSelected({ tokenId: skin.tokenId, id: skin.id })
-												}}
-												selected={selected?.id === skin.id}
-												src={`/sprites/balls/${lowerCase(BALLS[Number(skin.tokenId)])}.png`}
-												item={skin}
-											/>
-										))} */}
+										<div className="row-span-1 flex w-full flex-1 justify-center space-x-5">
+											{items.slice(page * 6, page * 6 + 3).map((item) => (
+												<Item
+													key={item.id}
+													onClick={() => {
+														setSelected({ tokenId: item.tokenId, id: item.id })
+													}}
+													selected={selected?.id === item.id}
+													item={item}
+												/>
+											))}
+										</div>
+
+										<div className="row-span-1 flex w-full flex-1 justify-center space-x-5">
+											{items.slice(page * 6 + 3, page * 6 + 3 + 3).map((item) => (
+												<Item
+													key={item.id}
+													onClick={() => {
+														setSelected({ tokenId: item.tokenId, id: item.id })
+													}}
+													selected={selected?.id === item.id}
+													item={item}
+												/>
+											))}
+										</div>
 									</div>
-								</div>
+								)}
 							</section>
 
 							{/* {selected && (
