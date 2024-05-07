@@ -12,7 +12,6 @@ import { Physics } from '@react-three/rapier'
 import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { Perf } from 'r3f-perf'
-import { useEffect } from 'react'
 
 const AxieAutoMove = dynamic(() => import('@/features/axie/axie-auto-move'))
 const Bimy = dynamic(() => import('@/features/npc/bimy'))

@@ -78,8 +78,11 @@ export default function Page() {
 
 						<View index={1} className="absolute inset-0 z-0 h-screen w-screen">
 							{stage === 'home' && <Home />}
-							{stage === 'battle' && <BattleScene />}
 							{stage === 'onboarding' && <Onboarding />}
+						</View>
+
+						<View index={4} className="absolute inset-0 z-0 h-screen w-screen">
+							{stage === 'battle' && <BattleScene />}
 						</View>
 
 						{stage === 'home' && (
