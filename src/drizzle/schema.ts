@@ -97,7 +97,7 @@ export const questsRelation = relations(quests, ({ many }) => ({
 	usersToQuests: many(usersToQuests),
 }))
 
-export const statusEnum = pgEnum('status', ['idle', 'ongoing', 'completed'])
+export const statusEnum = pgEnum('status', ['idle', 'ongoing', 'completed', 'claimed'])
 export const usersToQuests = pgTable(
 	'users_to_quests',
 	{

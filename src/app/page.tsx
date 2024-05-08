@@ -50,7 +50,7 @@ export default function Page() {
 
 	return (
 		<>
-			<main ref={ref} className="relative h-screen w-screen items-center justify-center">
+			<main ref={ref} className="relative h-screen w-screen items-center justify-center overflow-hidden">
 				<Suspense fallback={<span>Loading...</span>}>
 					<OnboardingManager />
 					<AnimationManager />
@@ -85,18 +85,22 @@ export default function Page() {
 									<View.Port />
 								</Suspense>
 							</Canvas>
+							{stage === 'home' && (
+								<View index={1} className="absolute inset-0 z-0 h-screen w-screen overflow-hidden">
+									<Home />
+								</View>
+							)}
+							{stage === 'onboarding' && (
+								<View index={5} className="absolute inset-0 z-0 h-screen w-screen overflow-hidden">
+									<Onboarding />
+								</View>
+							)}
 
-							<View index={1} className="absolute inset-0 z-0 h-screen w-screen">
-								{stage === 'home' && <Home />}
-							</View>
-
-							<View index={5} className="absolute inset-0 z-0 h-screen w-screen">
-								{stage === 'onboarding' && <Onboarding />}
-							</View>
-
-							<View index={4} className="absolute inset-0 z-0 h-screen w-screen">
-								{stage === 'battle' && <BattleScene />}
-							</View>
+							{stage === 'battle' && (
+								<View index={4} className="absolute inset-0 z-0 h-screen w-screen overflow-hidden">
+									<BattleScene />
+								</View>
+							)}
 
 							{stage === 'home' && (
 								<>
@@ -138,10 +142,9 @@ export default function Page() {
 							{stage === 'onboarding' && (
 								<div className="absolute bottom-0 h-[300px] w-screen bg-gradient-to-b from-[#f6f6f600] to-[#A9BAD2]" />
 							)}
-
-							{stage === 'battle' && <BattleSystem />}
 						</Pokiedex>
 					</KeyboardControls>
+					{stage === 'battle' && <BattleSystem />}
 				</Suspense>
 			</main>
 		</>

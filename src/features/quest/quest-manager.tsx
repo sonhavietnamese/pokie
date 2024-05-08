@@ -1,10 +1,18 @@
+// @ts-ignore
+// @ts-nocheck
+
 'use client'
 
-import Reward from '@/components/reward'
+import LoadingText from '@/components/loading-text'
+import { Button } from '@/components/ui/button'
 import { Sprite } from '@/components/ui/sprite'
+import Vignette from '@/components/vignette'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { type DialogueID, useDialogueStore } from '@/features/dialogue/store'
 import { useGuideLineStore } from '@/features/guide-line/guide-line-store'
+import { useNpcStore } from '@/features/npc/npc-store'
+import { usePokieCoin } from '@/features/poxie-coin/use-poxie-coin'
+import { useToastStore } from '@/features/toast/store'
 import { BALLS, NPCS, STUFFS } from '@/libs/constants'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
 import { capitalize } from 'lodash-es'
@@ -67,42 +75,27 @@ const REWARDS = {
 	],
 	quest_02: [
 		{
-			id: BALLS.AQUATIC,
-			type: 'ball',
-			amount: 1,
+			id: STUFFS.STAR,
+			type: 'item',
+			amount: 20,
 		},
 		{
-			id: BALLS.BEAST,
-			type: 'ball',
-			amount: 1,
+			id: STUFFS.MOON,
+			type: 'item',
+			amount: 20,
 		},
+	],
+	quest_03: [
 		{
-			id: BALLS.BIRD,
-			type: 'ball',
-			amount: 1,
-		},
-		{
-			id: BALLS.BUG,
-			type: 'ball',
-			amount: 1,
-		},
-		{
-			id: BALLS.PLANT,
-			type: 'ball',
-			amount: 1,
-		},
-		{
-			id: BALLS.REPTILE,
-			type: 'ball',
-			amount: 1,
+			id: 'pokie-coin',
+			type: 'coin',
+			amount: 20,
 		},
 	],
 }
 
 // TODO: Improve later
 export default function QuestManager() {
-	const setTarget = useGuideLineStore((s) => s.setTarget)
-
 	const [currentQuest, setCurrentQuest] = useState<Quest>()
 
 	const [showDialogue, selectedDialogue, clearDialogue] = useDialogueStore((s) => [
@@ -110,12 +103,29 @@ export default function QuestManager() {
 		s.selectedDialogue,
 		s.clear,
 	])
-
-	const [reward] = useQuestStore((s) => [s.reward])
-
-	const { onGoingQuest, isLoading, idleQuest } = useQuest()
-
+	const setTarget = useGuideLineStore((s) => s.setTarget)
+	const [reward, setReward] = useQuestStore((s) => [s.reward, s.setReward])
+	const {
+		onGoingQuest,
+		isLoading,
+		idleQuest,
+		getNextQuestId,
+		latestCompletedQuest,
+		createNewQuest,
+		latestClaimedQuest,
+		reward: rewardQuest,
+		switchToClaimedQuest,
+	} = useQuest()
 	const { data, status } = useSession()
+	const setIsTalking = useNpcStore((s) => s.setIsTalking)
+	const showToast = useToastStore((s) => s.showToast)
+	const [rewarding, setRewarding] = useState(false)
+	const { fetchBalances } = usePokieCoin()
+
+	const onClose = () => {
+		setReward(null)
+		setIsTalking(false)
+	}
 
 	useEffect(() => {
 		if (isLoading) return
@@ -125,29 +135,62 @@ export default function QuestManager() {
 				showDialogue(idleQuest.questId as DialogueID, 'bottom')
 			}
 		}
-	}, [isLoading, status, data])
+	}, [isLoading, status, data, idleQuest])
+
+	useEffect(() => {
+		if (latestClaimedQuest && !onGoingQuest && !latestCompletedQuest && !idleQuest && !reward) {
+			if (getNextQuestId()) createNewQuest()
+		}
+	}, [latestClaimedQuest, idleQuest, onGoingQuest, latestCompletedQuest, reward])
 
 	useEffect(() => {
 		if (onGoingQuest) {
 			// TODO: update typesafe
 			setCurrentQuest(questData[onGoingQuest.questId as keyof typeof questData] as unknown as Quest)
 			check({ ...onGoingQuest, id: onGoingQuest.questId } as unknown as Quest)
-		} else {
-			setCurrentQuest(undefined)
 		}
 	}, [onGoingQuest])
 
-	const check = (quest: Quest) => {
-		switch (quest.id) {
-			// TODO: Make it dynamic
-			case 'quest_01':
-				setTarget(new THREE.Vector3().fromArray(NPCS.bimy.position))
-				break
-
-			default:
-				console.log('Quest not found')
-				break
+	useEffect(() => {
+		if (latestCompletedQuest) {
+			// TODO: update typesafe
+			setCurrentQuest(questData[latestCompletedQuest.questId as keyof typeof questData] as unknown as Quest)
 		}
+	}, [latestCompletedQuest])
+
+	const check = async (quest: Quest) => {
+		if (latestCompletedQuest?.questId === quest.id) {
+			try {
+				setRewarding(true)
+				setCurrentQuest(undefined)
+
+				setReward({ id: quest.id })
+				await rewardQuest(quest.id)
+				switchToClaimedQuest(quest.id)
+
+				await fetchBalances()
+
+				return
+			} catch (error) {
+				showToast('Failed to reward!')
+			} finally {
+				setRewarding(false)
+			}
+		} else
+			switch (quest.id) {
+				// TODO: Make it dynamic
+				case 'quest_01':
+					setTarget(new THREE.Vector3().fromArray(NPCS.bimy.position))
+					break
+
+				case 'quest_02':
+					setTarget(new THREE.Vector3().fromArray(NPCS.ooap.position))
+					break
+
+				default:
+					console.log('Quest not found')
+					break
+			}
 	}
 
 	const onQuestClick = (quest: Quest) => {
@@ -156,42 +199,120 @@ export default function QuestManager() {
 
 	return (
 		<>
-			{/* {reward && <Reward />} */}
+			{reward && (
+				<div className="absolute inset-0 z-[20] h-screen w-screen">
+					<Vignette />
 
-			<Reward>
-				{REWARDS.quest_01.map((re, index) => (
+					<section className="relative flex h-full w-full">
+						<div className="z-[2] flex flex-1 items-center">
+							<Sprite
+								data={{
+									part: '1',
+									m: SPRITESHEET_DATA.frames['frame-reward.png'].frame,
+								}}
+								className="w-full"
+							/>
+						</div>
+
+						<div className="z-[2] flex flex-1 scale-x-[-1] items-center">
+							<Sprite
+								data={{
+									part: '1',
+									m: SPRITESHEET_DATA.frames['frame-reward.png'].frame,
+								}}
+								className="w-full"
+							/>
+						</div>
+
+						<div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 z-[3] aspect-square w-[30%] origin-center">
+							<Sprite
+								data={{
+									part: '1',
+									m: SPRITESHEET_DATA.frames['ray-01.png'].frame,
+								}}
+								className="h-full w-full animate-spin-slow"
+							/>
+						</div>
+
+						<div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 z-[4] flex origin-center gap-[80px]">
+							{REWARDS[reward.id].map((re, index) => (
+								<motion.div
+									key={re.id}
+									variants={itemVariants}
+									animate={'visible'}
+									initial={'hidden'}
+									className="flex min-w-[8cqw] max-w-[20cqw] flex-col items-center"
+								>
+									{re.type === 'coin' ? (
+										<>
+											<Sprite
+												data={{
+													part: '1',
+													m: SPRITESHEET_DATA.frames['icon-pokie-coin.png'].frame,
+												}}
+												className="h-full w-full"
+											/>
+											<motion.span
+												variants={itemTitleVariants}
+												initial="hidden"
+												animate="visible"
+												className="mt-5 w-full text-center font-extrabold text-[#FFF] text-[1.2cqw] tracking-wide outline-2-primary-medium"
+											>
+												Poxie Coin <br />x{re.amount}
+											</motion.span>
+										</>
+									) : (
+										<>
+											<Sprite
+												data={{
+													part: '1',
+													m: SPRITESHEET_DATA.frames[
+														`icon-${re.type}-${STUFFS[re.id].toLowerCase()}.png` as keyof typeof SPRITESHEET_DATA.frames
+													].frame,
+												}}
+												className="h-full w-full"
+											/>
+											<motion.span
+												variants={itemTitleVariants}
+												initial="hidden"
+												animate="visible"
+												className="mt-5 w-full text-center font-extrabold text-[#FFF] text-[1.2cqw] tracking-wide outline-2-primary-medium"
+											>
+												{capitalize(STUFFS[re.id])} <br />x{re.amount}
+											</motion.span>
+										</>
+									)}
+								</motion.div>
+							))}
+						</div>
+					</section>
+
 					<motion.div
-						key={re.id}
-						variants={itemVariants}
-						animate={'visible'}
-						initial={'hidden'}
-						className="flex min-w-[8cqw] max-w-[20cqw] flex-col items-center"
+						variants={itemTitleVariants}
+						initial="hidden"
+						animate="visible"
+						className="absolute bottom-10 z-[10] flex w-full justify-center"
 					>
-						<Sprite
-							data={{
-								part: '1',
-								m: SPRITESHEET_DATA.frames[
-									`icon-${re.type}-${STUFFS[re.id].toLowerCase()}.png` as keyof typeof SPRITESHEET_DATA.frames
-								].frame,
-							}}
-							className="h-full w-full"
-						/>
-						<motion.span
-							variants={itemTitleVariants}
-							initial="hidden"
-							animate="visible"
-							className="mt-5 w-full text-center font-extrabold text-[#FFF] text-[1.2cqw] tracking-wide outline-2-primary-medium"
-						>
-							{capitalize(STUFFS[re.id])} <br />x{re.amount}
-						</motion.span>
+						{rewarding ? (
+							<LoadingText text="Rewarding" />
+						) : (
+							<Button color="yellow" onMouseUp={onClose}>
+								Close
+							</Button>
+						)}
 					</motion.div>
-				))}
-			</Reward>
+				</div>
+			)}
 
 			<section className="absolute bottom-10 left-6 z-[5]">
 				<AnimatePresence>
 					{currentQuest && (
-						<QuestItem onClick={() => onQuestClick(currentQuest)} key={currentQuest.id} quest={currentQuest} />
+						<QuestItem
+							onClick={() => onQuestClick(currentQuest)}
+							key={currentQuest.id}
+							isCompleted={latestCompletedQuest?.questId === currentQuest.id}
+							quest={currentQuest}
+						/>
 					)}
 				</AnimatePresence>
 			</section>

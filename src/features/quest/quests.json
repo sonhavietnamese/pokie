@@ -1,7 +1,7 @@
 {
   "quest_01": {
     "id": "quest_01",
-    "name": "Find Bimy",
+    "name": "Talk to Bimy",
     "rewards": {
       "token": 10,
       "balls": ["1", "2", "3"]
@@ -9,6 +9,30 @@
     "goal": {
       "type": "FIND",
       "target": "bimy"
+    }
+  },
+  "quest_02": {
+    "id": "quest_02",
+    "name": "Craft a Poxie Ball",
+    "rewards": {
+      "token": 10,
+      "balls": ["1", "2", "3"]
+    },
+    "goal": {
+      "type": "CRAFT",
+      "target": "1"
+    }
+  },
+  "quest_03": {
+    "id": "quest_03",
+    "name": "Use Poxiedex to inspect an Axie",
+    "rewards": {
+      "token": 10,
+      "balls": ["1", "2", "3"]
+    },
+    "goal": {
+      "type": "CATCH",
+      "target": "1"
     }
   }
 }

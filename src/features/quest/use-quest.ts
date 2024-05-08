@@ -1,11 +1,11 @@
 'use client'
 
-import { createQuest, getQuests, switchToCompleted, switchToOngoing } from '@/app/actions/quest'
+import { createQuest, getQuests, switchToClaimed, switchToCompleted, switchToOngoing } from '@/app/actions/quest'
+import { rewardQuest } from '@/app/actions/reward-quest'
 import { useSession } from 'next-auth/react'
-import { useCallback } from 'react'
 import useSWRImmutable from 'swr'
 
-const QUEST_QUEUE = ['quest_01', 'quest_02', 'quest_03', 'quest_04', 'quest_05', 'quest_06', 'quest_07', 'quest_08']
+const QUEST_QUEUE = ['quest_01', 'quest_02', 'quest_03']
 
 export default function useQuest() {
 	const { data } = useSession()
@@ -19,21 +19,26 @@ export default function useQuest() {
 		mutate()
 	}
 
+	const latestClaimedQuest = quests
+		?.filter((quest) => quest.status === 'claimed')
+		.sort((a, b) => Number(b.questId.split('_')[1]) - Number(a.questId.split('_')[1]))[0]
+
 	const latestCompletedQuest = quests
 		?.filter((quest) => quest.status === 'completed')
-		.sort((a, b) => Number(b.questId.split('-')[1]) - Number(a.questId.split('-')[1]))[0]
+		.sort((a, b) => Number(b.questId.split('_')[1]) - Number(a.questId.split('_')[1]))[0]
 	const onGoingQuest = quests?.find((quest) => quest.status === 'ongoing')
 
 	const idleQuest = quests
 		?.filter((quest) => quest.status === 'idle')
-		.sort((a, b) => Number(b.questId.split('-')[1]) - Number(a.questId.split('-')[1]))[0]
+		.sort((a, b) => Number(b.questId.split('_')[1]) - Number(a.questId.split('_')[1]))[0]
 
-	const getNextQuestId = useCallback(() => {
-		if (!latestCompletedQuest) return QUEST_QUEUE[0]
-		const currentQuestIndex = QUEST_QUEUE.findIndex((quest) => quest === latestCompletedQuest.questId)
+	const getNextQuestId = () => {
+		fetchQuests()
+		if (!latestClaimedQuest) return QUEST_QUEUE[0]
+		const currentQuestIndex = QUEST_QUEUE.findIndex((quest) => quest === latestClaimedQuest.questId)
 
-		return QUEST_QUEUE[currentQuestIndex + 1]
-	}, [latestCompletedQuest])
+		return QUEST_QUEUE[currentQuestIndex + 1] || null
+	}
 
 	const createNewQuest = () => {
 		const nextQuestId = getNextQuestId()
@@ -60,6 +65,20 @@ export default function useQuest() {
 		mutate()
 	}
 
+	const switchToClaimedQuest = (questId: string) => {
+		if (!data) return
+
+		switchToClaimed(data.user.id, questId)
+		mutate()
+	}
+
+	const reward = async (questId: string) => {
+		if (!data) return
+
+		await rewardQuest(data.user.id, questId, data.user.wallet)
+		mutate()
+	}
+
 	return {
 		fetchQuests,
 		quests,
@@ -71,5 +90,8 @@ export default function useQuest() {
 		switchToOngoingQuest,
 		idleQuest,
 		switchToCompletedQuest,
+		latestClaimedQuest,
+		reward,
+		switchToClaimedQuest,
 	}
 }

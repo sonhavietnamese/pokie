@@ -1,3 +1,4 @@
+import useQuest from '@/features/quest/use-quest'
 import { useFrame } from '@react-three/fiber'
 import { type CollisionPayload, CuboidCollider, type RapierRigidBody, RigidBody } from '@react-three/rapier'
 import { useRef } from 'react'
@@ -10,12 +11,9 @@ export default function PokiedexRay() {
 	const rayRef = useRef<RapierRigidBody>(null)
 	const cameraPosition = useRef(new THREE.Vector3(0, 0, 0))
 	const cameraDirection = useRef(new THREE.Quaternion())
+	const { onGoingQuest, switchToCompletedQuest } = useQuest()
 
-	const [isOpen, foundedAxieId, setFoundedAxieId] = usePokiedexStore((s) => [
-		s.isOpen,
-		s.foundedAxieId,
-		s.setFoundedAxieId,
-	])
+	const [isOpen, setFoundedAxieId] = usePokiedexStore((s) => [s.isOpen, s.setFoundedAxieId])
 
 	useFrame(({ camera }) => {
 		if (rayRef.current && isOpen) {
@@ -30,6 +28,10 @@ export default function PokiedexRay() {
 	const enter = (e: CollisionPayload) => {
 		if (isOpen && e.colliderObject?.name.includes('axie')) {
 			setFoundedAxieId(e.colliderObject.name.split('-')[1])
+
+			if (onGoingQuest?.questId === 'quest_03') {
+				switchToCompletedQuest('quest_03')
+			}
 		}
 	}
 

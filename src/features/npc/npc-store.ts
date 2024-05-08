@@ -8,6 +8,9 @@ interface NpcStore {
 
 	isTalking: boolean
 	setIsTalking: (isTalking: boolean) => void
+
+	cameraPosition: [number, number, number]
+	setCameraPosition: (position: [number, number, number]) => void
 }
 
 export const useNpcStore = create<NpcStore>()((set) => ({
@@ -21,4 +24,7 @@ export const useNpcStore = create<NpcStore>()((set) => ({
 
 	isTalking: false,
 	setIsTalking: (isTalking) => set({ isTalking }),
+
+	cameraPosition: [0, 0, 0],
+	setCameraPosition: (position) => set({ cameraPosition: position }),
 }))

@@ -6,6 +6,7 @@ import { usePhoneStore } from '@/features/phone/phone-store'
 import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
 import { useKeyboardControls } from '@react-three/drei'
 import { useEffect } from 'react'
+import { useBlacksmithStore } from '../blacksmith/store'
 
 export default function ShortcutManager() {
 	// TODO: change name of setter function for consistency
@@ -15,6 +16,7 @@ export default function ShortcutManager() {
 	const [isPhoneOpen, setOpenPhone] = usePhoneStore((s) => [s.isOpen, s.setIsOpen])
 	const [isMarketplaceOpen, setOpenMarketplace] = useMarketplaceStore((s) => [s.isOpenUI, s.setIsOpenUI])
 	const [isCustomAvatarOpen, setOpenCustomAvatar] = useCustomAvatarStore((s) => [s.isOpenUI, s.setOpenUI])
+	const [isBlacksmithOpen, setOpenBlacksmith] = useBlacksmithStore((s) => [s.isOpenUI, s.setIsOpenUI])
 	const isBackpackPressed = useKeyboardControls((s) => s.backpack)
 	const isPokiedexPressed = useKeyboardControls((s) => s.pokiedex)
 	const isCatchAxiePressed = useKeyboardControls((s) => s['catch-axie'])
@@ -64,6 +66,7 @@ export default function ShortcutManager() {
 			setOpenCustomAvatar(false)
 			setOpenPhone(false)
 			setOpenMarketplace(false)
+			setOpenBlacksmith(false)
 		}
 	}, [isExitPressed])
 

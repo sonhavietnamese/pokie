@@ -46,7 +46,7 @@ export default function BattleSystem() {
 	} = useBattle()
 	const setGameStage = useStageStore((s) => s.setStage)
 	const [showFightCutscene, setShowFightCutscene] = useState(false)
-	const setIsTalking = useNpcStore((s) => s.setIsTalking)
+	const [setIsTalking, meetNpc] = useNpcStore((s) => [s.setIsTalking, s.meetNpc])
 
 	const [timeLeft, { start, isRunning, isEnd, reset }] = useCountDown(initialTime, interval)
 
@@ -127,6 +127,7 @@ export default function BattleSystem() {
 			setTimeout(() => {
 				setGameStage('home')
 				setIsTalking(false)
+				meetNpc(undefined)
 
 				cleanUp()
 				reset()
@@ -151,7 +152,9 @@ export default function BattleSystem() {
 
 			{stage !== 'animation' && <BattleHistory />}
 
-			{stage === 'waiting' && <ActionPanel onSelected={(move) => action(move)} />}
+			{/* {stage === 'waiting' && <ActionPanel onSelected={(move) => action(move)} />} */}
+
+			<ActionPanel show={stage === 'waiting'} onSelected={(move) => action(move)} />
 
 			<figure className="absolute bottom-6 left-6 z-[3]" onMouseUp={() => setStage('end')}>
 				<Sprite

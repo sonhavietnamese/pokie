@@ -145,7 +145,7 @@ export const NPCS = {
 	ooap: {
 		name: 'Ooap',
 		id: 'ooap',
-		position: [2, 1.67, 2],
+		position: [8, 1.67, 2],
 		rotation: [0, 0, 0],
 	},
 	blub: {
@@ -168,7 +168,7 @@ export const BATTLE_ANIMATION_COUNTDOWN = 5
 export const BATTLE_END_COUNTDOWN = 5
 export const BATTLE_MAX_HEALTH = 100
 export const BATTLE_MAX_ROUND = 3
-export const BATTLE_MAX_DAMAGE = 100
+export const BATTLE_MAX_DAMAGE = 35
 
 export enum BALLS {
 	BEAST = 1,

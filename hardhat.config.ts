@@ -12,7 +12,7 @@ import 'typechain'
 const testnet: NetworkUserConfig = {
 	chainId: 2021,
 	url: 'https://saigon-testnet.roninchain.com/rpc',
-	accounts: ['0x7bd8d28613ace75552b8410a9c525938ced766e4e6cd12573cc4acce05781904'],
+	accounts: [''],
 	blockGasLimit: 100000000,
 }
 

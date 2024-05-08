@@ -9,6 +9,7 @@ import { useFrame } from '@react-three/fiber'
 import { BallCollider, CapsuleCollider, type RapierRigidBody, RigidBody, quat, useRapier } from '@react-three/rapier'
 import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
+import { useNpcStore } from '../npc/npc-store'
 import type { Props, userDataType } from './type'
 // import { useMultiplayerStore } from '@/stores/multiplayer'
 import { useCharacterControl } from './use-character-control'
@@ -89,6 +90,8 @@ const CharacterController = ({
 	let isModePointToMove = false
 	const setCameraBased = useCharacterControl((state) => state.setCameraBased)
 	const getCameraBased = useCharacterControl((state) => state.getCameraBased)
+
+	const [npcCameraPosition] = useNpcStore((s) => [s.cameraPosition])
 
 	if (mode) {
 		if (mode === 'PointToMove') isModePointToMove = true
@@ -467,8 +470,7 @@ const CharacterController = ({
 		//#region Character controller
 		// Character current position
 		if (characterRef.current) {
-			if (isTalkingToNpc) currentPos.set(2, 1.2, 0 - 4)
-			else currentPos.copy(characterRef.current.translation() as THREE.Vector3)
+			currentPos.copy(characterRef.current.translation() as THREE.Vector3)
 			;(characterRef.current.userData as userDataType).canJump = canJump
 		}
 
@@ -508,8 +510,8 @@ const CharacterController = ({
 			camTargetPos = { x: 0, y: 0, z: 0 }
 		}
 
-		if (isTalkingToNpc) {
-			currentPos.set(2, 1.2, 0 - 5)
+		if (isTalkingToNpc && npcCameraPosition) {
+			currentPos.set(npcCameraPosition[0], npcCameraPosition[1], npcCameraPosition[2])
 			pivot.rotation.x = camInitDir.x
 			pivot.rotation.y = camInitDir.y
 			pivot.rotation.z = camInitDir.z

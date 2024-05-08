@@ -135,6 +135,124 @@
       ]
     }
   },
+  "quest_02": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["gesture-02"]
+        }
+      ],
+      "bubbles": ["Bimy is generous hah! He gave you almost everything."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["Cool! Go find Ooap, he's the best blacksmith in town."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "03"
+        }
+      ]
+    },
+    "03": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["He can help you to craft some Poxie Ball."],
+      "next": [
+        {
+          "action": "NEW_QUEST",
+          "node": "quest_02"
+        }
+      ]
+    }
+  },
+  "quest_03": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["gesture-02"]
+        }
+      ],
+      "bubbles": ["Congrats! You crafted your first ball."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["I am so excited to show you how to catch an Axie."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "03"
+        }
+      ]
+    },
+    "03": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["To understand about an Axie, you can use Poxiedex."],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "04"
+        }
+      ]
+    },
+    "04": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["Let's try it!"],
+      "next": [
+        {
+          "action": "NEW_QUEST",
+          "node": "quest_03"
+        }
+      ]
+    }
+  },
   "ron_insufficient": {
     "_entry": "01",
     "01": {
@@ -331,7 +449,7 @@
           "opts": ["idle-00"]
         }
       ],
-      "bubbles": ["Press F to open it."],
+      "bubbles": ["Come close and press F to open it."],
       "next": [
         {
           "action": "END"
@@ -507,7 +625,7 @@
           "opts": ["idle-00"]
         }
       ],
-      "bubbles": ["I'm quite mad, but I'll help you to get started."],
+      "bubbles": ["I'll help you to get started."],
       "next": [
         {
           "action": "GOTO",
@@ -578,6 +696,57 @@
           ]
         }
       }
+    }
+  },
+  "ooap_01": {
+    "_entry": "01",
+    "01": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["wave-01"]
+        }
+      ],
+      "bubbles": ["Dud bi dud ba dud, someone need my hammer!"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "02"
+        }
+      ]
+    },
+    "02": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["Young brother, wanna craft some shiny ball, isn't it?"],
+      "next": [
+        {
+          "action": "GOTO",
+          "node": "03"
+        }
+      ]
+    },
+    "03": {
+      "isSpeak": true,
+      "before": [
+        {
+          "action": "EMOTE",
+          "opts": ["idle-00"]
+        }
+      ],
+      "bubbles": ["Pick one!"],
+      "next": [
+        {
+          "action": "OPEN_PANEL",
+          "node": "blacksmith"
+        }
+      ]
     }
   }
 }

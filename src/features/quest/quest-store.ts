@@ -6,14 +6,10 @@ interface QuestState {
 
 	reward: {
 		id: string
-		name: string
-		count: number
 	} | null
 	setReward: (
 		reward: {
 			id: string
-			name: string
-			count: number
 		} | null,
 	) => void
 

@@ -30,7 +30,7 @@ export default function BottomDialogue({ content, onBubbleClick }: BottomDialogu
 	return (
 		<>
 			<div className="-bottom-24 fixed z-[20] flex w-screen items-center justify-center">
-				<View index={3} className="z-[10] h-[400px] w-[400px]">
+				<View index={3} className="z-[20] h-[400px] w-[400px]">
 					<OrthographicCamera makeDefault position={[0, 0, 5]} zoom={90} />
 					<ambientLight intensity={4} />
 					<animated.group position={[0, -2.3, 0]}>

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { useDialogueStore } from '@/features/dialogue/store'
 import useQuest from '@/features/quest/use-quest'
+import { NPCS } from '@/libs/constants'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
 import { capitalize, sample } from 'lodash-es'
 import { useMemo } from 'react'
@@ -20,7 +21,12 @@ const buttonVariants: Variants = {
 }
 
 export default function NpcOpenChatButton() {
-	const [npc, setIsTalking, isTalking] = useNpcStore((s) => [s.npc, s.setIsTalking, s.isTalking])
+	const [npc, setIsTalking, isTalking, setCameraPosition] = useNpcStore((s) => [
+		s.npc,
+		s.setIsTalking,
+		s.isTalking,
+		s.setCameraPosition,
+	])
 	const { onGoingQuest, switchToCompletedQuest } = useQuest()
 	const showDialogue = useDialogueStore((s) => s.showDialogue)
 
@@ -32,9 +38,16 @@ export default function NpcOpenChatButton() {
 	const onClick = () => {
 		setIsTalking(true)
 
-		if (onGoingQuest) {
-			showDialogue('bimy_01', 'top')
-		} else showDialogue('bimy_02', 'top')
+		if (npc?.id === 'bimy') {
+			setCameraPosition([2, 1.2, -5])
+			if (onGoingQuest?.questId === 'quest_01') showDialogue('bimy_01', 'top')
+			else showDialogue('bimy_02', 'top')
+		}
+
+		if (npc?.id === 'ooap') {
+			setCameraPosition([8, 1.2, -3])
+			if (onGoingQuest?.questId === 'quest_02') showDialogue('ooap_01', 'top')
+		}
 	}
 
 	return (

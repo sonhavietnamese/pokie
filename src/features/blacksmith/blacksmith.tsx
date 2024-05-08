@@ -1,17 +1,19 @@
-// @ts-ignore
 // @ts-nocheck
+// @ts-ignore
 
 import { Button } from '@/components/ui/button'
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import useBackpack from '@/features/backpack/use-backpack'
 import { useNotificationStore } from '@/features/notification/notification-store'
+import { useNpcStore } from '@/features/npc/npc-store'
 import { useToastStore } from '@/features/toast/store'
 import { usePoxieBallContract } from '@/hooks/use-pokie-ball-contract'
 import { BALLS } from '@/libs/constants'
 import { cn } from '@/libs/utils'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import useQuest from '../quest/use-quest'
 import { useBlacksmithStore } from './store'
 import { useBlacksmith } from './use-blacksmith'
 
@@ -141,8 +143,14 @@ export default function Blacksmith() {
 	const [status, setStatus] = useState('')
 	const showToast = useToastStore((s) => s.showToast)
 	const showNotification = useNotificationStore((s) => s.showNotification)
+	const setIsNpcTalking = useNpcStore((s) => s.setIsTalking)
+	const { onGoingQuest, switchToCompletedQuest } = useQuest()
 
 	const { craft } = usePoxieBallContract()
+
+	useEffect(() => {
+		if (!store.isOpenUI) setIsNpcTalking(false)
+	}, [store.isOpenUI])
 
 	const craftBall = async (info) => {
 		try {
@@ -156,6 +164,8 @@ export default function Blacksmith() {
 			await craftBallServer(BALLS[info.tokenId].toLowerCase())
 			await fetchBackpack()
 			showNotification('Ball crafted successfully!')
+			store.setIsOpenUI(false)
+			onGoingQuest?.questId === 'quest_02' && switchToCompletedQuest('quest_02')
 		} catch (error) {
 			console.error('Failed to craft ball:', error)
 			showToast("Blacksmith's hammer broke! Try again later.")
@@ -178,7 +188,9 @@ export default function Blacksmith() {
 						<button
 							className="-top-7 -right-7 absolute z-[7] h-20 w-20 p-4"
 							type="button"
-							onClick={() => store.setIsOpenUI(false)}
+							onClick={() => {
+								store.setIsOpenUI(false)
+							}}
 						>
 							<Sprite
 								data={{

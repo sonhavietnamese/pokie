@@ -9,6 +9,7 @@ import { type Stage, useStageStore } from '@/stores/stage'
 import { size } from 'lodash-es'
 import dynamic from 'next/dynamic'
 import { useEffect, useMemo, useState } from 'react'
+import { useBlacksmithStore } from '../blacksmith/store'
 import { useDialogueStore } from './store'
 import type { Choice, NextNode } from './type'
 
@@ -30,7 +31,8 @@ export default function DialogueSystem() {
 	const setStage = useStageStore((s) => s.setStage)
 	const setReward = useQuestStore((s) => s.setReward)
 	const { switchToOngoingQuest, switchToCompletedQuest } = useQuest()
-	const setIsTalking = useNpcStore((s) => s.setIsTalking)
+	const [setIsTalking, setCameraPosition] = useNpcStore((s) => [s.setIsTalking, s.setCameraPosition])
+	const setOpenBlacksmith = useBlacksmithStore((s) => s.setIsOpenUI)
 
 	const dialogues = useMemo(
 		() => (dialogueType === 'bottom' ? bottomDialogues : topDialogues),
@@ -85,6 +87,16 @@ export default function DialogueSystem() {
 
 				return
 
+			case 'OPEN_PANEL':
+				if (!node) return
+				if (node === 'blacksmith') {
+					setOpenBlacksmith(true)
+					setCameraPosition([9.3, 1.2, -3])
+				}
+				clear()
+
+				return
+
 			case 'CHANGE_STAGE':
 				if (!node) return
 				setStage(node as Stage)
@@ -98,6 +110,14 @@ export default function DialogueSystem() {
 				if (node === 'quest_01') {
 					switchToOngoingQuest('quest_01')
 				}
+
+				if (node === 'quest_02') {
+					switchToOngoingQuest('quest_02')
+				}
+
+				if (node === 'quest_03') {
+					switchToOngoingQuest('quest_03')
+				}
 				clear()
 
 				return
@@ -106,11 +126,6 @@ export default function DialogueSystem() {
 				if (!node) return
 
 				if (node === 'quest_01') {
-					setReward({
-						id: 'ball-beast',
-						name: 'Ball Beast',
-						count: 1,
-					})
 					switchToCompletedQuest('quest_01')
 				}
 				clear()

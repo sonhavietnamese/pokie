@@ -59,7 +59,7 @@ export const SKIN_MAP: Record<string, string> = {
 }
 
 export default function Backpack() {
-	const { backpack, isOpen, setOpen: setOpenBackpack } = useBackpack()
+	const { backpack, isOpen, setOpen: setOpenBackpack, fetchBackpack } = useBackpack()
 	const setOpenCatchAxieUI = useCatchAxieStore((state) => state.setOpenUI)
 	const setOpenCustomAvatar = useCustomAvatarStore((state) => state.setOpenUI)
 
@@ -81,6 +81,8 @@ export default function Backpack() {
 				setLoading(true)
 				const items = []
 
+				await fetchBackpack()
+
 				if (backpack)
 					for (const [item, quantity] of Object.entries(backpack)) {
 						if (item !== 'id' && item !== 'userId' && typeof quantity === 'number' && quantity > 0)
@@ -95,8 +97,6 @@ export default function Backpack() {
 					}
 
 				const balls = await getBalances()
-
-				console.log(balls)
 
 				for (const [item, quantity] of Object.entries(balls)) {
 					items.push({

@@ -27,3 +27,10 @@ export const switchToCompleted = async (userId: string, questId: string) => {
 		.set({ status: 'completed' })
 		.where(and(eq(usersToQuests.userId, userId), eq(usersToQuests.questId, questId)))
 }
+
+export const switchToClaimed = async (userId: string, questId: string) => {
+	await db
+		.update(usersToQuests)
+		.set({ status: 'claimed' })
+		.where(and(eq(usersToQuests.userId, userId), eq(usersToQuests.questId, questId)))
+}

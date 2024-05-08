@@ -1,5 +1,6 @@
 import type { SapidaeAnimation } from '@/components/sapidae/type'
 import { useBattle } from '@/features/battle/use-battle'
+import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 import { useFrame } from '@react-three/fiber'
 import { sample } from 'lodash-es'
 import dynamic from 'next/dynamic'
@@ -38,6 +39,7 @@ export default function BattleScene() {
 const Sapidaes = () => {
 	const meRef = useRef<THREE.Group>(null)
 	const enemyRef = useRef<THREE.Group>(null)
+	const selectedSkin = useCustomAvatarStore((s) => s.selectedSkin)
 
 	const lerpMe = useRef(false)
 	const lerpEnemy = useRef(false)
@@ -112,10 +114,10 @@ const Sapidaes = () => {
 	return (
 		<>
 			<group ref={meRef} position={[0, 0, 4]} rotation={[0, Math.PI, 0]}>
-				<Sapidae animation={myAnimation} />
+				<Sapidae skin={selectedSkin} animation={myAnimation} />
 			</group>
 			<group ref={enemyRef} position={[0, 0, -4]}>
-				<Sapidae animation={enemyAnimation} />
+				<Sapidae skin={'default'} animation={enemyAnimation} />
 			</group>
 		</>
 	)

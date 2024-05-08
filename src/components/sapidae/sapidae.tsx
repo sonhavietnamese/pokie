@@ -21,9 +21,10 @@ type GLTFResult = GLTF & {
 
 type SapidaeProps = {
 	animation: SapidaeAnimation
+	skin: string
 } & JSX.IntrinsicElements['group']
 
-export default function Sapidae({ animation, ...props }: SapidaeProps) {
+export default function Sapidae({ skin, animation, ...props }: SapidaeProps) {
 	const group = useRef<THREE.Group>(null)
 
 	const { animations } = useGLTF('/models/character.glb') as GLTFResult
@@ -37,5 +38,5 @@ export default function Sapidae({ animation, ...props }: SapidaeProps) {
 		}
 	}, [animation])
 
-	return <SapidaeModel ref={group} {...props} />
+	return <SapidaeModel skin={skin} ref={group} {...props} />
 }

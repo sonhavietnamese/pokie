@@ -1,9 +1,13 @@
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
+import { cn } from '@/libs/utils'
+import useQuest from '../quest/use-quest'
 import { usePokiedexStore } from './pokiedex-store'
 
 export default function PokiedexOpenButton() {
 	const setIsOpen = usePokiedexStore((state) => state.setIsOpen)
+
+	const { onGoingQuest } = useQuest()
 
 	return (
 		<button type="button" className="group relative w-[80px]" onMouseUp={() => setIsOpen(true)}>
@@ -31,7 +35,12 @@ export default function PokiedexOpenButton() {
 				Poxiedex
 			</span>
 
-			<div className="-left-8 absolute top-[30px] hidden animate-shake-horizontal group-hover:block">
+			<div
+				className={cn(
+					'-left-8 absolute top-[30px] hidden animate-shake-horizontal group-hover:block',
+					onGoingQuest?.questId === 'quest_03' ? 'block' : 'hidden',
+				)}
+			>
 				<Sprite
 					data={{
 						part: '1',
