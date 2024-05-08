@@ -1,10 +1,13 @@
 'use client'
 
 import Reward from '@/components/reward'
+import { Sprite } from '@/components/ui/sprite'
+import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { type DialogueID, useDialogueStore } from '@/features/dialogue/store'
 import { useGuideLineStore } from '@/features/guide-line/guide-line-store'
-import { NPCS } from '@/libs/constants'
-import { AnimatePresence } from 'framer-motion'
+import { BALLS, NPCS, STUFFS } from '@/libs/constants'
+import { AnimatePresence, type Variants, motion } from 'framer-motion'
+import { capitalize } from 'lodash-es'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import * as THREE from 'three'
@@ -13,6 +16,88 @@ import { useQuestStore } from './quest-store'
 import questData from './quests.json'
 import type { Quest } from './type'
 import useQuest from './use-quest'
+
+const itemVariants: Variants = {
+	hidden: { opacity: 0, scale: 1.5 },
+	visible: { opacity: 1, scale: 1 },
+}
+
+const itemTitleVariants: Variants = {
+	hidden: { opacity: 0, y: 10 },
+	visible: { opacity: 1, y: 0, transition: { delay: 0.5 } },
+}
+
+const REWARDS = {
+	quest_01: [
+		{
+			id: STUFFS.ROCK,
+			type: 'item',
+			amount: 20,
+		},
+		{
+			id: STUFFS.NUT,
+			type: 'item',
+			amount: 20,
+		},
+		{
+			id: STUFFS.FISH,
+			type: 'item',
+			amount: 20,
+		},
+		{
+			id: STUFFS.BUG,
+			type: 'item',
+			amount: 20,
+		},
+		{
+			id: STUFFS.FEATHER,
+			type: 'item',
+			amount: 20,
+		},
+		{
+			id: STUFFS.MILK,
+			type: 'item',
+			amount: 20,
+		},
+		{
+			id: STUFFS.PLANT,
+			type: 'item',
+			amount: 20,
+		},
+	],
+	quest_02: [
+		{
+			id: BALLS.AQUATIC,
+			type: 'ball',
+			amount: 1,
+		},
+		{
+			id: BALLS.BEAST,
+			type: 'ball',
+			amount: 1,
+		},
+		{
+			id: BALLS.BIRD,
+			type: 'ball',
+			amount: 1,
+		},
+		{
+			id: BALLS.BUG,
+			type: 'ball',
+			amount: 1,
+		},
+		{
+			id: BALLS.PLANT,
+			type: 'ball',
+			amount: 1,
+		},
+		{
+			id: BALLS.REPTILE,
+			type: 'ball',
+			amount: 1,
+		},
+	],
+}
 
 // TODO: Improve later
 export default function QuestManager() {
@@ -71,7 +156,37 @@ export default function QuestManager() {
 
 	return (
 		<>
-			{reward && <Reward />}
+			{/* {reward && <Reward />} */}
+
+			<Reward>
+				{REWARDS.quest_01.map((re, index) => (
+					<motion.div
+						key={re.id}
+						variants={itemVariants}
+						animate={'visible'}
+						initial={'hidden'}
+						className="flex min-w-[8cqw] max-w-[20cqw] flex-col items-center"
+					>
+						<Sprite
+							data={{
+								part: '1',
+								m: SPRITESHEET_DATA.frames[
+									`icon-${re.type}-${STUFFS[re.id].toLowerCase()}.png` as keyof typeof SPRITESHEET_DATA.frames
+								].frame,
+							}}
+							className="h-full w-full"
+						/>
+						<motion.span
+							variants={itemTitleVariants}
+							initial="hidden"
+							animate="visible"
+							className="mt-5 w-full text-center font-extrabold text-[#FFF] text-[1.2cqw] tracking-wide outline-2-primary-medium"
+						>
+							{capitalize(STUFFS[re.id])} <br />x{re.amount}
+						</motion.span>
+					</motion.div>
+				))}
+			</Reward>
 
 			<section className="absolute bottom-10 left-6 z-[5]">
 				<AnimatePresence>

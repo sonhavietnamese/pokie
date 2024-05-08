@@ -6,19 +6,19 @@ import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { useNpcStore } from '@/features/npc/npc-store'
 import { useQuestStore } from '@/features/quest/quest-store'
 import { type Variants, motion } from 'framer-motion'
+import type { ReactNode } from 'react'
 import { Button } from './ui/button'
-
-const itemVariants: Variants = {
-	hidden: { opacity: 0, scale: 1.5 },
-	visible: { opacity: 1, scale: 1 },
-}
 
 const itemTitleVariants: Variants = {
 	hidden: { opacity: 0, y: 10 },
 	visible: { opacity: 1, y: 0, transition: { delay: 0.5 } },
 }
 
-export default function Reward() {
+type RewardProps = {
+	children: ReactNode
+}
+
+export default function Reward({ children }: RewardProps) {
 	const setReward = useQuestStore((s) => s.setReward)
 	const setIsTalking = useNpcStore((s) => s.setIsTalking)
 
@@ -62,29 +62,8 @@ export default function Reward() {
 					/>
 				</div>
 
-				<div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 z-[4] flex w-[20%] origin-center gap-[80px]">
-					<motion.div
-						variants={itemVariants}
-						animate={'visible'}
-						initial={'hidden'}
-						className="flex w-[100%] flex-col items-center"
-					>
-						<Sprite
-							data={{
-								part: '1',
-								m: SPRITESHEET_DATA.frames['icon-ball-beast.png'].frame,
-							}}
-							className="h-full w-full"
-						/>
-						<motion.span
-							variants={itemTitleVariants}
-							initial="hidden"
-							animate="visible"
-							className="mt-5 text-center font-extrabold text-3xl text-[#FFF] tracking-wide outline-2-primary-medium"
-						>
-							Beast Ball x10
-						</motion.span>
-					</motion.div>
+				<div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 z-[4] flex origin-center gap-[80px]">
+					{children}
 				</div>
 			</section>
 

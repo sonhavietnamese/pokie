@@ -1,3 +1,6 @@
+// @ts-ignore
+// @ts-nocheck
+
 'use server'
 
 import { type SelectBackpack, db } from '@/drizzle'
