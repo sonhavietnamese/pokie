@@ -9,6 +9,7 @@ import { useAnimations, useGLTF } from '@react-three/drei'
 import { sample } from 'lodash-es'
 import { type JSX, useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { useCustomAvatarStore } from '../custom-avatar/custom-avatar-store'
 import { ANIMATION_SET, useCharacterControl } from './use-character-control'
 
 export default function Sapidae(props: JSX.IntrinsicElements['group']) {
@@ -20,6 +21,8 @@ export default function Sapidae(props: JSX.IntrinsicElements['group']) {
 	const curAnimation = useCharacterControl((state) => state.curAnimation)
 	const resetAnimation = useCharacterControl((state) => state.reset)
 	const initializeAnimationSet = useCharacterControl((state) => state.initializeAnimationSet)
+
+	const selectedSkin = useCustomAvatarStore((s) => s.selectedSkin)
 
 	// animations[4].tracks.splice(3, 3).splice(6, 3) // idle-01
 
@@ -69,6 +72,7 @@ export default function Sapidae(props: JSX.IntrinsicElements['group']) {
 
 	return (
 		<SapidaeModel
+			skin={selectedSkin}
 			// isLookAtMouse={curAnimation === ANIMATION_SET.idle}
 			ref={group}
 			{...props}

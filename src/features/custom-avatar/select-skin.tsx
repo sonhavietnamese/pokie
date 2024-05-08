@@ -1,17 +1,57 @@
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
+import { type ItemType, SKIN_MAP } from '@/features/backpack/backpack'
+import { usePoxiePropsContract } from '@/hooks/use-poxie-props-contract'
+import { SKINS } from '@/libs/constants'
 import { cn } from '@/libs/utils'
 import { useCharacterStore } from '@/stores/character'
 import { AnimatePresence, motion } from 'framer-motion'
-import React, { useEffect } from 'react'
+import { upperCase } from 'lodash-es'
+import React, { useEffect, useState } from 'react'
 import { useCustomAvatarStore } from './custom-avatar-store'
 
 export default function CustomAvatarSelectSkin() {
-	const [isOpenUI, setOpenUI] = useCustomAvatarStore((s) => [s.isOpenUI, s.setOpenUI])
+	const [isOpenUI, setOpenUI, selectedSkin, setSelectedSkin] = useCustomAvatarStore((s) => [
+		s.isOpenUI,
+		s.setOpenUI,
+		s.selectedSkin,
+		s.setSelectedSkin,
+	])
 	const setCanControl = useCharacterStore((s) => s.setCanControl)
+	const { getBalances: getPropsBalances } = usePoxiePropsContract()
+	const [items, setItems] = useState<ItemType[]>([])
 
 	useEffect(() => {
 		setCanControl(!isOpenUI)
+
+		const handle = async () => {
+			const items = []
+			const skins = await getPropsBalances('skins')
+
+			for (const [item, quantity] of Object.entries(skins)) {
+				items.push({
+					id: `skins-${item}`,
+					name: `${SKIN_MAP[item]}`,
+					description: item,
+					quantity,
+					type: 'skins',
+					tokenId: SKINS[upperCase(item) as keyof typeof SKINS] as number,
+				} as ItemType)
+			}
+
+			items.push({
+				id: 'skins-default',
+				name: 'Default',
+				description: 'default',
+				quantity: 1,
+				type: 'skins',
+				tokenId: 0,
+			} as ItemType)
+
+			setItems(items)
+		}
+
+		isOpenUI && handle()
 	}, [isOpenUI])
 
 	return (
@@ -25,19 +65,23 @@ export default function CustomAvatarSelectSkin() {
 						exit={{ opacity: 0 }}
 						className="flex"
 					>
-						{Array.from({ length: 5 }).map((_, i) => (
+						{items.map((item) => (
 							<div
-								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-								key={i}
+								key={item.id}
 								className={cn(
 									'group relative flex aspect-square w-[80px] scale-90 justify-center rounded-2xl border-[4px] p-2 transition-transform hover:scale-100',
-									i % 2 === 0 ? 'border-white/50 bg-[#FFF0C7]/50' : 'border-white bg-[#FFF0C7]',
+									item.id.split('-')[1] === selectedSkin
+										? 'border-white bg-[#FFF0C7]'
+										: 'border-white/50 bg-[#FFF0C7]/50',
 								)}
+								onMouseUp={() => setSelectedSkin(item.id.split('-')[1])}
 							>
 								<Sprite
 									data={{
 										part: '1',
-										m: SPRITESHEET_DATA.frames['icon-skin-default.png'].frame,
+										m: SPRITESHEET_DATA.frames[
+											`icon-skin-${item.id.split('-')[1]}.png` as keyof typeof SPRITESHEET_DATA.frames
+										].frame,
 									}}
 									className="w-full"
 								/>

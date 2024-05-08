@@ -163,7 +163,7 @@ export default function Marketplace() {
 		store.isOpenUI && fetchItem()
 
 		return () => {
-			clearInterval(timeout.current)
+			timeout.current && clearInterval(timeout.current)
 		}
 	}, [store.isOpenUI, activeTab])
 
@@ -207,7 +207,7 @@ export default function Marketplace() {
 			await approveTx.wait()
 
 			setStage('minting')
-			const mintTx = await createMarketSale(selected.id.split('-')[1])
+			const mintTx = await createMarketSale(Number(selected.id.split('-')[1]))
 
 			setStage('minted')
 			await mintTx.wait()

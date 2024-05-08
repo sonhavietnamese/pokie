@@ -2,11 +2,11 @@ import { useKTX2, useTexture } from '@react-three/drei'
 import type * as THREE from 'three'
 
 export default function useTextureFactory() {
-	const [skinDefault, skinBlue, skinGreen, skinPurple, skinYellow, eyeOpen, eyeClose] = useTexture([
+	const [skinDefault, skinBlue, skinGreen, skinRed, skinYellow, eyeOpen, eyeClose] = useTexture([
 		'/textures/sapidae/skin-default.png',
 		'/textures/sapidae/skin-blue.png',
 		'/textures/sapidae/skin-green.png',
-		'/textures/sapidae/skin-purple.png',
+		'/textures/sapidae/skin-red.png',
 		'/textures/sapidae/skin-yellow.png',
 
 		'/textures/sapidae/skin-default.png',
@@ -16,7 +16,7 @@ export default function useTextureFactory() {
 	skinDefault.flipY = false
 	skinBlue.flipY = false
 	skinGreen.flipY = false
-	skinPurple.flipY = false
+	skinRed.flipY = false
 	skinYellow.flipY = false
 
 	eyeOpen.flipY = false
@@ -25,7 +25,7 @@ export default function useTextureFactory() {
 	skinDefault.needsUpdate = true
 	skinBlue.needsUpdate = true
 	skinGreen.needsUpdate = true
-	skinPurple.needsUpdate = true
+	skinRed.needsUpdate = true
 	skinYellow.needsUpdate = true
 
 	eyeOpen.needsUpdate = true
@@ -35,7 +35,7 @@ export default function useTextureFactory() {
 		DEFAULT: skinDefault,
 		BLUE: skinBlue,
 		GREEN: skinGreen,
-		PURPLE: skinPurple,
+		RED: skinRed,
 		YELLOW: skinYellow,
 
 		EYE_OPEN: eyeOpen,

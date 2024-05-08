@@ -7,6 +7,7 @@ import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
+import { usePoxieMarketplaceContract } from '@/features/marketplace/poxie-marketplace-contract'
 import { useToastStore } from '@/features/toast/store'
 import { usePoxieBallContract } from '@/hooks/use-pokie-ball-contract'
 import { usePoxiePropsContract } from '@/hooks/use-poxie-props-contract'
@@ -14,7 +15,6 @@ import { BALLS, SKINS, STUFFS_DATA, TOOLS } from '@/libs/constants'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
 import { capitalize, upperCase } from 'lodash-es'
 import { useEffect, useState } from 'react'
-import { usePoxieMarketplaceContract } from '../marketplace/poxie-marketplace-contract'
 import Item from './item'
 import useBackpack from './use-backpack'
 
@@ -42,7 +42,7 @@ const backgroundVariants: Variants = {
 	},
 }
 
-type ItemType = {
+export type ItemType = {
 	quantity: number
 	id: string
 	name: string
@@ -51,7 +51,7 @@ type ItemType = {
 	tokenId: null | number
 }
 
-const SKIN_MAP: Record<string, string> = {
+export const SKIN_MAP: Record<string, string> = {
 	blue: 'Summer Sky',
 	green: 'Green Forest',
 	red: 'Mystic Patina',
