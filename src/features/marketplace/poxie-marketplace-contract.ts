@@ -7,8 +7,9 @@ import { capitalize } from 'lodash-es'
 export function usePoxieMarketplaceContract() {
 	const { loadContract } = useContract()
 
-	const createMarketItem = async (tokenId: string) => {
+	const createMarketItem = async (tokenId: number) => {
 		const contract = loadContract(POKIEMARKETPLACE_ADDRESS, abi)
+
 		const transaction = await contract.createMarketItem(
 			POKIEBALL_ADDRESS,
 			tokenId,
@@ -38,11 +39,15 @@ export function usePoxieMarketplaceContract() {
 	}
 
 	const createMarketSale = async (itemId: number) => {
+		console.log('itemId', Number(itemId))
 		const contract = loadContract(POKIEMARKETPLACE_ADDRESS, abi)
-		const transaction = await contract.createMarketSale(POKIEBALL_ADDRESS, itemId, {})
+		const transaction = await contract.createMarketSale(POKIEBALL_ADDRESS, Number(itemId))
 
 		return transaction
 	}
 
 	return { createMarketItem, createMarketSale, fetchMarketItems }
 }
+
+// 0x58eb2df5000000000000000000000000833413e1c5e11c91f5e4bc3e426b082b7128406f00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000004563918244f40000
+// 0x58eb2df5000000000000000000000000833413e1c5e11c91f5e4bc3e426b082b7128406f00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000004563918244f40000

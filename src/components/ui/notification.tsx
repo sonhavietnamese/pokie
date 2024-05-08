@@ -27,7 +27,7 @@ const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(({ chil
 	return (
 		<motion.div
 			ref={ref}
-			className={cn('relative flex items-center p-2 px-20')}
+			className={cn('relative flex items-center p-3 px-20')}
 			variants={notificationVatiants}
 			initial={'hidden'}
 			animate={'visible'}

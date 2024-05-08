@@ -11,9 +11,7 @@ export default function useBackpack() {
 	const { isOpen, setOpen } = useBackpackStore()
 	const { data } = useSession()
 
-	console.log(data)
-
-	const { data: backpack } = useSWRImmutable(data?.user ? 'getBackpack' : null, () =>
+	const { data: backpack, isLoading } = useSWRImmutable(data?.user ? 'getBackpack' : null, () =>
 		getBackpack(data ? data.user.id : ''),
 	)
 
@@ -33,5 +31,5 @@ export default function useBackpack() {
 		await updateBackpack(data.user.id, stuff, -amount)
 	}
 
-	return { fetchBackpack, addItem, removeItem, backpack: backpack ? backpack : null, isOpen, setOpen }
+	return { fetchBackpack, addItem, removeItem, backpack: backpack ? backpack : null, isOpen, setOpen, isLoading }
 }

@@ -5,7 +5,7 @@ import { useWalletgo } from '@roninnetwork/walletgo'
 import { utils } from 'ethers'
 import { usePokieCoinBalanceStore } from './poxie-coin-store'
 
-export default function usePokieCoin() {
+export function usePokieCoin() {
 	const { loadContract } = useContract()
 	const { walletProvider } = useWalletgo()
 	const setBalance = usePokieCoinBalanceStore((s) => s.setBalance)
@@ -23,7 +23,7 @@ export default function usePokieCoin() {
 	}
 
 	const approve = async (address: string, amount: number) => {
-		const contract = await loadContract(POKIECOIN_ADDRESS, abi)
+		const contract = loadContract(POKIECOIN_ADDRESS, abi)
 		const tx = await contract.approve(address, utils.parseEther(amount.toString()))
 
 		return tx

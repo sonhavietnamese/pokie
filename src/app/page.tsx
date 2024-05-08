@@ -29,6 +29,7 @@ const OnboardingManager = dynamic(() => import('@/features/onboarding/onboarding
 const MovementInstructions = dynamic(() => import('@/components/movement-instructions'), { ssr: false })
 const CustomAvatarSelectSkin = dynamic(() => import('@/features/custom-avatar/select-skin'), { ssr: false })
 const BattleSystem = dynamic(() => import('@/features/battle/battle-system'), { ssr: false })
+const NotificationManager = dynamic(() => import('@/features/notification/notification-manager'), { ssr: false })
 
 const PhoneOpenButton = dynamic(() => import('@/features/phone/phone-open-button'))
 const NpcOpenChatButton = dynamic(() => import('@/features/npc/npc-open-chat-button'))
@@ -55,6 +56,7 @@ export default function Page() {
 
 					<DialogueSystem />
 					<ToastManager />
+					<NotificationManager />
 
 					<KeyboardControls map={KEYBOARD_MAP}>
 						<ShortcutManager />

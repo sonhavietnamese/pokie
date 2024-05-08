@@ -1,13 +1,14 @@
+import LoadingText from '@/components/loading-text'
+import { Button } from '@/components/ui/button'
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
-import { BALLS, POKIEMARKETPLACE_ADDRESS, SKINS as SKIN_ENUM, TOOLS as TOOL_ENUM } from '@/libs/constants'
-import { cn } from '@/libs/utils'
+import { useNotificationStore } from '@/features/notification/notification-store'
+import { usePokieCoin } from '@/features/poxie-coin/use-poxie-coin'
+import { useToastStore } from '@/features/toast/store'
+import { usePoxiePropsContract } from '@/hooks/use-poxie-props-contract'
+import { POKIEMARKETPLACE_ADDRESS, POKIEPROPS_ADDRESS, SKINS as SKIN_ENUM, TOOLS as TOOL_ENUM } from '@/libs/constants'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
-import { lowerCase, round } from 'lodash-es'
 import { useEffect, useState } from 'react'
-import { useToastStore } from '../toast/store'
-// import { usePokieMarketplaceContract } from '../backpack/use-pokie-marketplace-contract'
-// import { usePokieCoinBalance, usePokieCoinContract } from '../pokie-coin'
 import Item from './item'
 import { useMarketplaceStore } from './marketplace-store'
 import { usePoxieMarketplaceContract } from './poxie-marketplace-contract'
@@ -108,22 +109,29 @@ const TOOLS: MarketplaceItem[] = [
 	},
 ]
 
+const STATUS: Record<string, string> = {
+	approving: 'Approving',
+	approved: 'Hang on',
+	minting: 'Buying',
+	minted: 'One moment',
+	done: 'Done',
+}
+
 export default function Marketplace() {
 	const store = useMarketplaceStore()
 	const [items, setItems] = useState<MarketplaceItem[]>([])
 	const [page, setPage] = useState<number>(0)
 	const [stage, setStage] = useState<string>('')
-	const [selected, setSelected] = useState<{
-		tokenId: number
-		id: string
-	} | null>(null)
+	const [selected, setSelected] = useState<MarketplaceItem | null>(null)
 	const [loading, setLoading] = useState(false)
 	const [activeTab, setActiveTab] = useState<Tab>('balls')
 	const showToast = useToastStore((s) => s.showToast)
+	const showNotification = useNotificationStore((s) => s.showNotification)
 
 	const { fetchMarketItems, createMarketSale } = usePoxieMarketplaceContract()
 	// const setBalance = usePokieCoinBalance((s) => s.setBalance)
-	// const { getBalances, approve } = usePokieCoinContract()
+	const { approve, fetchBalances } = usePokieCoin()
+	const { mint } = usePoxiePropsContract()
 
 	useEffect(() => {
 		const fetchItem = async () => {
@@ -150,36 +158,92 @@ export default function Marketplace() {
 		store.isOpenUI && fetchItem()
 	}, [store.isOpenUI, activeTab])
 
+	const buyProps = async () => {
+		if (!selected) return
+
+		try {
+			setStage('approving')
+			const approveTx = await approve(POKIEPROPS_ADDRESS, Number(selected.price))
+
+			setStage('approved')
+			await approveTx.wait()
+
+			setStage('minting')
+			const mintTx = await mint(selected.tokenId, Number(selected.price))
+
+			setStage('minted')
+			await mintTx.wait()
+
+			setStage('done')
+
+			showNotification('Check your inventory to see your new stuff!')
+			store.setIsOpenUI(false)
+			fetchBalances()
+		} catch (error) {
+			if ((error as Error).message !== 'User rejected') showToast('Runout of fabric to make this skin')
+		} finally {
+			setStage('')
+		}
+	}
+
 	const buyBall = async () => {
-		// if (!selected) return
-		// try {
-		// 	setStage('approving')
-		// 	const approveTx = await approve(POKIEMARKETPLACE_ADDRESS, 10)
-		// 	await approveTx.wait()
-		// 	setStage('minting')
-		// 	await createMarketSale(selected.id)
-		// 	setStage('done')
-		// 	store.setIsOpenUI(false)
-		// } catch (error) {
-		// 	console.log(error)
-		// } finally {
-		// 	setSelected(null)
-		// 	setStage('')
-		// }
-		// const balance = await getBalances()
-		// setBalance(round(Number(balance) / 1e18, 3))
+		if (!selected) return
+
+		try {
+			setStage('approving')
+			const approveTx = await approve(POKIEMARKETPLACE_ADDRESS, Number(selected.price))
+
+			console.log(approveTx)
+			setStage('approved')
+			await approveTx.wait()
+
+			setStage('minting')
+			const mintTx = await createMarketSale(selected.id.split('-')[1])
+
+			setStage('minted')
+			await mintTx.wait()
+
+			setStage('done')
+
+			showNotification('Check your inventory to see your new stuff!')
+			store.setIsOpenUI(false)
+			fetchBalances()
+		} catch (error) {
+			console.error(error)
+			console.log(error)
+			if ((error as Error).message !== 'User rejected') showToast('Runout of fabric to make this skin')
+			if ((error as Error).message !== 'Failed to open Confirm this transaction') showToast('Allow popup and try again')
+		} finally {
+			setStage('')
+		}
+	}
+
+	const buy = async () => {
+		if (stage !== '') return
+
+		if (activeTab === 'skins') {
+			buyProps()
+		}
+
+		if (activeTab === 'tools') {
+			buyProps()
+		}
+
+		if (activeTab === 'balls') {
+			buyBall()
+		}
 	}
 
 	return (
 		<AnimatePresence>
 			{store.isOpenUI && (
-				<main className="pointer-events-auto absolute top-0 left-0 z-[3] h-screen w-screen select-none">
+				<main className="absolute top-0 left-0 z-[3] h-screen w-screen select-none">
 					<motion.div
 						variants={overlayVariants}
 						initial={'hide'}
 						animate={store.isOpenUI ? 'show' : 'hide'}
 						exit={'hide'}
-						className="pointer-events-none absolute z-[3] h-full w-full bg-[#200C04]/70"
+						className="absolute z-[3] h-full w-full bg-[#200C04]/70"
 					/>
 
 					<motion.section
@@ -189,10 +253,14 @@ export default function Marketplace() {
 						exit={'hide'}
 						className="relative z-[4] h-full w-full"
 					>
-						<div className="pointer-events-auto absolute top-[50%] left-[50%] z-[4] flex w-[1200px] translate-x-[-50%] translate-y-[-50%] items-center">
+						<div className="absolute top-[50%] left-[50%] z-[4] flex w-[1200px] translate-x-[-50%] translate-y-[-50%] items-center">
 							<div className="-left-20 absolute top-10 z-1">
 								{tabs.map((t) => (
-									<div key={t.name} className="relative w-[100px]" onMouseUp={() => setActiveTab(t.name)}>
+									<div
+										key={t.name}
+										className="relative w-[100px]"
+										onMouseUp={() => stage === '' && setActiveTab(t.name)}
+									>
 										<Sprite
 											data={{
 												part: '1',
@@ -293,9 +361,7 @@ export default function Marketplace() {
 											{items.slice(page * 6, page * 6 + 3).map((item) => (
 												<Item
 													key={item.id}
-													onClick={() => {
-														setSelected({ tokenId: item.tokenId, id: item.id })
-													}}
+													onClick={() => stage === '' && setSelected(item)}
 													selected={selected?.id === item.id}
 													item={item}
 												/>
@@ -306,9 +372,7 @@ export default function Marketplace() {
 											{items.slice(page * 6 + 3, page * 6 + 3 + 3).map((item) => (
 												<Item
 													key={item.id}
-													onClick={() => {
-														setSelected({ tokenId: item.tokenId, id: item.id })
-													}}
+													onClick={() => stage === '' && setSelected(item)}
 													selected={selected?.id === item.id}
 													item={item}
 												/>
@@ -316,64 +380,24 @@ export default function Marketplace() {
 										</div>
 									</div>
 								)}
+
+								{stage && (
+									<div className="absolute bottom-[65px] left-[65px]">
+										<LoadingText text={STATUS[stage]} />
+									</div>
+								)}
 							</section>
 
-							{/* {selected && (
-								<>
-									{
-										{
-											'': (
-												<>
-													<div
-														className={
-															'w-[150px] hover:scale-105 z-[6] transition-transform absolute bottom-10 left-[50%] translate-x-[-50%] select-none'
-														}
-														onMouseEnter={() => SOUNDS.BUTTON_HOVER.play()}
-														onClick={() => {
-															SOUNDS.CLICK.play()
-															buyBall()
-														}}
-													>
-														<img
-															draggable="false"
-															src={'/sprites/button/buy.png'}
-															alt={''}
-															className={'w-full h-full no-select'}
-														/>
-													</div>
-												</>
-											),
-											approving: (
-												<div
-													className={
-														'hover:scale-105 z-[6] transition-transform absolute bottom-10 left-[50%] translate-x-[-50%] select-none'
-													}
-												>
-													<span className="text-xl text-[#A7792E]">Request Bing to show this ...</span>
-												</div>
-											),
-											minting: (
-												<div
-													className={
-														'hover:scale-105 z-[6] transition-transform absolute bottom-10 left-[50%] translate-x-[-50%] select-none'
-													}
-												>
-													<span className="text-xl text-[#A7792E]">Bing is wrapping ...</span>
-												</div>
-											),
-											done: (
-												<div
-													className={
-														'hover:scale-105 z-[6] transition-transform absolute bottom-10 left-[50%] translate-x-[-50%] select-none'
-													}
-												>
-													<span className="text-xl text-[#A7792E]">Your Ball is ready!</span>
-												</div>
-											),
-										}[stage]
-									}
-								</>
-							)} */}
+							{selected && (
+								<div
+									className="absolute bottom-5 left-[50%] z-[6] w-[100px] translate-x-[-50%] select-none transition-transform"
+									onMouseUp={() => {
+										buy()
+									}}
+								>
+									<Button color="pink">Buy</Button>
+								</div>
+							)}
 						</div>
 					</motion.section>
 				</main>

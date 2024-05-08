@@ -31,68 +31,68 @@ export const POKIEAXIE_ADDRESS = '0x69B539f14Cd8298be4ebFAd958f9525eC5D43278'
 export const POKIECOIN_ADDRESS = '0x69f44cb68352f1727FA6120e1b03a3d64EF8C279'
 export const POKIEPROPS_ADDRESS = '0x2C4a8Bacd834286A0c76860E2cd119b865A3da55'
 export const POKIEMARKETPLACE_ADDRESS = '0x4ADF8385d353D16e410fE3df0196a53e253c2e89'
-export const POKIEBALL_ADDRESS = '0x2C4a8Bacd834286A0c76860E2cd119b865A3da55'
+export const POKIEBALL_ADDRESS = '0x833413E1C5E11C91F5e4bc3e426B082B7128406F'
 
 export const AXIE_ADDRESS = '0xcaca1c072d26e46686d932686015207fbe08fdb8'
 
 export const POKIECOIN_DECIMALS = 1e18
 export const RON_DECIMALS = 1e18
 
-export const STUFFS = ['milks', 'fishes', 'feathers', 'rocks', 'nuts', 'plants', 'bugs', 'stars', 'moons'] as const
+// export const STUFFS = ['milks', 'fishes', 'feathers', 'rocks', 'nuts', 'plants', 'bugs', 'stars', 'moons'] as const
 
-export const STUFFS_DATA: Record<(typeof STUFFS)[number], Stuff> = {
+export const STUFFS_DATA: Record<string, { name: string; id: string; description: string; slug: string }> = {
 	milks: {
-		name: 'Milks',
-		slug: 'milk',
+		name: 'Milk',
 		id: 'milks-milk-01',
+		slug: 'milk',
 		description: '',
 	},
 	fishes: {
-		name: 'Fishes',
-		slug: 'fish',
+		name: 'Fish',
 		id: 'fishes-fish-01',
+		slug: 'fish',
 		description: '',
 	},
 	feathers: {
-		name: 'Feathers',
-		slug: 'feather',
+		name: 'Feather',
 		id: 'feathers-feather-01',
+		slug: 'feather',
 		description: '',
 	},
 	rocks: {
-		name: 'Rocks',
-		slug: 'rock',
+		name: 'Rock',
 		id: 'rocks-rock-01',
+		slug: 'rock',
 		description: '',
 	},
 	nuts: {
-		name: 'Nuts',
-		slug: 'nut',
+		name: 'Nut',
 		id: 'nuts-nut-01',
+		slug: 'nut',
 		description: '',
 	},
 	plants: {
-		name: 'Plants',
-		slug: 'plant',
+		name: 'Plant',
 		id: 'plants-plant-01',
+		slug: 'plant',
 		description: '',
 	},
 	bugs: {
-		name: 'Bugs',
-		slug: 'bug',
+		name: 'Bug',
 		id: 'bugs-bug-01',
+		slug: 'bug',
 		description: '',
 	},
 	stars: {
-		name: 'Stars',
-		slug: 'star',
+		name: 'Star',
 		id: 'stars-star-01',
+		slug: 'star',
 		description: '',
 	},
 	moons: {
-		name: 'Moons',
-		slug: 'moon',
+		name: 'Moon',
 		id: 'moons-moon-01',
+		slug: 'moon',
 		description: '',
 	},
 }
@@ -193,4 +193,16 @@ export enum SKINS {
 export enum TOOLS {
 	HAMMER = 11,
 	NET = 12,
+}
+
+export enum STUFFS {
+	MILK = 1,
+	FISH = 2,
+	FEATHER = 3,
+	ROCK = 4,
+	NUT = 5,
+	PLANT = 6,
+	BUG = 7,
+	STAR = 8,
+	MOON = 9,
 }

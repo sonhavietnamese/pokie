@@ -49,7 +49,7 @@ export default function BattleHistory() {
 			className="pointer-events-none absolute top-[20%] left-4 z-[1]"
 		>
 			{history.length > 0 && (
-				<div className="pointer-events-auto h-full max-h-[460px] space-y-1 overflow-auto rounded-[44px] border-[#82FDDC]/50 border-[6px] bg-[#2B7A82]/40 p-2">
+				<div className=" h-full max-h-[460px] space-y-1 overflow-auto rounded-[44px] border-[#82FDDC]/50 border-[6px] bg-[#2B7A82]/40 p-2">
 					{history.map((h) => (
 						<div ref={ref} id={`item-${h.player.result}`} className={'flex items-center gap-2'} key={JSON.stringify(h)}>
 							<figure className={'w-16'}>

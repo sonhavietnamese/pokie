@@ -24,11 +24,11 @@ export default function NotificationManager() {
 	}, [notifications])
 
 	return (
-		<section className="absolute top-10">
+		<section className="absolute top-16 z-10 flex w-full items-center justify-center">
 			<AnimatePresence>
 				{notifications && (
 					<Notification key={notifications.id}>
-						<span>{notifications.content}</span>
+						<span className="font-extrabold text-2xl text-[#ffffff] tracking-wide">{notifications.content}</span>
 					</Notification>
 				)}
 			</AnimatePresence>

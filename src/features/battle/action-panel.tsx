@@ -98,7 +98,7 @@ export function ActionPanel({ onSelected }: ActionPanelProps) {
 				</figure>
 
 				<div className="absolute bottom-0 z-[2] h-full w-[850px]">
-					<div className="-space-x-5 pointer-events-auto absolute right-[4%] bottom-[3%] flex">
+					<div className="-space-x-5  absolute right-[4%] bottom-[3%] flex">
 						<motion.figure
 							animate={action === 'rock' ? 'shake' : 'init'}
 							initial={'init'}

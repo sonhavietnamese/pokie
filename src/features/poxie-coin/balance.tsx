@@ -2,7 +2,7 @@ import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { useEffect } from 'react'
 import { usePokieCoinBalanceStore } from './poxie-coin-store'
-import usePokieCoin from './use-poxie-coin'
+import { usePokieCoin } from './use-poxie-coin'
 
 export default function PokieCoinBalance() {
 	const l = SPRITESHEET_DATA.frames['badge-02-l.png'].frame

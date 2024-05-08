@@ -2,6 +2,7 @@ import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { BALLS, SKINS, TOOLS } from '@/libs/constants'
 import { cn, trimWallet } from '@/libs/utils'
+import { useWalletgo } from '@roninnetwork/walletgo'
 import { type HTMLMotionProps, type Variants, motion } from 'framer-motion'
 import { lowerCase } from 'lodash-es'
 import type { MarketplaceItem } from './marketplace'
@@ -21,6 +22,8 @@ const itemVariants: Variants = {
 }
 
 export default function Item({ selected, item, className, ...props }: Props) {
+	const { account } = useWalletgo()
+
 	return (
 		<motion.div
 			initial={'normal'}
@@ -92,7 +95,11 @@ export default function Item({ selected, item, className, ...props }: Props) {
 					</figure>
 
 					<span className="scale-90 rounded-2xl bg-[#735427] p-.5 px-3 pb-1 text-[#FEF1C6] text-lg">
-						{item.seller.startsWith('0x') ? trimWallet(item.seller, 4) : item.seller}
+						{item.seller.toLocaleLowerCase() === account?.toLowerCase()
+							? 'You'
+							: item.seller.startsWith('0x')
+								? trimWallet(item.seller, 4)
+								: item.seller}
 					</span>
 
 					<div className="mt-1 flex items-center gap-1">
