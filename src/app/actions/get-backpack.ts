@@ -6,11 +6,11 @@ import { eq } from 'drizzle-orm'
 
 export async function getBackpack(userId: string): Promise<SelectBackpack | undefined> {
 	try {
-		const useBackpack = await db.select().from(backpack).where(eq(backpack.userId, userId))
+		const userBackpack = await db.select().from(backpack).where(eq(backpack.userId, userId))
 
-		if (useBackpack.length === 0) return undefined
+		if (userBackpack.length === 0) return undefined
 
-		return useBackpack[0]
+		return userBackpack[0]
 	} catch (error) {
 		console.error('Failed to fetch backpack:', error)
 		throw new Error('Failed to fetch backpack.')

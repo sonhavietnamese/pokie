@@ -21,6 +21,8 @@ export function usePoxieBallContract() {
 
 		const balance = await contract.balanceOfBatch(addresses, ids)
 		const formattedBalance = balance.map((b: ethers.BigNumber) => b.toNumber())
+
+		console.log('formattedBalance', formattedBalance)
 		const mappedBall: Record<string, number> = {}
 
 		formattedBalance.forEach((ball: number, index: number) => {
@@ -33,14 +35,14 @@ export function usePoxieBallContract() {
 	}
 
 	const craft = async (id: number) => {
-		const contract = await loadContract(POKIEBALL_ADDRESS, abi)
+		const contract = loadContract(POKIEBALL_ADDRESS, abi)
 		const tx = await contract.craft(id)
 
 		return tx
 	}
 
 	const burn = async (id: number) => {
-		const contract = await loadContract(POKIEBALL_ADDRESS, abi)
+		const contract = loadContract(POKIEBALL_ADDRESS, abi)
 		const tx = await contract['burn(uint256)'](id)
 
 		return tx

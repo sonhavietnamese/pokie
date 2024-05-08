@@ -23,6 +23,7 @@ const Butterflies = dynamic(() => import('@/features/environment/butterfly/butte
 const GuideLineManager = dynamic(() => import('@/features/guide-line/guide-line-manager'))
 const Sapidae = dynamic(() => import('@/features/movement/character'))
 const Ground = dynamic(() => import('@/features/environment/ground'))
+const Ooap = dynamic(() => import('@/features/blacksmith/ooap'))
 
 export default function Home() {
 	const searchParams = useSearchParams()
@@ -66,6 +67,7 @@ export default function Home() {
 
 			<Physics debug={Boolean(debug)} timeStep="vary" paused={loading}>
 				<Bimy position={NPCS.bimy.position as [number, number, number]} />
+				<Ooap position={NPCS.ooap.position as [number, number, number]} />
 
 				<Butterflies />
 				<ShootBall />

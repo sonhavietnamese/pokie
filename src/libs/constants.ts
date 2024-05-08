@@ -1,4 +1,3 @@
-import type { Stuff } from '@/features/backpack/type'
 import type { App } from '@/features/phone/type'
 
 export const VERSION = '0.0.1'
@@ -146,7 +145,7 @@ export const NPCS = {
 	ooap: {
 		name: 'Ooap',
 		id: 'ooap',
-		position: [2, 1.67, 0],
+		position: [2, 1.67, 2],
 		rotation: [0, 0, 0],
 	},
 	blub: {

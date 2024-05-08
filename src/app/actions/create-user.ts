@@ -9,15 +9,15 @@ export async function createUser(user: InsertUser): Promise<InsertUser | undefin
 		await db.insert(profile).values({ userId: newUser[0].id, energy: 100 })
 		await db.insert(backpack).values({
 			userId: newUser[0].id,
-			milks: 0,
-			fishes: 0,
-			feathers: 0,
-			rocks: 0,
-			nuts: 0,
-			plants: 0,
-			bugs: 0,
-			stars: 0,
-			moons: 0,
+			milks: 20,
+			fishes: 20,
+			feathers: 20,
+			rocks: 20,
+			nuts: 20,
+			plants: 20,
+			bugs: 20,
+			stars: 20,
+			moons: 20,
 		})
 		await createQuest(newUser[0].id, 'quest_01')
 

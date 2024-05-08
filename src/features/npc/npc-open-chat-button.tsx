@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { useDialogueStore } from '@/features/dialogue/store'
 import useQuest from '@/features/quest/use-quest'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
+import { capitalize, sample } from 'lodash-es'
 import { useMemo } from 'react'
 import { useNpcStore } from './npc-store'
 
@@ -20,7 +21,6 @@ const buttonVariants: Variants = {
 
 export default function NpcOpenChatButton() {
 	const [npc, setIsTalking, isTalking] = useNpcStore((s) => [s.npc, s.setIsTalking, s.isTalking])
-	// const [showButton, setShowButton] = useState(false)
 	const { onGoingQuest, switchToCompletedQuest } = useQuest()
 	const showDialogue = useDialogueStore((s) => s.showDialogue)
 
@@ -48,7 +48,9 @@ export default function NpcOpenChatButton() {
 					className="absolute bottom-6 left-1/2 z-[5] h-[70px] w-[200px]"
 				>
 					<Button color="green" className="h-full w-full" onClick={onClick}>
-						<span className="font-extrabold text-2xl">Ask Bimy</span>
+						<span className="font-extrabold text-2xl">
+							{capitalize(sample(['ask', 'hello', 'sup']))} {npc?.name}
+						</span>
 					</Button>
 				</motion.div>
 			)}

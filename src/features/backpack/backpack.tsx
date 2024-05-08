@@ -96,6 +96,8 @@ export default function Backpack() {
 
 				const balls = await getBalances()
 
+				console.log(balls)
+
 				for (const [item, quantity] of Object.entries(balls)) {
 					items.push({
 						id: `balls-${item}`,

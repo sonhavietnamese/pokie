@@ -42,6 +42,7 @@ const MarketplaceOpenButton = dynamic(() => import('@/features/marketplace/marke
 
 const Backpack = dynamic(() => import('@/features/backpack/backpack'))
 const Marketplace = dynamic(() => import('@/features/marketplace/marketplace'))
+const Blacksmith = dynamic(() => import('@/features/blacksmith/blacksmith'))
 
 export default function Page() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -119,6 +120,7 @@ export default function Page() {
 									<PhoneCase />
 									<Backpack />
 									<Marketplace />
+									<Blacksmith />
 
 									<aside className="-translate-y-1/2 absolute top-1/2 right-6 flex flex-col gap-2">
 										<BackpackOpenButton />
