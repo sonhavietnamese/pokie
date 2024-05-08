@@ -8,7 +8,7 @@ import { useToastStore } from '@/features/toast/store'
 import { usePoxiePropsContract } from '@/hooks/use-poxie-props-contract'
 import { POKIEMARKETPLACE_ADDRESS, POKIEPROPS_ADDRESS, SKINS as SKIN_ENUM, TOOLS as TOOL_ENUM } from '@/libs/constants'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Item from './item'
 import { useMarketplaceStore } from './marketplace-store'
 import { usePoxieMarketplaceContract } from './poxie-marketplace-contract'
@@ -133,15 +133,20 @@ export default function Marketplace() {
 	const { approve, fetchBalances } = usePokieCoin()
 	const { mint } = usePoxiePropsContract()
 
+	const timeout = useRef<NodeJS.Timeout | null>(null)
+
 	useEffect(() => {
 		const fetchItem = async () => {
 			setSelected(null)
-			let data = []
+			let data: MarketplaceItem[] = []
 
 			try {
 				setLoading(true)
 				if (activeTab === 'balls') {
-					data = await fetchMarketItems()
+					timeout.current = setInterval(async () => {
+						data = await fetchMarketItems()
+						setItems(data)
+					}, 2000)
 				} else if (activeTab === 'skins') {
 					data = SKINS
 				} else if (activeTab === 'tools') {
@@ -156,6 +161,10 @@ export default function Marketplace() {
 		}
 
 		store.isOpenUI && fetchItem()
+
+		return () => {
+			clearInterval(timeout.current)
+		}
 	}, [store.isOpenUI, activeTab])
 
 	const buyProps = async () => {

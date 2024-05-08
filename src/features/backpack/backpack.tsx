@@ -158,13 +158,9 @@ export default function Backpack() {
 		try {
 			if (!selectedItem) return
 
-			console.log(selectedItem.id.split('-')[1])
-			console.log(selectedItem.tokenId)
+			await createMarketItem(selectedItem.tokenId as number)
 
-			const tx = await createMarketItem(selectedItem.tokenId as number)
-
-			console.log(tx)
-			// setIsOpen(false)
+			setOpenBackpack(false)
 		} catch (error) {
 			console.error(error)
 		}
