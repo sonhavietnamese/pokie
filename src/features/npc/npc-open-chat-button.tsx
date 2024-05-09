@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { useDialogueStore } from '@/features/dialogue/store'
 import useQuest from '@/features/quest/use-quest'
-import { NPCS } from '@/libs/constants'
 import { AnimatePresence, type Variants, motion } from 'framer-motion'
 import { capitalize, sample } from 'lodash-es'
 import { useMemo } from 'react'
+import { useBlacksmithStore } from '../blacksmith/store'
 import { useNpcStore } from './npc-store'
 
 const buttonVariants: Variants = {
@@ -29,6 +29,7 @@ export default function NpcOpenChatButton() {
 	])
 	const { onGoingQuest, switchToCompletedQuest } = useQuest()
 	const showDialogue = useDialogueStore((s) => s.showDialogue)
+	const setOpenBlacksmith = useBlacksmithStore((s) => s.setIsOpenUI)
 
 	const shouldShowButton = useMemo(() => {
 		if (isTalking) return false
@@ -47,6 +48,10 @@ export default function NpcOpenChatButton() {
 		if (npc?.id === 'ooap') {
 			setCameraPosition([8, 1.2, -3])
 			if (onGoingQuest?.questId === 'quest_02') showDialogue('ooap_01', 'top')
+			else {
+				setOpenBlacksmith(true)
+				setCameraPosition([9, 1.2, -3])
+			}
 		}
 	}
 

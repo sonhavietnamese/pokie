@@ -44,6 +44,7 @@ export default function CatchAxieAim() {
 	const onHold = () => {
 		if (!selectedBall) {
 			showToast('Select a ball first!')
+
 			return
 		}
 
@@ -54,6 +55,7 @@ export default function CatchAxieAim() {
 	const onRelease = async () => {
 		if (!selectedBall) {
 			showToast('Select a ball first!')
+
 			return
 		}
 
@@ -64,7 +66,7 @@ export default function CatchAxieAim() {
 		if (width - 2 * 2 >= 350 - 30 * 2 && width <= 350) {
 			try {
 				setBurning(true)
-				// await burn(BALLS[upperCase(selectedBall) as keyof typeof BALLS] as number)
+				await burn(BALLS[upperCase(selectedBall) as keyof typeof BALLS] as number)
 				setIsThrew(true)
 			} catch (error) {
 				showToast((error as Error).message)

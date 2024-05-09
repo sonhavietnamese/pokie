@@ -492,7 +492,7 @@ const AxieAutoMove = ({
 				showDialog('first_time_meet_axie', 'bottom')
 			}
 
-			const emote = sample<AxieEmote>(['happy'])
+			const emote = sample<AxieEmote>(['happy', 'angry'])
 
 			setEmote(emote)
 

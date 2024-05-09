@@ -11,7 +11,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 import { saigon } from 'viem/chains'
 
 export async function catchAxie(to: string, axieId: number) {
-	const canCatch = true
+	const canCatch = Math.random() > 0.7
 
 	if (!canCatch) {
 		return false

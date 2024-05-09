@@ -1,11 +1,7 @@
 'use client'
 
 import AxieManager from '@/features/axie/axie-manager'
-import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
-import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
-import { useNpcStore } from '@/features/npc/npc-store'
-import { usePhoneStore } from '@/features/phone/phone-store'
-import { usePokiedexStore } from '@/features/pokiedex/pokiedex-store'
+import Local from '@/features/movement/local'
 import { useLoadingAssets } from '@/hooks/use-assets'
 import { NPCS } from '@/libs/constants'
 import { Environment } from '@react-three/drei'
@@ -14,27 +10,18 @@ import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { Perf } from 'r3f-perf'
 
-const AxieAutoMove = dynamic(() => import('@/features/axie/axie-auto-move'))
 const Bimy = dynamic(() => import('@/features/npc/bimy'))
 const PokiedexRay = dynamic(() => import('@/features/pokiedex/pokiedex-ray'))
-const CharacterController = dynamic(() => import('@/features/movement/character-controller'))
 const Chest = dynamic(() => import('@/components/chest/chest'))
 const ShootBall = dynamic(() => import('@/features/catch-axie/shoot-ball'))
 const Butterflies = dynamic(() => import('@/features/environment/butterfly/butterflies'))
 const GuideLineManager = dynamic(() => import('@/features/guide-line/guide-line-manager'))
-const Sapidae = dynamic(() => import('@/features/movement/character'))
 const Ground = dynamic(() => import('@/features/environment/ground'))
 const Ooap = dynamic(() => import('@/features/blacksmith/ooap'))
 
 export default function Home() {
 	const searchParams = useSearchParams()
 	const debug = searchParams.get('debug')
-
-	const isPokiedexOpen = usePokiedexStore((s) => s.isOpen)
-	const isCatchAxieOpen = useCatchAxieStore((s) => s.isOpen)
-	const isCustomAvatarOpen = useCustomAvatarStore((s) => s.isOpenUI)
-	const isPhoneOpen = usePhoneStore((s) => s.isOpen)
-	const isTalking = useNpcStore((s) => s.isTalking)
 
 	const loading = useLoadingAssets()
 
@@ -83,7 +70,8 @@ export default function Home() {
 
 				<AxieManager />
 
-				<CharacterController
+				<Local />
+				{/* <CharacterController
 					isTalkingToNpc={!!isTalking}
 					camMaxDis={-10}
 					camInitDis={isCustomAvatarOpen || isPhoneOpen ? -5 : isPokiedexOpen || isCatchAxieOpen ? -2 : -10}
@@ -97,7 +85,7 @@ export default function Home() {
 					autoBalanceDampingOnY={0.05}
 				>
 					<Sapidae position={[0, -0.9, 0]} />
-				</CharacterController>
+				</CharacterController> */}
 			</Physics>
 		</>
 	)
