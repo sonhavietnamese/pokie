@@ -13,7 +13,7 @@ import { upperCase } from 'lodash-es'
 import { useEffect, useState } from 'react'
 import { useCatchAxieStore } from './catch-axie-store'
 
-const BALLS_COLORS: Record<string, string> = {
+export const BALLS_COLORS: Record<string, string> = {
 	aquatic: '#7AA2E3',
 	beast: '#FB6D48',
 	plant: '#2C7865',
@@ -64,7 +64,7 @@ export default function CatchAxieAim() {
 		if (width - 2 * 2 >= 350 - 30 * 2 && width <= 350) {
 			try {
 				setBurning(true)
-				await burn(BALLS[upperCase(selectedBall) as keyof typeof BALLS] as number)
+				// await burn(BALLS[upperCase(selectedBall) as keyof typeof BALLS] as number)
 				setIsThrew(true)
 			} catch (error) {
 				showToast((error as Error).message)

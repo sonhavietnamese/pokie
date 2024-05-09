@@ -1,21 +1,14 @@
 import { useCharacterControl } from '@/features/movement/use-character-control'
-import { useCharacterStore } from '@/stores/character'
-// import { useGame } from '@/stores/use-game'
 import { useThree } from '@react-three/fiber'
 import { type CollisionPayload, type RapierRigidBody, RigidBody } from '@react-three/rapier'
 import { useWalletgo } from '@roninnetwork/walletgo'
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { useNotificationStore } from '../notification/notification-store'
+import { useToastStore } from '../toast/store'
+import { BALLS_COLORS } from './catch-axie-aim'
 import { useCatchAxieStore } from './catch-axie-store'
-// import { useCatchAxieStore } from './store'
-// import { catchAxie } from '@/libs/utils'
-
-const BALLS_COLORS: Record<string, string> = {
-	aquatic: '#7AA2E3',
-	beast: '#FB6D48',
-	plant: '#2C7865',
-	reptile: '#912BBC',
-}
+import useCatchAxie from './use-catch-axie'
 
 export default function ShootBall() {
 	const [cubeMesh, setCubeMesh] = useState<ReactNode[]>([])
@@ -24,21 +17,23 @@ export default function ShootBall() {
 	const currentBall = useRef<THREE.Mesh>(null)
 
 	const throwAnimation = useCharacterControl((s) => s.throw)
-	const setCanControl = useCharacterStore((s) => s.setCanControl)
 
-	const [isThrew, setIsThrew] = useCatchAxieStore((state) => [
+	const [isThrew, setIsThrew, selectedBall, setCaughtAxie] = useCatchAxieStore((state) => [
 		state.isThrew,
 		state.setIsThrew,
-		// state.selectedBall,
-		// state.setCaughtAxie,
+		state.selectedBall,
+		state.setCaughtAxie,
 	])
+	const { capture } = useCatchAxie()
+	const showNotification = useNotificationStore((s) => s.showNotification)
+	const showToast = useToastStore((s) => s.showToast)
 
 	const scene = useThree((s) => s.scene)
 
 	const position = useMemo(() => new THREE.Vector3(), [])
 	const direction = useMemo(() => new THREE.Vector3(), [])
 
-	const { walletProvider } = useWalletgo()
+	const { account } = useWalletgo()
 
 	const clickToCreateBox = () => {
 		const character = scene.getObjectByName('character')
@@ -48,13 +43,12 @@ export default function ShootBall() {
 		const newMesh = (
 			<mesh ref={currentBall} position={[position.x, position.y + 1, position.z]}>
 				<sphereGeometry args={[0.15, 8, 8]} />
-				<meshStandardMaterial color={'red'} />
+				<meshStandardMaterial color={BALLS_COLORS[selectedBall]} />
 			</mesh>
 		)
 
 		setCubeMesh((prevMeshes) => [...prevMeshes, newMesh])
 		setIsThrew(false)
-		// setCanControl(true)
 	}
 
 	useEffect(() => {
@@ -84,59 +78,40 @@ export default function ShootBall() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isThrew])
 
-	// const onEnter = async (e: CollisionPayload) => {
-	// 	if (!walletProvider) return
+	const onEnter = async (e: CollisionPayload) => {
+		if (!account) return
 
-	// 	if (
-	// 		currentBall.current &&
-	// 		cubeRef.current &&
-	// 		e.colliderObject &&
-	// 		e.colliderObject.name.includes('obtainable-axie') &&
-	// 		isCaught
-	// 	) {
-	// 		const a = scene.getObjectByName(e.colliderObject.name)
-	// 		const pos = new THREE.Vector3()
+		if (currentBall.current && cubeRef.current && e.rigidBodyObject?.name.includes('axie')) {
+			const a = scene.getObjectByName(e.rigidBodyObject.name)
 
-	// 		if (a) {
-	// 			a.getWorldPosition(pos)
-	// 			cubeRef.current.setBodyType(1, false)
-	// 			cubeRef.current.setTranslation(new THREE.Vector3(pos.x, pos.y, pos.z), false)
-	// 		}
+			if (a) {
+				cubeRef.current.setBodyType(1, false)
+			}
 
-	// 		const address = await walletProvider.getSigner().getAddress()
+			let count = 0
+			const blinkInterval = setInterval(() => {
+				count++
+				;(currentBall.current?.material as THREE.MeshStandardMaterial).color.set(
+					count % 2 === 0 ? BALLS_COLORS[selectedBall] : '#00ffff',
+				)
+			}, 500)
 
-	// 		let count = 0
-	// 		const blinkInterval = setInterval(() => {
-	// 			count++
-	// 			;(currentBall.current!.material as THREE.MeshStandardMaterial).color.set(
-	// 				count % 2 === 0 ? BALLS_COLORS[selectedBall] : '#00ffff',
-	// 			)
-	// 		}, 500)
+			try {
+				const tx = await capture(account, Number(e.rigidBodyObject.name.split('-')[1]))
 
-	// 		try {
-	// 			const response = await fetch('https://pokemon-psi-two.vercel.app/api/catch', {
-	// 				// const response = await fetch('http://localhost:3333/api/catch', {
-	// 				method: 'POST',
-	// 				headers: {
-	// 					'Content-Type': 'application/json',
-	// 				},
-	// 				body: JSON.stringify({
-	// 					to: address,
-	// 					axie: e.colliderObject.name.split('-')[2],
-	// 				}),
-	// 			})
+				setCaughtAxie({ caught: tx, id: e.rigidBodyObject.name.split('-')[1] })
 
-	// 			const data = await response.json()
+				if (tx) showNotification(`Caught #${e.rigidBodyObject.name.split('-')[1]}!`)
+				else showToast('Failed to catch Axie!')
 
-	// 			setCaughtAxie({ caught: data.caught, id: e.colliderObject.name.split('-')[2] })
-
-	// 			clearInterval(blinkInterval)
-	// 			setCubeMesh([])
-	// 		} catch (error) {
-	// 			console.log(error)
-	// 		}
-	// 	}
-	// }
+				clearInterval(blinkInterval)
+				setCubeMesh([])
+			} catch (error) {
+				console.log(error)
+				setCaughtAxie(null)
+			}
+		}
+	}
 
 	return (
 		<>
@@ -149,7 +124,7 @@ export default function ShootBall() {
 						ref={cubeRef}
 						colliders="ball"
 						name="ball-aquatic"
-						// onCollisionEnter={(e) => onEnter(e)}
+						onCollisionEnter={(e) => onEnter(e)}
 					>
 						{item}
 					</RigidBody>

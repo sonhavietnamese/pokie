@@ -34,19 +34,11 @@ export const fetcher = (url: string, axieId: string) =>
 	}).then((res) => res.json())
 
 export default function AxieMixer({ axieId = '123', animation }: AxieMixerProps) {
-	// const { data, isLoading } = useSWRImmutable(
-	// 	axieId ? 'https://api-gateway.skymavis.com/graphql/marketplace' : null,
-	// 	(url) => fetcher(url, axieId as string),
-	// 	{
-	// 		refreshWhenHidden: false,
-	// 		revalidateOnFocus: false,
-	// 		revalidateOnReconnect: false,
-	// 	},
-	// )
-
 	const addAxie = useAxieStore((s) => s.addAxie)
 
 	const [parts, setParts] = useState<AxieParts[]>([])
+
+	console.log('parts', axieId)
 
 	useEffect(() => {
 		const handle = async () => {

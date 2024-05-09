@@ -21,6 +21,8 @@ export default function AnimationManager() {
 			const restored = JSON.parse(pako.inflate(data, { to: 'string' }))
 			const animations: Record<string, THREE.AnimationClip> = {}
 
+			console.log(restored)
+
 			for (const key in restored.body) {
 				if (Object.prototype.hasOwnProperty.call(restored.body, key)) {
 					const raw = restored.body[key]
@@ -29,7 +31,10 @@ export default function AnimationManager() {
 						if (['idle', 'walk', 'run'].includes(animationKey)) {
 							const animation = raw[animationKey]
 
-							animations[`${key}_${animationKey}`] = THREE.AnimationClip.parse(animation)
+							let body = key
+							if (key === 'furry') body = 'fuzzy'
+
+							animations[`${body}_${animationKey}`] = THREE.AnimationClip.parse(animation)
 						}
 					}
 				}

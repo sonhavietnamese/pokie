@@ -1,5 +1,6 @@
 'use client'
 
+import AxieManager from '@/features/axie/axie-manager'
 import { useCatchAxieStore } from '@/features/catch-axie/catch-axie-store'
 import { useCustomAvatarStore } from '@/features/custom-avatar/custom-avatar-store'
 import { useNpcStore } from '@/features/npc/npc-store'
@@ -78,7 +79,9 @@ export default function Home() {
 
 				<Ground />
 
-				<AxieAutoMove sprintMult={2.2} position={[5, 3, 0]} axieId="123" />
+				{/* <AxieAutoMove sprintMult={2.2} position={[5, 3, 0]} axieId="523127" /> */}
+
+				<AxieManager />
 
 				<CharacterController
 					isTalkingToNpc={!!isTalking}
@@ -87,7 +90,7 @@ export default function Home() {
 					camInitDir={{ x: 0, y: Math.PI, z: 0 }}
 					springK={2}
 					dampingC={0.2}
-					position={[2, 5, 3]}
+					position={[0, 5, 0]}
 					autoBalanceSpringK={1.2}
 					autoBalanceDampingC={0.04}
 					autoBalanceSpringOnY={0.7}

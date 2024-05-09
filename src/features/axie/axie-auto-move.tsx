@@ -21,6 +21,7 @@ import {
 import { random, sample } from 'lodash-es'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { useCatchAxieStore } from '../catch-axie/catch-axie-store'
 import AxieNotation from './axie-notation'
 import type { AxieEmote } from './type'
 
@@ -49,6 +50,8 @@ const AxieAutoMove = ({
 	fallingGravityScale = 2.5,
 	fallingMaxVel = -20,
 	wakeUpDelay = 200,
+
+	autoMove = false,
 
 	rayOriginOffset = { x: 0, y: -capsuleHalfHeight, z: 0 },
 	rayLength = capsuleRadius + 2,
@@ -80,6 +83,7 @@ const AxieAutoMove = ({
 	const showTip = useTipStore((s) => s.showTip)
 	const isFirstTimeMeetAxie = useOnboardingStore((s) => s.isFirstTimeMeetAxie)
 	const showDialog = useDialogueStore((s) => s.showDialogue)
+	const caughtAxie = useCatchAxieStore((s) => s.caughtAxie)
 
 	//#region PHYSICS
 	const modelFacingVec = useRef(new THREE.Vector3())
@@ -465,7 +469,7 @@ const AxieAutoMove = ({
 
 		autoBalanceCharacter()
 
-		// canMove.current && pointToMove(slopeAngle, movingObjectVelocity.current)
+		canMove.current && autoMove && pointToMove(slopeAngle, movingObjectVelocity.current)
 
 		if (!isPointMoving) {
 			setAnimation('idle')
@@ -475,6 +479,12 @@ const AxieAutoMove = ({
 			setAnimation('walk')
 		}
 	})
+
+	useEffect(() => {
+		if (caughtAxie && !caughtAxie.caught && characterModelRef.current) {
+			characterModelRef.current.visible = true
+		}
+	}, [caughtAxie])
 
 	const onEnter = (e: CollisionPayload) => {
 		if (e.colliderObject?.name.includes('character-body')) {
@@ -514,16 +524,23 @@ const AxieAutoMove = ({
 		}
 	}
 
+	const onBallHit = (e: CollisionPayload) => {
+		if (characterModelRef.current && e.rigidBodyObject?.name.includes('ball')) {
+			characterModelRef.current.visible = false
+		}
+	}
+
 	return (
 		<>
 			<RigidBody
-				name={axieId}
+				name={`axie-${axieId}`}
 				onContactForce={(e) => bodyContactForce.set(e.totalForce.x, e.totalForce.y, e.totalForce.z)}
 				onCollisionExit={() => bodyContactForce.set(0, 0, 0)}
 				colliders={false}
 				ref={characterRef}
 				enabledRotations={[true, true, true]}
 				position={props.position}
+				onCollisionEnter={onBallHit}
 			>
 				<CapsuleCollider name={`axie-${axieId}`} args={[capsuleHalfHeight, capsuleRadius]} />
 				<BallCollider args={[0.5]} position={[0, 0.3, 0]} />
@@ -588,6 +605,8 @@ type Props = RigidBodyProps & {
 	floatingDis?: number
 	springK?: number
 	dampingC?: number
+
+	autoMove?: boolean
 
 	showSlopeRayOrigin?: boolean
 	slopeMaxAngle?: number

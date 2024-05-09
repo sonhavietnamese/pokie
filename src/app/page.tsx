@@ -1,5 +1,6 @@
 'use client'
 
+import CaughtAxie from '@/features/catch-axie/caught-axie'
 import { KEYBOARD_MAP } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { KeyboardControls, View } from '@react-three/drei'
@@ -108,6 +109,8 @@ export default function Page() {
 										<Energy />
 										<PokieCoinBalance />
 									</aside>
+
+									<CaughtAxie />
 
 									<Avatar />
 									<LogoutButton />

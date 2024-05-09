@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 type CatchAxie = {
 	id: string
-	caught: boolean
+	caught: boolean | string
 }
 
 type CatchAxieState = {
