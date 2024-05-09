@@ -42,11 +42,21 @@ export default function CatchAxieAim() {
 	const { getBalances, burn } = usePoxieBallContract()
 
 	const onHold = () => {
+		if (!selectedBall) {
+			showToast('Select a ball first!')
+			return
+		}
+
 		animate(scope.current, { width: 1200 }, { duration: 1.7, ease: 'linear' }).play()
 	}
 	const [items, setItems] = useState<ItemType[]>([])
 
 	const onRelease = async () => {
+		if (!selectedBall) {
+			showToast('Select a ball first!')
+			return
+		}
+
 		const width = scope.current.getClientRects()[0].width
 
 		animate(scope.current, { width: 1200 }, { duration: 1.7, ease: 'linear' }).pause()
@@ -96,6 +106,10 @@ export default function CatchAxieAim() {
 				} as ItemType)
 			}
 
+			if (items.length > 0) {
+				setSelectedBall(items[0].id.split('-')[1])
+			}
+
 			setItems(items)
 		}
 
@@ -137,15 +151,16 @@ export default function CatchAxieAim() {
 								opacity: 0.7,
 							}}
 						/>
-
-						<div
-							ref={scope}
-							className={cn('absolute aspect-square rounded-full border-[2px]')}
-							style={{
-								borderColor: BALLS_COLORS[selectedBall],
-								background: `radial-gradient(circle at center, #00ff0000 50%, ${BALLS_COLORS[selectedBall]} 100%)`,
-							}}
-						/>
+						{selectedBall && (
+							<div
+								ref={scope}
+								className={cn('absolute aspect-square rounded-full border-[2px]')}
+								style={{
+									borderColor: BALLS_COLORS[selectedBall],
+									background: `radial-gradient(circle at center, #00ff0000 50%, ${BALLS_COLORS[selectedBall]} 100%)`,
+								}}
+							/>
+						)}
 					</motion.div>
 
 					<motion.button

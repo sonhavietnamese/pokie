@@ -32,7 +32,7 @@ export const useCatchAxieStore = create<CatchAxieState>()((set) => ({
 	isThrew: false,
 	setIsThrew: (isThrew: boolean) => set({ isThrew }),
 
-	selectedBall: 'aquatic',
+	selectedBall: '',
 	setSelectedBall: (selectedBall: string) => set({ selectedBall }),
 
 	caughtAxie: null,
