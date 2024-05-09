@@ -172,7 +172,7 @@ export default function PhoneCase() {
 								/>
 							</div>
 
-							<div className="absolute inset-0 z-[3] h-full w-full p-40 pt-16 pr-[140px] pb-[70px]">
+							<div className="absolute inset-0 z-[3] h-full w-full p-[150px] pt-16 pr-[126px] pb-[70px]">
 								<motion.div
 									initial="hidden"
 									className="relative grid h-full w-full auto-rows-min grid-cols-4 gap-3 overflow-hidden rounded-[32px] bg-[#FFF6D5] p-5"
@@ -193,7 +193,7 @@ export default function PhoneCase() {
 
 					<div
 						ref={scope}
-						className="-bottom-[500px] pointer-events-none absolute z-[5] w-[300px] origin-top-left scale-[1.8] opacity-0"
+						className="-bottom-[600px] pointer-events-none absolute z-[5] w-[500px] origin-top-left scale-[1.8] opacity-0"
 					>
 						{hand === 0 ? (
 							<div className="h-full w-full">

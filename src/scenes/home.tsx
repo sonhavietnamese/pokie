@@ -80,7 +80,7 @@ export default function Home() {
 				<Butterflies />
 				<ShootBall />
 
-				<Chest position={[-5, 2, 3]} />
+				{/* <Chest position={[-5, 2, 3]} /> */}
 
 				<PokiedexRay />
 

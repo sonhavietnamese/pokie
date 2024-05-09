@@ -40,17 +40,17 @@ export default function NpcOpenChatButton() {
 		setIsTalking(true)
 
 		if (npc?.id === 'bimy') {
-			setCameraPosition([2, 1.2, -5])
+			setCameraPosition([5, 1.1, -5])
 			if (onGoingQuest?.questId === 'quest_01') showDialogue('bimy_01', 'top')
 			else showDialogue('bimy_02', 'top')
 		}
 
 		if (npc?.id === 'ooap') {
-			setCameraPosition([8, 1.2, -3])
+			setCameraPosition([8, 1.2, 4])
 			if (onGoingQuest?.questId === 'quest_02') showDialogue('ooap_01', 'top')
 			else {
 				setOpenBlacksmith(true)
-				setCameraPosition([9, 1.2, -3])
+				setCameraPosition([9, 1.2, 5])
 			}
 		}
 	}

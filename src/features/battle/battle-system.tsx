@@ -12,6 +12,7 @@ import {
 } from '@/libs/constants'
 import { useStageStore } from '@/stores/stage'
 import { AnimatePresence } from 'framer-motion'
+import { sample } from 'lodash-es'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { ActionPanel } from './action-panel'
@@ -103,8 +104,8 @@ export default function BattleSystem() {
 	}, [stage, isStarted, isEnd, isRunning, timeLeft, start, winner, setStage, process, cleanUp, reset])
 
 	const action = (selectedMove: Move) => {
-		const moves = ['rock', 'paper', 'scissors']
-		const botMove = moves[Math.floor(Math.random() * moves.length)] as Move
+		const moves = ['rock', 'paper', 'scissors', 'paper', 'scissors', 'paper', 'scissors']
+		const botMove = sample(moves) as Move
 
 		move({ player: { move: selectedMove }, bot: { move: botMove } })
 

@@ -133,7 +133,7 @@ export const NPCS = {
 	bimy: {
 		name: 'Bimy',
 		id: 'bimy',
-		position: [2, 1.67, 0],
+		position: [5, 1.5, 0],
 		rotation: [0, 0, 0],
 	},
 	lolo: {
@@ -145,7 +145,7 @@ export const NPCS = {
 	ooap: {
 		name: 'Ooap',
 		id: 'ooap',
-		position: [8, 1.67, 2],
+		position: [8, 1.4, 8],
 		rotation: [0, 0, 0],
 	},
 	blub: {

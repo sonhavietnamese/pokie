@@ -7,6 +7,16 @@ export async function createUser(user: InsertUser): Promise<InsertUser | undefin
 		const newUser = await db.insert(users).values(user).returning()
 
 		await db.insert(profile).values({ userId: newUser[0].id, energy: 100 })
+		await db.insert(backpack).values({
+			userId: newUser[0].id,
+			milks: 10,
+			fishes: 10,
+			feathers: 10,
+			rocks: 10,
+			nuts: 10,
+			plants: 10,
+			bugs: 10,
+		})
 
 		await createQuest(newUser[0].id, 'quest_01')
 

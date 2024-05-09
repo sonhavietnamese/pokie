@@ -4,7 +4,7 @@ import { Environment, PerspectiveCamera } from '@react-three/drei'
 import { useWalletgo } from '@roninnetwork/walletgo'
 import { signIn } from 'next-auth/react'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 const Sapidae = dynamic(() => import('@/components/sapidae/sapidae'), { ssr: false })
 const Backdrop = dynamic(() => import('@/components/backdrop'), { ssr: false })

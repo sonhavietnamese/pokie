@@ -91,7 +91,7 @@ export default function DialogueSystem() {
 				if (!node) return
 				if (node === 'blacksmith') {
 					setOpenBlacksmith(true)
-					setCameraPosition([9.3, 1.2, -3])
+					setCameraPosition([9, 1.2, 5])
 				}
 				clear()
 
@@ -128,6 +128,7 @@ export default function DialogueSystem() {
 				if (node === 'quest_01') {
 					switchToCompletedQuest('quest_01')
 				}
+				setIsTalking(false)
 				clear()
 
 				return

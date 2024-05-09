@@ -12,7 +12,7 @@ export default function AxieManager() {
 					key={axie.tokenId}
 					autoMove={randInt(0, 1) === 1}
 					sprintMult={randFloat(1.5, 2.2)}
-					position={[randInt(-20, 20), 3, randInt(-20, 20)]}
+					position={[randInt(0, 20), 3, randInt(0, 20)]}
 					axieId={axie.tokenId}
 				/>
 			))}

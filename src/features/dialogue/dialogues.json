@@ -90,8 +90,7 @@
       "bubbles": ["Awesome, let's go!"],
       "next": [
         {
-          "action": "CHANGE_STAGE",
-          "node": "home"
+          "action": "END"
         }
       ]
     }
@@ -641,7 +640,7 @@
           "opts": ["idle-00"]
         }
       ],
-      "bubbles": ["Grab this!"],
+      "bubbles": ["See ya!"],
       "next": [
         {
           "action": "REWARD",
