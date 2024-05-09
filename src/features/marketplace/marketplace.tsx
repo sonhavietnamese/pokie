@@ -127,9 +127,7 @@ export default function Marketplace() {
 	const [activeTab, setActiveTab] = useState<Tab>('balls')
 	const showToast = useToastStore((s) => s.showToast)
 	const showNotification = useNotificationStore((s) => s.showNotification)
-
 	const { fetchMarketItems, createMarketSale } = usePoxieMarketplaceContract()
-	// const setBalance = usePokieCoinBalance((s) => s.setBalance)
 	const { approve, fetchBalances } = usePokieCoin()
 	const { mint } = usePoxiePropsContract()
 
@@ -143,10 +141,7 @@ export default function Marketplace() {
 			try {
 				setLoading(true)
 				if (activeTab === 'balls') {
-					timeout.current = setInterval(async () => {
-						data = await fetchMarketItems()
-						setItems(data)
-					}, 2000)
+					data = await fetchMarketItems()
 				} else if (activeTab === 'skins') {
 					data = SKINS
 				} else if (activeTab === 'tools') {
@@ -195,6 +190,20 @@ export default function Marketplace() {
 		}
 	}
 
+	useEffect(() => {
+		const handle = async () => {
+			let data = []
+			timeout.current = setInterval(async () => {
+				data = await fetchMarketItems()
+				setItems(data)
+			}, 2000)
+		}
+
+		if (activeTab === 'balls') {
+			handle()
+		}
+	}, [activeTab])
+
 	const buyBall = async () => {
 		if (!selected) return
 
@@ -202,7 +211,6 @@ export default function Marketplace() {
 			setStage('approving')
 			const approveTx = await approve(POKIEMARKETPLACE_ADDRESS, Number(selected.price))
 
-			console.log(approveTx)
 			setStage('approved')
 			await approveTx.wait()
 
@@ -219,9 +227,8 @@ export default function Marketplace() {
 			fetchBalances()
 		} catch (error) {
 			console.error(error)
-			console.log(error)
-			if ((error as Error).message !== 'User rejected') showToast('Runout of fabric to make this skin')
-			if ((error as Error).message !== 'Failed to open Confirm this transaction') showToast('Allow popup and try again')
+			if ((error as Error).message === 'User rejected') showToast('user rejected')
+			if ((error as Error).message === 'Failed to open Confirm this transaction') showToast('Allow popup and try again')
 		} finally {
 			setStage('')
 		}
