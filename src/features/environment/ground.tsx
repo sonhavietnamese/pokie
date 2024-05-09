@@ -22,26 +22,24 @@ type GLTFResult = GLTF & {
 	}
 }
 
-// const grassCount = 1000
+const grassCount = 10000
 
-// const grassColorProps = {
-// 	baseColor: '#313f1b',
-// 	tipColor1: '#9bd38d',
-// 	tipColor2: '#1f352a',
-// }
+const grassColorProps = {
+	baseColor: '#313f1b',
+	tipColor1: '#9bd38d',
+	tipColor2: '#1f352a',
+}
 
 export default function Ground(props: JSX.IntrinsicElements['group']) {
 	const { nodes } = useGLTF('/models/environment/map-ground.glb') as GLTFResult
-	// const grassLOD = useGLTF('/models/environment/grass-lods.glb')
+	const grassLOD = useGLTF('/models/environment/grass-lods.glb')
 	const prototypeGrid = useTexture('/textures/prototype-grid.png')
-	// const perlinNoise = useTexture('/textures/perlinnoise.webp')
 
 	prototypeGrid.wrapS = prototypeGrid.wrapT = THREE.RepeatWrapping
 	prototypeGrid.repeat.set(170, 170)
+	// const perlinNoise = useTexture('/textures/perlinnoise.webp')
+
 	// perlinNoise.wrapS = perlinNoise.wrapT = THREE.RepeatWrapping
-	// const [setIsUnderWater] = useCharacterStore((state) => [
-	// 	state.setIsUnderWater,
-	// ])
 
 	// const grassAlpha = useTexture('/textures/grass.jpeg')
 
@@ -265,10 +263,10 @@ export default function Ground(props: JSX.IntrinsicElements['group']) {
 	// 	const grassInstancedMesh = new THREE.InstancedMesh(grassGeometry, material, grassCount)
 
 	// 	grassInstancedMesh.receiveShadow = true
-	// 	grassInstancedMesh.position.set(-8.503, -0.391, -12.436)
+	// 	grassInstancedMesh.position.set(-8.503, -0.5, -12.436)
 	// 	const position = new THREE.Vector3()
 	// 	const quaternion = new THREE.Quaternion()
-	// 	const scale = new THREE.Vector3(4, 0.1, 4)
+	// 	const scale = new THREE.Vector3(8, 0.1, 8)
 
 	// 	const normal = new THREE.Vector3()
 	// 	const yAxis = new THREE.Vector3(0, 1, 0)

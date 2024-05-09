@@ -1,6 +1,16 @@
 'use client'
 
 import AxieManager from '@/features/axie/axie-manager'
+import { Fence } from '@/features/environment/fence'
+import { ETrees } from '@/features/environment/map-e-trees'
+import { NMountain } from '@/features/environment/map-n-mountain'
+import { RiverTrees } from '@/features/environment/map-river-trees'
+import { SMountain } from '@/features/environment/map-s-mountain'
+import { STrees } from '@/features/environment/map-s-trees'
+import { SmallIsland } from '@/features/environment/map-small-island'
+import { WMountain } from '@/features/environment/map-w-mountain'
+import { OldTree } from '@/features/environment/old-tree'
+import { Tree02 } from '@/features/environment/tree-02'
 import Local from '@/features/movement/local'
 import { useLoadingAssets } from '@/hooks/use-assets'
 import { NPCS } from '@/libs/constants'
@@ -53,7 +63,17 @@ export default function Home() {
 
 			<GuideLineManager />
 
+			<Fence />
+			<WMountain />
+			<NMountain />
+			<SmallIsland />
+			<ETrees />
+			<Tree02 />
 			<Physics debug={Boolean(debug)} timeStep="vary" paused={loading}>
+				<STrees />
+				<SMountain />
+				<RiverTrees />
+				<OldTree />
 				<Bimy position={NPCS.bimy.position as [number, number, number]} />
 				<Ooap position={NPCS.ooap.position as [number, number, number]} />
 
@@ -66,26 +86,9 @@ export default function Home() {
 
 				<Ground />
 
-				{/* <AxieAutoMove sprintMult={2.2} position={[5, 3, 0]} axieId="523127" /> */}
-
 				<AxieManager />
 
 				<Local />
-				{/* <CharacterController
-					isTalkingToNpc={!!isTalking}
-					camMaxDis={-10}
-					camInitDis={isCustomAvatarOpen || isPhoneOpen ? -5 : isPokiedexOpen || isCatchAxieOpen ? -2 : -10}
-					camInitDir={{ x: 0, y: Math.PI, z: 0 }}
-					springK={2}
-					dampingC={0.2}
-					position={[0, 5, 0]}
-					autoBalanceSpringK={1.2}
-					autoBalanceDampingC={0.04}
-					autoBalanceSpringOnY={0.7}
-					autoBalanceDampingOnY={0.05}
-				>
-					<Sapidae position={[0, -0.9, 0]} />
-				</CharacterController> */}
 			</Physics>
 		</>
 	)

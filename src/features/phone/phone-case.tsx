@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { Sprite } from '@/components/ui/sprite'
 import { SPRITESHEET_DATA } from '@/configs/spritesheet'
 import { APPS } from '@/libs/constants'
@@ -144,26 +143,39 @@ export default function PhoneCase() {
 							initial="hidden"
 							animate={isOpen ? 'visible' : 'hidden'}
 							exit={'hidden'}
-							className="relative aspect-[9/13] h-[85%] origin-[bottom_left]"
+							className="relative aspect-[9/10] h-[85%] origin-[bottom_left]"
 						>
 							<Sprite
 								data={{
 									part: '1',
-									m: SPRITESHEET_DATA.frames['ex-hand.png'].frame,
+									m: SPRITESHEET_DATA.frames['phone-hand-wist.png'].frame,
 								}}
-								className="-bottom-32 -left-32 absolute z-[-1] h-[200px] w-[400px]"
+								className="-bottom-32 absolute left-20 z-[-1] h-[200px] w-[450px]"
 							/>
 
-							<img src="/phone-frame.png" alt="" className="absolute z-[3] h-full w-full" />
+							<Sprite
+								data={{
+									part: '1',
+									m: SPRITESHEET_DATA.frames['phone-case.png'].frame,
+								}}
+								className="absolute z-[3] h-full w-full"
+							/>
 
-							<div className="absolute top-0 right-0 z-[6]">
-								<Button onClick={() => setIsOpen(false)}>X</Button>
+							<div className="absolute top-10 right-40 z-[6]">
+								<Sprite
+									data={{
+										part: '1',
+										m: SPRITESHEET_DATA.frames['btn-close-01.png'].frame,
+									}}
+									className="absolute z-[3] h-20 w-20"
+									onClick={() => setIsOpen(false)}
+								/>
 							</div>
 
-							<div className="absolute inset-0 z-[3] h-full w-full p-10 pt-16">
+							<div className="absolute inset-0 z-[3] h-full w-full p-40 pt-16 pr-[140px] pb-[70px]">
 								<motion.div
 									initial="hidden"
-									className="relative grid h-full w-full auto-rows-min grid-cols-4 gap-3 overflow-hidden rounded-2xl bg-[#FFF6D5] p-5"
+									className="relative grid h-full w-full auto-rows-min grid-cols-4 gap-3 overflow-hidden rounded-[32px] bg-[#FFF6D5] p-5"
 									animate={controls}
 									variants={{}}
 								>
@@ -188,7 +200,7 @@ export default function PhoneCase() {
 								<Sprite
 									data={{
 										part: '1',
-										m: SPRITESHEET_DATA.frames['ex-hand-02.png'].frame,
+										m: SPRITESHEET_DATA.frames['phone-hand-01.png'].frame,
 									}}
 									className="w-full"
 								/>
@@ -198,7 +210,7 @@ export default function PhoneCase() {
 								<Sprite
 									data={{
 										part: '1',
-										m: SPRITESHEET_DATA.frames['ex-hand-03.png'].frame,
+										m: SPRITESHEET_DATA.frames['phone-hand-02.png'].frame,
 									}}
 									className="w-full"
 								/>

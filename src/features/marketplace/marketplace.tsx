@@ -193,8 +193,10 @@ export default function Marketplace() {
 	useEffect(() => {
 		const handle = async () => {
 			let data = []
+
 			timeout.current = setInterval(async () => {
 				data = await fetchMarketItems()
+
 				setItems(data)
 			}, 2000)
 		}
