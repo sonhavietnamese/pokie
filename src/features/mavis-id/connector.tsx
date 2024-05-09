@@ -24,7 +24,7 @@ class IdConnector extends BaseConnector<MavisIdProvider> {
 
 	async connect(chainId: number) {
 		const newProvider = MavisIdProvider.create({
-			clientId: 'pokie',
+			clientId: 'poxie',
 			chainId: chainId,
 		})
 
